@@ -10,7 +10,7 @@
 
 ----
 ## Nivel de Refinamiento 2
-``
+````
   1.1. Hacer lo siguiente mientras la opción del usuario no sea "S" (Salir):
     1.2. Mostrar en pantalla: '--- MENÚ GESTIÓN DE EVENTOS ---'
     1.3. Mostrar en pantalla: 'Para crear un evento ingresar > C'
@@ -34,7 +34,7 @@
         1.9.6.1 Mostrar mensaje de error: 'Opción no válida. Por favor, intente nuevamente.'
         1.9.6.2 Volver al paso (1.2)
   1.2. Fin del bucle.
-``
+````
 ## Algoritmo
 
 ----
