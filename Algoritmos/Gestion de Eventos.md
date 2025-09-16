@@ -12,6 +12,8 @@
 
 ----
 ## Nivel de Refinamiento 2
+
+### Menu Principal
 ````
   1.1. Hacer lo siguiente mientras la opción del usuario no sea "S" (Salir):
     1.2. Mostrar en pantalla: '--- MENÚ GESTIÓN DE EVENTOS ---'
@@ -37,42 +39,83 @@
         1.9.6.2 Volver al paso (1.2)
   1.2. Fin del bucle.
 ````
+### Crear un nuevo evento
 ````
-2.1.  Mostrar en pantalla: '--- CREACIÓN DE NUEVO EVENTO ---'
-2.2.  Solicitar y leer el nombre del evento. Guardar en 'nombre_evento'.
-2.3.  Solicitar y leer la fecha del evento (formato DD/MM/AAAA). Guardar en 'fecha_evento'.
-2.4.  Solicitar y leer el lugar del evento. Guardar en 'lugar_evento'.
-2.5.  Solicitar y leer la descripción del evento. Guardar en 'descripcion_evento'.
-2.6.  Solicitar y leer la capacidad máxima de asistentes. Guardar en 'capacidad_evento'.
-2.7.  Validar los datos ingresados:
-      2.7.1. Si 'nombre_evento' está vacío O la 'fecha_evento' no tiene un formato válido O 'capacidad_evento' no es un número positivo, hacer:
-             2.7.1.1. Mostrar mensaje de error: 'Datos inválidos. Por favor, revise la información ingresada.'
-             2.7.1.2. Finalizar subproceso y volver al menú principal.
-2.8.  Generar un ID único para el evento. Guardar en 'id_evento'.
-2.9.  Guardar los datos ('id_evento', 'nombre_evento', 'fecha_evento', etc.) en la base de datos o estructura de datos del sistema.
-2.10. Mostrar mensaje de éxito: 'Evento "' + nombre_evento + '" creado exitosamente con el ID: ' + id_evento.
-2.11. Finalizar subproceso y volver al menú principal.
+2.1. Mostrar en pantalla: 'Ingrese nombre del evento:'
+2.2. Leer y guardar en 'nombre_evento'
+2.3. Mostrar en pantalla: 'Ingrese descripción del evento:'
+2.4. Leer y guardar en 'descripcion_evento'
+2.5. Mostrar en pantalla: 'Ingrese fecha del evento (DD/MM/AAAA):'
+2.6. Leer y guardar en 'fecha_evento'
+2.7. Validar que fecha_evento > fecha_actual
+2.8. Si fecha no es válida:
+    2.8.1. Mostrar mensaje: 'Error: La fecha debe ser posterior a hoy'
+    2.8.2. Volver al paso 2.5
+2.9. Mostrar en pantalla: 'Ingrese hora de inicio (HH:MM):'
+2.10. Leer y guardar en 'hora_inicio'
+2.11. Mostrar en pantalla: 'Ingrese hora de fin (HH:MM):'
+2.12. Leer y guardar en 'hora_fin'
+2.13. Validar que hora_fin > hora_inicio
+2.14. Si horarios no son válidos:
+    2.14.1. Mostrar mensaje: 'Error: La hora de fin debe ser posterior a la de inicio'
+    2.14.2. Volver al paso 2.9
+2.15. Mostrar en pantalla: 'Ingrese ubicación del evento:'
+2.16. Leer y guardar en 'ubicacion'
+2.17. Mostrar en pantalla: 'Ingrese capacidad máxima:'
+2.18. Leer y guardar en 'capacidad_maxima'
+2.19. Validar que capacidad_maxima > 0
+2.20. Si capacidad no es válida:
+    2.20.1. Mostrar mensaje: 'Error: La capacidad debe ser mayor a 0'
+    2.20.2. Volver al paso 2.17
+2.21. Mostrar en pantalla: 'Ingrese precio del evento:'
+2.22. Leer y guardar en 'precio'
+2.23. Validar que precio >= 0
+2.24. Si precio no es válido:
+    2.24.1. Mostrar mensaje: 'Error: El precio no puede ser negativo'
+    2.24.2. Volver al paso 2.21
+2.25. Generar nuevo ID único para el evento
+2.26. Establecer estado = 'activo'
+2.27. Guardar evento en la base de datos
+2.28. Mostrar mensaje: 'Evento creado exitosamente con ID: [ID_generado]'
 ````
+### Consultar eventos
 ````
-3.1.  Mostrar en pantalla: '--- CONSULTA DE EVENTOS ---'
-3.2.  Verificar si existen eventos registrados en el sistema.
-3.3.  Si no hay eventos, hacer:
-      3.3.1. Mostrar mensaje: 'No hay eventos registrados en el sistema.'
-      3.3.2. Finalizar subproceso y volver al menú principal.
-3.4.  Si hay eventos, mostrar la lista completa:
-      3.4.1. Para cada evento en la lista de eventos, hacer:
-             3.4.1.1. Mostrar en pantalla: 'ID: ' + evento.id + ' | Nombre: ' + evento.nombre + ' | Fecha: ' + evento.fecha
-3.5.  Preguntar al usuario: '¿Desea ver el detalle de un evento específico? (S/N)'.
-3.6.  Leer y guardar la respuesta en 'ver_detalle'.
-3.7.  Si 'ver_detalle' es "S" (o "s"), hacer:
-      3.7.1. Solicitar y leer el ID del evento a detallar. Guardar en 'id_buscado'.
-      3.7.2. Buscar el evento con el 'id_buscado' en la lista de eventos.
-      3.7.3. Si se encuentra el evento, hacer:
-             3.7.3.1. Mostrar todos sus detalles: ID, Nombre, Fecha, Lugar, Descripción, Capacidad.
-      3.7.4. Si no se encuentra el evento, hacer:
-             3.7.4.1. Mostrar mensaje de error: 'No se encontró ningún evento con el ID proporcionado.'
-3.8.  Finalizar subproceso y volver al menú principal.
+3.1. Mostrar en pantalla: '--- CONSULTA DE EVENTOS ---'
+3.2. Mostrar en pantalla: 'Para ver todos los eventos ingresar > T'
+3.3. Mostrar en pantalla: 'Para buscar por ID ingresar > I'
+3.4. Mostrar en pantalla: 'Para buscar por nombre ingresar > N'
+3.5. Mostrar en pantalla: 'Para buscar por fecha ingresar > F'
+3.6. Leer y guardar en 'opcion_consulta'
+3.7. Según el valor de opcion_consulta:
+    3.7.1. Caso "T":
+        3.7.1.1. Obtener todos los eventos de la base de datos
+        3.7.1.2. Si no hay eventos:
+            3.7.1.2.1. Mostrar mensaje: 'No hay eventos registrados'
+        3.7.1.3. Si hay eventos:
+            3.7.1.3.1. Para cada evento en la lista:
+                3.7.1.3.1.1. Mostrar información completa del evento
+    3.7.2. Caso "I":
+        3.7.2.1. Mostrar en pantalla: 'Ingrese ID del evento:'
+        3.7.2.2. Leer y guardar en 'id_busqueda'
+        3.7.2.3. Buscar evento por ID en la base de datos
+        3.7.2.4. Si evento encontrado:
+            3.7.2.4.1. Mostrar información completa del evento
+        3.7.2.5. Si no encontrado:
+            3.7.2.5.1. Mostrar mensaje: 'Evento no encontrado'
+    3.7.3. Caso "N":
+        3.7.3.1. Mostrar en pantalla: 'Ingrese nombre del evento:'
+        3.7.3.2. Leer y guardar en 'nombre_busqueda'
+        3.7.3.3. Buscar eventos que contengan el nombre en la base de datos
+        3.7.3.4. Mostrar resultados encontrados
+    3.7.4. Caso "F":
+        3.7.4.1. Mostrar en pantalla: 'Ingrese fecha (DD/MM/AAAA):'
+        3.7.4.2. Leer y guardar en 'fecha_busqueda'
+        3.7.4.3. Buscar eventos por fecha en la base de datos
+        3.7.4.4. Mostrar resultados encontrados
+    3.7.5. De lo contrario:
+        3.7.5.1. Mostrar mensaje: 'Opción no válida'
 ````
+### Modificar un evento existente
 ````
 4.1.  Mostrar en pantalla: '--- MODIFICAR EVENTO EXISTENTE ---'
 4.2.  Verificar si existen eventos registrados. Si no hay, mostrar 'No hay eventos para modificar.' y volver al menú.
@@ -86,7 +129,7 @@
       4.6.2. Solicitar al usuario el nuevo nombre del evento. Si no ingresa nada, mantener el original. Guardar en 'nuevo_nombre'.
       4.6.3. Solicitar la nueva fecha. Si no ingresa nada, mantener la original. Guardar en 'nueva_fecha'.
       4.6.4. Solicitar el nuevo lugar. Si no ingresa nada, mantener el original. Guardar en 'nuevo_lugar'.
-      4.6.5. Validar los nuevos datos ingresados (similar al paso 2.7).
+      4.6.5. Validar los nuevos datos ingresados.
       4.6.6. Si los datos no son válidos, mostrar error y cancelar la modificación.
       4.6.7. Si los datos son válidos, preguntar: '¿Confirma los cambios? (S/N)'.
       4.6.8. Leer y guardar la confirmación.
@@ -97,25 +140,28 @@
              4.6.10.1. Mostrar mensaje: 'Modificación cancelada.'
 4.7.  Finalizar subproceso y volver al menú principal.
 ````
+### Eliminar un evento
 ````
-5.1.  Mostrar en pantalla: '--- ELIMINAR EVENTO ---'
-5.2.  Verificar si existen eventos registrados. Si no hay, mostrar 'No hay eventos para eliminar.' y volver al menú.
-5.3.  Solicitar y leer el ID del evento a eliminar. Guardar en 'id_a_eliminar'.
-5.4.  Buscar el evento con el 'id_a_eliminar'.
-5.5.  Si no se encuentra el evento, hacer:
-      5.5.1. Mostrar mensaje de error: 'Evento no encontrado.'
-      5.5.2. Finalizar subproceso y volver al menú principal.
-5.6.  Si se encuentra el evento, hacer:
-      5.6.1. Mostrar en pantalla los datos del evento que se va a eliminar.
-      5.6.2. Preguntar al usuario: '¿Está SEGURO de que desea eliminar este evento de forma permanente? (S/N)'.
-      5.6.3. Leer y guardar la confirmación en 'confirmar_eliminar'.
-      5.6.4. Si 'confirmar_eliminar' es "S" (o "s"), hacer:
-             5.6.4.1. Eliminar el evento de la base de datos.
-             5.6.4.2. Mostrar mensaje de éxito: 'El evento ha sido eliminado correctamente.'
-      5.6.5. Si la confirmación no es "S", hacer:
-             5.6.5.1. Mostrar mensaje: 'Operación cancelada. El evento no ha sido eliminado.'
-5.7.  Finalizar subproceso y volver al menú principal.
+5.1. Mostrar en pantalla: 'Ingrese ID del evento a eliminar:'
+5.2. Leer y guardar en 'id_evento'
+5.3. Buscar evento por ID en la base de datos
+5.4. Si evento no encontrado:
+    5.4.1. Mostrar mensaje: 'Evento no encontrado'
+    5.4.2. Terminar subproceso
+5.5. Si evento encontrado:
+    5.5.1. Mostrar información del evento
+    5.5.2. Verificar si hay inscripciones asociadas
+    5.5.3. Si hay inscripciones:
+        5.5.3.1. Mostrar mensaje: 'No se puede eliminar. Hay inscripciones asociadas'
+        5.5.3.2. Terminar subproceso
+    5.5.4. Si no hay inscripciones:
+        5.5.4.1. Mostrar en pantalla: '¿Está seguro? (S/N):'
+        5.5.4.2. Leer confirmación
+        5.5.4.3. Si confirmación = "S":
+            5.5.4.3.1. Eliminar evento de la base de datos
+            5.5.4.3.2. Mostrar mensaje: 'Evento eliminado exitosamente'
+        5.5.4.4. Si confirmación = "N":
+            5.5.4.4.1. Mostrar mensaje: 'Operación cancelada'
 ````
-
 ----
 ## Pseudocodigo
