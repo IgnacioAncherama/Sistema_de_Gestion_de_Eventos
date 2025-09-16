@@ -1,5 +1,7 @@
 # Algoritmo de Sistemas de Gestion de Eventos
 
+## Algoritmo
+
 ## Nivel de Refinamiento 1
 
 1. Menu principal gestion de eventos.
@@ -114,7 +116,6 @@
              5.6.5.1. Mostrar mensaje: 'Operación cancelada. El evento no ha sido eliminado.'
 5.7.  Finalizar subproceso y volver al menú principal.
 ````
-## Algoritmo
 
 ----
 ## Pseudocodigo
