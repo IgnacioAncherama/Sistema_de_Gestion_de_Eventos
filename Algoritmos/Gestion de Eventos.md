@@ -34,7 +34,6 @@
         1.9.6.2 Volver al paso (1.2)
   1.2. Fin del bucle.
 
-----
 ## Algoritmo
 
 ----
