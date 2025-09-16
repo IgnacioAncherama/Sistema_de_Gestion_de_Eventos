@@ -1,54 +1,58 @@
 # Event Manager (Equipo **N5**)
 
-Pensamiento Computacional y Programación Avanzada
-Trabajo Práctico N° 2 - Desarrollo y testeo
+### Pensamiento Computacional y Programación Avanzada
 
-Modalidad: Grupal
-Presentación: Lunes 22/9 - 15 minutos por equipo.
-Presentación: 6/10 Tarea de Tester de todos los proyectos.
-Cantidad de estudiantes: 5 (cinco).
+---
 
-Cada equipo recibirá un enunciado con 5 (cinco) procesos indispensables que debe tener el desarrollo.
+# Trabajo Práctico N° 2 - Desarrollo y Testeo
 
-El proyecto debe tener claramente desarrollados y modularizados los procesos solicitados.
+### Información General
+* **Materia:** Pensamiento Computacional y Programación Avanzada
+* **Modalidad:** Grupal
+* **Presentación (Primera Entrega):** Lunes 22/09 - 15 minutos por equipo.
+* **Presentación (Segunda Entrega):** 06/10 - Tarea de Tester de todos los proyectos.
+* **Cantidad de estudiantes:** 5
 
-Cada equipo subirá al Github sus producciones como repositorio público, de manera que se pueda acceder a toda la información del desarrollo.
+---
 
-En la semana fases agregar las tareas asignadas a cada integrante y el estado de cada una de ellas.
+### Requisitos Generales del Proyecto
+* El proyecto debe tener claramente desarrollados y modularizados los **5 procesos indispensables**.
+* El equipo subirá al Github sus producciones como repositorio público para acceder a la información del desarrollo.
+* Se debe agregar en la semana [fases] las tareas asignadas a cada integrante y el estado de cada una de ellas.
+* Se generará un `Readme.md` con el número de equipo asignado, nombre y apellido de los integrantes y el responsable de cada proceso.
+* Finalmente, en la tarea del campus se subirá el link al repositorio de GitHub creado.
 
-Generar un Readme.md con el número de equipo asignado, nombre y apellido de los integrantes y el responsable de cada proceso.
+---
 
-Finalmente, en la tarea del campus subir el link al repositorio de github creado.
+### Primera Entrega: 22/09
+Para esta primera entrega, se debe presentar de manera formal el relevamiento, análisis y diseño del sistema solicitado. Debe incluir:
 
-Primera entrega: 22/09
-Para la primera entrega se debe presentar de manera formal, el relevamiento, análisis y diseño del sistema solicitado. Debe incluir dentro del diseño el pseudocódigo y los objetivos específicos de cada módulo y el algoritmo, 2 niveles de refinamiento y pseudocódigo de los 5 módulos solicitados y del main. En esta primera presentación que será 15 minutos por equipo, cada estudiante debe especializarse y defender uno de los procesos, pero debe conocer todos.
+* **Pseudocódigo y objetivos** específicos de cada módulo y del `main`.
+* El **algoritmo, 2 niveles de refinamiento y pseudocódigo** de los 5 módulos solicitados.
 
-Segunda entrega: 06/10
-Cada módulo deberá:
+En esta presentación de 15 minutos, cada estudiante debe especializarse y defender uno de los procesos, pero debe conocerlos todos.
 
-Agregar en el readme el pseudocódigo del main (debe ser pseudocódigo, no programa) y la entrada y salida requerida por cada uno de los módulos, una descripción de su funcionalidad.
+---
 
-Desarrollar en Python los 5 módulos solicitados. En la cabecera de cada código, a modo de comentarios, debe figurar la autoría del mismo (nombre, legajo), el estado de desarrollo, el responsable, fecha de creación, trace de los cambios realizados mientras se desarrollaba (fecha y cambios), otros comentarios.
+### Segunda Entrega: 06/10
+Cada módulo deberá cumplir con lo siguiente:
 
-No debe desarrollarse y correr ni main de ningún tipo.
+* Agregar en el `readme` el pseudocódigo del `main` (debe ser pseudocódigo, no programa) y la entrada y salida requerida por cada uno de los módulos, con una descripción de su funcionalidad.
+* Desarrollar en **Python** los 5 módulos solicitados.
+* En la cabecera de cada código, a modo de comentarios, debe figurar la autoría (nombre, legajo), el estado de desarrollo, el responsable, la fecha de creación, el `trace` de los cambios realizados (fecha y cambios), y otros comentarios.
+* **No debe desarrollarse ni correr ningún `main` de ningún tipo.**
+* Si no se genera una base de datos, se debe simular con archivos en un modelo adicional que genere y/o recupere los datos que se solicitan (si utilizan algún tipo de NoSQL o archivos planos).
+* Los módulos deben correr sin errores, sin que les falte ninguna estructura, etc., tanto de manera independiente como parte del proyecto global.
 
-Si no está generada la base de datos, simular la misma con archivos en un modelo adicional que genere y/o recupere/a los datos que le solicitan. Si utilizan algún tipo de NoSQL o archivos planos los mismos.
+---
 
-Los módulos deben correr sin errores, sin que le falte ninguna estructura, etc. tanto de manera independiente como parte del proyecto global.
-
-Consigna de desarrollo Equipo n°3:
-Sistema de reserva de habitaciones en un hotel
-
-Consulta disponibilidad
-
-Registro de reserva
-
-Confirmación de reserva
-
-Preparación de la habitación
-
-Check-in y atención al huésped
-
+### Consigna de Desarrollo - Equipo N°3
+**Sistema de reserva de habitaciones en un hotel**
+* Consulta de disponibilidad
+* Registro de reserva
+* Confirmación de reserva
+* Preparación de la habitación
+* Check-in y atención al huésped
 
 
 ## Asignaciones
