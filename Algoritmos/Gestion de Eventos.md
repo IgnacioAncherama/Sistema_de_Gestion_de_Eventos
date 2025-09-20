@@ -13,7 +13,7 @@
 ----
 ## Nivel de Refinamiento 2
 
-### Menu Principal
+### Menu Principal (Ok)
 ````
   1.1. Hacer lo siguiente mientras la opción del usuario no sea "S" (Salir):
     1.2. Mostrar en pantalla: '--- MENÚ GESTIÓN DE EVENTOS ---'
@@ -39,7 +39,7 @@
         1.9.6.2 Volver al paso (1.2)
   1.2. Fin del bucle.
 ````
-### Crear un nuevo evento
+### Crear un nuevo evento (OK, revisar 2.27. si hay que especificar la tupla de guardado)
 ````
 2.1. Mostrar en pantalla: 'Ingrese nombre del evento:'
 2.2. Leer y guardar en 'nombre_evento'
@@ -78,44 +78,54 @@
 2.27. Guardar evento en la base de datos
 2.28. Mostrar mensaje: 'Evento creado exitosamente con ID: [ID_generado]'
 ````
-### Consultar eventos
+### Consultar eventos (OK)
 ````
 3.1. Mostrar en pantalla: '--- CONSULTA DE EVENTOS ---'
 3.2. Mostrar en pantalla: 'Para ver todos los eventos ingresar > T'
 3.3. Mostrar en pantalla: 'Para buscar por ID ingresar > I'
 3.4. Mostrar en pantalla: 'Para buscar por nombre ingresar > N'
 3.5. Mostrar en pantalla: 'Para buscar por fecha ingresar > F'
-3.6. Leer y guardar en 'opcion_consulta'
-3.7. Según el valor de opcion_consulta:
-    3.7.1. Caso "T":
-        3.7.1.1. Obtener todos los eventos de la base de datos
-        3.7.1.2. Si no hay eventos:
-            3.7.1.2.1. Mostrar mensaje: 'No hay eventos registrados'
-        3.7.1.3. Si hay eventos:
-            3.7.1.3.1. Para cada evento en la lista:
-                3.7.1.3.1.1. Mostrar información completa del evento
-    3.7.2. Caso "I":
-        3.7.2.1. Mostrar en pantalla: 'Ingrese ID del evento:'
-        3.7.2.2. Leer y guardar en 'id_busqueda'
-        3.7.2.3. Buscar evento por ID en la base de datos
-        3.7.2.4. Si evento encontrado:
-            3.7.2.4.1. Mostrar información completa del evento
-        3.7.2.5. Si no encontrado:
-            3.7.2.5.1. Mostrar mensaje: 'Evento no encontrado'
-    3.7.3. Caso "N":
-        3.7.3.1. Mostrar en pantalla: 'Ingrese nombre del evento:'
-        3.7.3.2. Leer y guardar en 'nombre_busqueda'
-        3.7.3.3. Buscar eventos que contengan el nombre en la base de datos
-        3.7.3.4. Mostrar resultados encontrados
-    3.7.4. Caso "F":
-        3.7.4.1. Mostrar en pantalla: 'Ingrese fecha (DD/MM/AAAA):'
-        3.7.4.2. Leer y guardar en 'fecha_busqueda'
-        3.7.4.3. Buscar eventos por fecha en la base de datos
-        3.7.4.4. Mostrar resultados encontrados
-    3.7.5. De lo contrario:
-        3.7.5.1. Mostrar mensaje: 'Opción no válida'
+3.6. Mostrar en pantalla: 'Para salir de este submodulo ingresar > S'
+3.7. Leer y guardar en 'opcion_consulta'
+3.8. Según el valor de opcion_consulta:
+    3.8.1. Caso "T":
+        3.8.1.1. Obtener todos los eventos de la base de datos
+        3.8.1.2. Si no hay eventos:
+            3.8.1.2.1. Mostrar mensaje: 'No hay eventos registrados'
+        3.8.1.3. Si hay eventos:
+            3.8.1.3.1. Para cada evento en la lista:
+                3.8.1.3.1.1. Mostrar información completa del evento
+    3.8.2. Caso "I":
+        3.8.2.1. Mostrar en pantalla: 'Ingrese ID del evento:'
+        3.8.2.2. Leer y guardar en 'id_busqueda'
+        3.8.2.3. Buscar evento por ID en la base de datos
+        3.8.2.4. Si evento encontrado:
+            3.8.2.4.1. Mostrar información completa del evento
+        3.8.2.5. Si no encontrado:
+            3.8.2.5.1. Mostrar mensaje: 'Evento no encontrado'
+    3.8.3. Caso "N":
+        3.8.3.1. Mostrar en pantalla: 'Ingrese nombre del evento:'
+        3.8.3.2. Leer y guardar en 'nombre_busqueda'
+        3.8.3.3. Buscar eventos que contengan el nombre en la base de datos
+        3.8.3.4. Si evento encontrado:
+            3.8.3.4.1. Mostrar información completa del evento
+        3.8.3.5. Si no encontrado:
+            3.8.3.5.1. Mostrar mensaje: 'Evento no encontrado'
+    3.8.4. Caso "F":
+        3.8.4.1. Mostrar en pantalla: 'Ingrese fecha (DD/MM/AAAA):'
+        3.8.4.2. Leer y guardar en 'fecha_busqueda'
+        3.8.4.3. Buscar eventos por fecha en la base de datos
+        3.8.4.4. Si evento encontrado:
+            3.8.4.4.1. Mostrar información completa del evento
+        3.8.4.5. Si no encontrado:
+            3.8.4.5.1. Mostrar mensaje: 'Evento no encontrado'
+    3.8.5. Caso "S":
+        3.8.5.1. Mostrar mensaje: 'Volviendo al menu inicial de Gestion de eventos'
+        3.8.5.2. Retornar al Menu Principal de Gestion de Eventos
+    3.8.6. De lo contrario:
+        3.8.6.1. Mostrar mensaje: 'Opción no válida'
 ````
-### Modificar un evento existente
+### Modificar un evento existente (OK)
 ````
 4.1.  Mostrar en pantalla: '--- MODIFICAR EVENTO EXISTENTE ---'
 4.2.  Verificar si existen eventos registrados. Si no hay, mostrar 'No hay eventos para modificar.' y volver al menú.
@@ -134,13 +144,13 @@
       4.6.7. Si los datos son válidos, preguntar: '¿Confirma los cambios? (S/N)'.
       4.6.8. Leer y guardar la confirmación.
       4.6.9. Si la confirmación es "S" (o "s"), hacer:
-             4.6.9.1. Actualizar los datos del evento en la base de datos.
+             4.6.9.1. Segun el 'id_buscado', actualizar los datos del evento en la base de datos.
              4.6.9.2. Mostrar mensaje de éxito: 'El evento ha sido modificado correctamente.'
       4.6.10. Si la confirmación no es "S", hacer:
              4.6.10.1. Mostrar mensaje: 'Modificación cancelada.'
 4.7.  Finalizar subproceso y volver al menú principal.
 ````
-### Eliminar un evento
+### Eliminar un evento (OK -> Revisar si puede eliminar por otra cosa que no sea el ID)
 ````
 5.1. Mostrar en pantalla: 'Ingrese ID del evento a eliminar:'
 5.2. Leer y guardar en 'id_evento'
