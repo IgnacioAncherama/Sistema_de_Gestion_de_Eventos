@@ -2,14 +2,20 @@
 
 ## Algoritmo
 
-## Nivel de Refinamiento 1
+El sistema permite al usuario a través de un menu, realizar la gestion del evento que desee.
+Para crear un nuevo evento, ingresar C
+Consultar eventos, ingresa M
+Modificar un evento existente, ingresa X
+Eliminar un evento, ingresa E 
 
+## Nivel de Refinamiento 1
+````
 1. Menu principal gestion de eventos.
   2. Crear un nuevo evento.
   3. Consultar eventos.
   4. Modificar un evento existente.
   5. Eliminar un evento.
-
+````
 ----
 ## Nivel de Refinamiento 2
 
