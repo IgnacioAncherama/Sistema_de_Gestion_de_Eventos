@@ -1,6 +1,27 @@
 # Algoritmo de Sistemas de Gestion de Eventos
+## 5. Módulo de Generación de Informes y Estadísticas
 
-## Nivel de Refinamiento 1
+### Objetivo
+Proporcionar a los organizadores del evento herramientas para analizar el rendimiento del mismo, facilitando la toma de decisiones. 📊
+
+
+### Objetivos Específicos
+
+* **Generar informes de asistencia y participación:**
+    * **Gráfico de Asistencia vs. Registro:** Muestra de forma visual la diferencia entre el número de personas que se registraron para 			el evento y el número real de asistentes que hicieron check-in.
+    * **Distribución demográfica de los asistentes:** Muestra el porcentaje de asistentes por diferentes categorías como edad, género, 				profesión o país. 
+    * **Interés por tipo de contenido o actividad:** Evalúa el nivel de participación y asistencia a sesiones, talleres, conferencias o 			cualquier otra actividad específica dentro del evento.
+    * **Tasa de repetición y fidelización:** Se enfoca en el comportamiento de los asistentes a través del tiempo, determinando cuántos 		regresan para participar en futuras ediciones.
+
+* **Presentar estadísticas financieras:**
+    * **Pagos registrados por actividad, servicio o ticketing:** Muestra un desglose completo de los ingresos generados (entradas, patrocinios, productos, etc.), permitiendo a los organizadores ver de dónde proviene el dinero.
+
+* **Permitir la exportación de informes:**
+    * Ofrecer la posibilidad de descargar los datos y visualizaciones en formatos útiles como **PDF** y **CSV**.
+ 
+---
+## Algoritmo
+### Nivel de Refinamiento 1
 
     1. Permitir al usuario seleccionar una opción de informe
     2. Recopilar los datos del evento necesarios para generar el informe
@@ -8,7 +29,7 @@
     4. Generar reporte
     5. Implementar la exportación de cada reporte
 
-## Nivel de Refinamiento 2
+### Nivel de Refinamiento 2
 
 	- 1.1 Mostrar una lista de opciones de informes disponibles:
 		 Asistencia vs. Registro
@@ -45,9 +66,9 @@
 	  5.2 Para CSV: Convertir los datos del informe en un formato de texto separado por comas y permitir la descarga del archivo.
 	  5.3 Para PDF Utilizar una biblioteca de generación de PDF para capturar la visualización del informe y generar un documento PDF descargable.
 
-## Pseudocódigo
+### Pseudocódigo
 
-### Programa principal
+#### Programa principal
 
 ```python
 INICIO PROGRAMA
