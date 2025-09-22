@@ -5,15 +5,15 @@
 ## Nivel de Refinamiento 1
 
 1. Menu principal gestion de eventos.
-2. Crear un nuevo evento.
-3. Consultar eventos.
-4. Modificar un evento existente.
-5. Eliminar un evento.
+  2. Crear un nuevo evento.
+  3. Consultar eventos.
+  4. Modificar un evento existente.
+  5. Eliminar un evento.
 
 ----
 ## Nivel de Refinamiento 2
 
-### Menu Principal (Ok)
+### Menu Principal 
 ````
   1.1. Hacer lo siguiente mientras la opción del usuario no sea "S" (Salir):
     1.2. Mostrar en pantalla: '--- MENÚ GESTIÓN DE EVENTOS ---'
@@ -39,7 +39,7 @@
         1.9.6.2 Volver al paso (1.2)
   1.2. Fin del bucle.
 ````
-### Crear un nuevo evento (OK, revisar 2.27. si hay que especificar la tupla de guardado)
+### Crear un nuevo evento 
 ````
 2.1. Mostrar en pantalla: 'Ingrese nombre del evento:'
 2.2. Leer y guardar en 'nombre_evento'
@@ -78,7 +78,7 @@
 2.27. Guardar evento en la base de datos
 2.28. Mostrar mensaje: 'Evento creado exitosamente con ID: [ID_generado]'
 ````
-### Consultar eventos (OK)
+### Consultar eventos 
 ````
 3.1. Mostrar en pantalla: '--- CONSULTA DE EVENTOS ---'
 3.2. Mostrar en pantalla: 'Para ver todos los eventos ingresar > T'
@@ -125,7 +125,7 @@
     3.8.6. De lo contrario:
         3.8.6.1. Mostrar mensaje: 'Opción no válida'
 ````
-### Modificar un evento existente (OK)
+### Modificar un evento existente 
 ````
 4.1.  Mostrar en pantalla: '--- MODIFICAR EVENTO EXISTENTE ---'
 4.2.  Verificar si existen eventos registrados. Si no hay, mostrar 'No hay eventos para modificar.' y volver al menú.
@@ -150,7 +150,7 @@
              4.6.10.1. Mostrar mensaje: 'Modificación cancelada.'
 4.7.  Finalizar subproceso y volver al menú principal.
 ````
-### Eliminar un evento (OK -> Revisar si puede eliminar por otra cosa que no sea el ID)
+### Eliminar un evento 
 ````
 5.1. Mostrar en pantalla: 'Ingrese ID del evento a eliminar:'
 5.2. Leer y guardar en 'id_evento'
@@ -175,3 +175,135 @@
 ````
 ----
 ## Pseudocodigo
+
+````
+VARIABLES:
+    Input: cadena
+    nombre_evento, descripcion_evento, ubicacion: cadena
+    fecha_evento: fecha
+    hora_inicio, hora_fin: hora
+    capacidad_maxima, id_evento: entero
+    precio: real
+    estado: cadena
+    opcion_consulta: cadena
+
+INICIO
+    REPETIR
+        ESCRIBIR '--- MENÚ GESTIÓN DE EVENTOS ---'
+        ESCRIBIR 'Para crear un evento ingresar > C'
+        ESCRIBIR 'Para consultar eventos ingresar > M'
+        ESCRIBIR 'Para modificar un evento ingresar > X'
+        ESCRIBIR 'Para eliminar un evento ingresar > E'
+        ESCRIBIR 'Para salir del módulo ingresar > S'
+        LEER Input
+        Input <- MAYUSCULA(Input)
+        
+        SEGUN Input HACER
+            CASO "C":
+                // Crear nuevo evento
+                ESCRIBIR 'Ingrese nombre del evento:'
+                LEER nombre_evento
+                ESCRIBIR 'Ingrese descripción del evento:'
+                LEER descripcion_evento
+                ESCRIBIR 'Ingrese fecha del evento (DD/MM/AAAA):'
+                LEER fecha_evento
+                SI fecha_evento <= FECHA_ACTUAL ENTONCES
+                    ESCRIBIR 'Error: La fecha debe ser posterior a hoy'
+                    CONTINUAR
+                FIN_SI
+                ESCRIBIR 'Ingrese hora de inicio (HH:MM):'
+                LEER hora_inicio
+                ESCRIBIR 'Ingrese hora de fin (HH:MM):'
+                LEER hora_fin
+                SI hora_fin <= hora_inicio ENTONCES
+                    ESCRIBIR 'Error: La hora de fin debe ser posterior a la de inicio'
+                    CONTINUAR
+                FIN_SI
+                ESCRIBIR 'Ingrese ubicación del evento:'
+                LEER ubicacion
+                ESCRIBIR 'Ingrese capacidad máxima:'
+                LEER capacidad_maxima
+                SI capacidad_maxima <= 0 ENTONCES
+                    ESCRIBIR 'Error: La capacidad debe ser mayor a 0'
+                    CONTINUAR
+                FIN_SI
+                ESCRIBIR 'Ingrese precio del evento:'
+                LEER precio
+                SI precio < 0 ENTONCES
+                    ESCRIBIR 'Error: El precio no puede ser negativo'
+                    CONTINUAR
+                FIN_SI
+                id_evento <- GENERAR_ID_UNICO()
+                estado <- 'activo'
+                GUARDAR_EVENTO(id_evento, nombre_evento, descripcion_evento, fecha_evento, 
+                              hora_inicio, hora_fin, ubicacion, capacidad_maxima, precio, estado)
+                ESCRIBIR 'Evento creado exitosamente con ID: ', id_evento
+                
+            CASO "M":
+                // Consultar eventos
+                ESCRIBIR '--- CONSULTA DE EVENTOS ---'
+                ESCRIBIR 'Para ver todos los eventos ingresar > T'
+                ESCRIBIR 'Para buscar por ID ingresar > I'
+                ESCRIBIR 'Para buscar por nombre ingresar > N'
+                ESCRIBIR 'Para buscar por fecha ingresar > F'
+                LEER opcion_consulta
+                SEGUN opcion_consulta HACER
+                    CASO "T":
+                        MOSTRAR_TODOS_LOS_EVENTOS()
+                    CASO "I":
+                        ESCRIBIR 'Ingrese ID del evento:'
+                        LEER id_evento
+                        BUSCAR_EVENTO_POR_ID(id_evento)
+                    CASO "N":
+                        ESCRIBIR 'Ingrese nombre del evento:'
+                        LEER nombre_evento
+                        BUSCAR_EVENTOS_POR_NOMBRE(nombre_evento)
+                    CASO "F":
+                        ESCRIBIR 'Ingrese fecha (DD/MM/AAAA):'
+                        LEER fecha_evento
+                        BUSCAR_EVENTOS_POR_FECHA(fecha_evento)
+                    DE_LO_CONTRARIO:
+                        ESCRIBIR 'Opción no válida'
+                FIN_SEGUN
+                
+            CASO "X":
+                // Modificar evento
+                ESCRIBIR 'Ingrese ID del evento a modificar:'
+                LEER id_evento
+                SI EXISTE_EVENTO(id_evento) ENTONCES
+                    MODIFICAR_EVENTO(id_evento)
+                SINO
+                    ESCRIBIR 'Evento no encontrado'
+                FIN_SI
+                
+            CASO "E":
+                // Eliminar evento
+                ESCRIBIR 'Ingrese ID del evento a eliminar:'
+                LEER id_evento
+                SI EXISTE_EVENTO(id_evento) ENTONCES
+                    SI TIENE_INSCRIPCIONES(id_evento) ENTONCES
+                        ESCRIBIR 'No se puede eliminar. Hay inscripciones asociadas'
+                    SINO
+                        ESCRIBIR '¿Está seguro? (S/N):'
+                        LEER confirmacion
+                        SI confirmacion = "S" ENTONCES
+                            ELIMINAR_EVENTO(id_evento)
+                            ESCRIBIR 'Evento eliminado exitosamente'
+                        SINO
+                            ESCRIBIR 'Operación cancelada'
+                        FIN_SI
+                    FIN_SI
+                SINO
+                    ESCRIBIR 'Evento no encontrado'
+                FIN_SI
+                
+            CASO "S":
+                ESCRIBIR 'Saliendo del módulo de gestión de eventos...'
+                
+            DE_LO_CONTRARIO:
+                ESCRIBIR 'Opción no válida. Por favor, intente nuevamente.'
+        FIN_SEGUN
+        
+    HASTA_QUE Input = "S"
+FIN
+````
