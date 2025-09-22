@@ -184,14 +184,25 @@ Eliminar un evento, ingresa E
 
 ````
 VARIABLES:
+    // Variables generales del menú
     Input: cadena
+    id_buscado, id_evento: entero
+    confirmacion: cadena
+    
+    // Variables para Crear y Modificar Evento
     nombre_evento, descripcion_evento, ubicacion: cadena
     fecha_evento: fecha
     hora_inicio, hora_fin: hora
-    capacidad_maxima, id_evento: entero
+    capacidad_maxima: entero
     precio: real
     estado: cadena
-    opcion_consulta: cadena
+    evento_encontrado: registro // Estructura para almacenar los datos de un evento
+    
+    // Variables para Submenús
+    opcion_consulta, opcion_modificar: cadena
+    nuevo_valor_cadena: cadena
+    nuevo_valor_entero: entero
+    nuevo_valor_fecha: fecha
 
 INICIO
     REPETIR
@@ -242,7 +253,7 @@ INICIO
                 id_evento <- GENERAR_ID_UNICO()
                 estado <- 'activo'
                 GUARDAR_EVENTO(id_evento, nombre_evento, descripcion_evento, fecha_evento, 
-                              hora_inicio, hora_fin, ubicacion, capacidad_maxima, precio, estado)
+                               hora_inicio, hora_fin, ubicacion, capacidad_maxima, precio, estado)
                 ESCRIBIR 'Evento creado exitosamente con ID: ', id_evento
                 
             CASO "M":
@@ -274,33 +285,87 @@ INICIO
                 
             CASO "X":
                 // Modificar evento
+                ESCRIBIR '--- MODIFICAR EVENTO ---'
                 ESCRIBIR 'Ingrese ID del evento a modificar:'
-                LEER id_evento
-                SI EXISTE_EVENTO(id_evento) ENTONCES
-                    MODIFICAR_EVENTO(id_evento)
-                SINO
-                    ESCRIBIR 'Evento no encontrado'
-                FIN_SI
+                LEER id_buscado
                 
+                evento_encontrado <- BUSCAR_EVENTO_POR_ID(id_buscado)
+                
+                SI evento_encontrado ES NULO ENTONCES
+                    ESCRIBIR 'Evento no encontrado.'
+                SINO
+                    ESCRIBIR 'Información actual del evento:'
+                    // Mostrar aquí los datos de evento_encontrado
+                    ESCRIBIR 'ID: ', evento_encontrado.id
+                    ESCRIBIR 'Nombre: ', evento_encontrado.nombre
+                    ESCRIBIR 'Fecha: ', evento_encontrado.fecha
+                    ESCRIBIR 'Ubicación: ', evento_encontrado.ubicacion
+                    
+                    ESCRIBIR '¿Qué desea modificar?'
+                    ESCRIBIR '(N) Nombre'
+                    ESCRIBIR '(F) Fecha'
+                    ESCRIBIR '(U) Ubicación'
+                    ESCRIBIR '(C) Capacidad'
+                    LEER opcion_modificar
+                    opcion_modificar <- MAYUSCULA(opcion_modificar)
+                    
+                    SEGUN opcion_modificar HACER
+                        CASO "N":
+                            ESCRIBIR 'Ingrese el nuevo nombre:'
+                            LEER nuevo_valor_cadena
+                            SI nuevo_valor_cadena <> "" ENTONCES
+                                ACTUALIZAR_CAMPO_EVENTO(id_buscado, "nombre", nuevo_valor_cadena)
+                                ESCRIBIR 'Evento modificado exitosamente.'
+                            SINO
+                                ESCRIBIR 'Error: El nombre no puede estar vacío.'
+                            FIN_SI
+                        CASO "F":
+                            ESCRIBIR 'Ingrese la nueva fecha (DD/MM/AAAA):'
+                            LEER nuevo_valor_fecha
+                            SI nuevo_valor_fecha > FECHA_ACTUAL ENTONCES
+                                ACTUALIZAR_CAMPO_EVENTO(id_buscado, "fecha", nuevo_valor_fecha)
+                                ESCRIBIR 'Evento modificado exitosamente.'
+                            SINO
+                                ESCRIBIR 'Error: La fecha debe ser posterior a hoy.'
+                            FIN_SI
+                        CASO "U":
+                             ESCRIBIR 'Ingrese la nueva ubicación:'
+                             LEER nuevo_valor_cadena
+                             ACTUALIZAR_CAMPO_EVENTO(id_buscado, "ubicacion", nuevo_valor_cadena)
+                             ESCRIBIR 'Evento modificado exitosamente.'
+                        CASO "C":
+                            ESCRIBIR 'Ingrese la nueva capacidad:'
+                            LEER nuevo_valor_entero
+                            SI nuevo_valor_entero > 0 ENTONCES
+                                ACTUALIZAR_CAMPO_EVENTO(id_buscado, "capacidad", nuevo_valor_entero)
+                                ESCRIBIR 'Evento modificado exitosamente.'
+                            SINO
+                                ESCRIBIR 'Error: La capacidad debe ser mayor a cero.'
+                            FIN_SI
+                        DE_LO_CONTRARIO:
+                            ESCRIBIR 'Opción de modificación no válida.'
+                    FIN_SEGUN
+                FIN_SI
+
             CASO "E":
                 // Eliminar evento
                 ESCRIBIR 'Ingrese ID del evento a eliminar:'
                 LEER id_evento
                 SI EXISTE_EVENTO(id_evento) ENTONCES
                     SI TIENE_INSCRIPCIONES(id_evento) ENTONCES
-                        ESCRIBIR 'No se puede eliminar. Hay inscripciones asociadas'
+                        ESCRIBIR 'No se puede eliminar. Hay inscripciones asociadas.'
                     SINO
-                        ESCRIBIR '¿Está seguro? (S/N):'
+                        ESCRIBIR '¿Está seguro que desea eliminar este evento? (S/N):'
                         LEER confirmacion
-                        SI confirmacion = "S" ENTONCES
+                        SI confirmacion = "S" O confirmacion = "s" ENTONCES
                             ELIMINAR_EVENTO(id_evento)
-                            ESCRIBIR 'Evento eliminado exitosamente'
+                            ESCRIBIR 'Evento eliminado exitosamente.'
                         SINO
-                            ESCRIBIR 'Operación cancelada'
+                            ESCRIBIR 'Operación cancelada.'
                         FIN_SI
                     FIN_SI
                 SINO
-                    ESCRIBIR 'Evento no encontrado'
+                    ESCRIBIR 'Evento no encontrado.'
                 FIN_SI
                 
             CASO "S":
