@@ -11,12 +11,12 @@
 
 1. Mostrar menú principal con opciones disponibles.
 2. Leer y validar la opción seleccionada por el usuario.
-3. Ejecutar la funcionalidad correspondiente según la opción:
-   3.1. Registrar nueva inscripción: Verificar evento, participante y cupos disponibles.
-   3.2. Consultar inscripciones: Buscar y mostrar información según criterios.
-   3.3. Modificar inscripción: Actualizar datos de inscripción existente.
-   3.4. Cancelar inscripción: Procesar cancelación y liberar cupo.
-   3.5. Gestionar lista de espera: Administrar participantes en espera.
+3. Ejecutar la funcionalidad correspondiente según la opción: 
+   3.1. Registrar nueva inscripción: Verificar evento, participante y cupos disponibles.  
+   3.2. Consultar inscripciones: Buscar y mostrar información según criterios.  
+   3.3. Modificar inscripción: Actualizar datos de inscripción existente.  
+   3.4. Cancelar inscripción: Procesar cancelación y liberar cupo.  
+   3.5. Gestionar lista de espera: Administrar participantes en espera.  
 4. Repetir el proceso hasta que el usuario decida salir.
 5. Finalizar el módulo y retornar al menú principal.
 
