@@ -173,6 +173,23 @@ Evento {
 }
 ```
 
+**Actividad**
+Representa una sesión, taller o conferencia dentro de un evento principal.
+```
+Actividad {
+    - id: entero
+    - id_evento: entero         
+    - nombre: cadena
+    - descripcion: cadena
+    - hora_inicio: hora
+    - hora_fin: hora
+    - ubicacion_especifica: cadena
+    - capacidad: entero
+
+}
+```
+
+
 **Participante**
 ```
 Participante {
@@ -183,7 +200,11 @@ Participante {
     - telefono: cadena
     - documento: cadena
     - fecha_nacimiento: fecha
+    - genero: cadena            
+    - pais: cadena              
+    - profesion: cadena 
 }
+
 ```
 
 **Inscripción**
@@ -207,6 +228,7 @@ Pago {
     - fecha_pago: fecha
     - metodo_pago: cadena
     - estado: cadena (confirmado/pendiente/rechazado)
+    - concepto: cadena 
 }
 ```
 
@@ -217,6 +239,7 @@ Asistencia {
     - id_inscripcion: entero
     - fecha_hora_llegada: fecha_hora
     - presente: booleano
+    - id_actividad: entero
 }
 ```
 
