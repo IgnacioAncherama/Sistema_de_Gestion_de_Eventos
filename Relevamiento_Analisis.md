@@ -155,6 +155,13 @@ El sistema seguirá una arquitectura modular con 5 módulos principales:
 
 ### 3.2 Diseño de Datos
 
+#### Diagrama logico relacional (DLR)
+
+![DLR del Sistema de Gestión de Eventos](./media/der.png)
+
+Figura 1: Diagrama logico relacional del Sistema de Gestión de Eventos mostrando las tablas principales y sus relaciones.
+
+
 #### Estructura de Datos Principal
 
 **Evento**
@@ -259,6 +266,14 @@ Asistencia {
 
 ### 3.4 Diseño de Flujo de Trabajo
 
+
+#### Diagrama de Flujo de Datos (DFD)
+
+![DFD del Sistema de Gestión de Eventos](./media/mermaid-diagram-2025-10-10-170042.png)
+
+Figura 2: Diagrama de Flujo de Datos del Sistema de Gestión de Eventos mostrando los procesos principales y el flujo de información entre ellos.
+
+#### Flujo de Trabajo General
 ```
 1. CREACIÓN DE EVENTO
    ↓
