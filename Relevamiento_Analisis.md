@@ -142,18 +142,25 @@ El sistema seguirá una arquitectura modular con 5 módulos principales:
 │                                             │
 │  ┌─────────────┐  ┌─────────────────────┐   │
 │  │ADMINISTRACIÓN│  │    REALIZACIÓN     │   │
-│  │  DE PAGOS   │  │    DEL EVENTO      │   │
-│  │  Y COBROS   │  │                    │   │
+│  │  DE PAGOS   │  │    DEL EVENTO       │   │
+│  │  Y COBROS   │  │                     │   │
 │  └─────────────┘  └─────────────────────┘   │
 │                                             │
-│  ┌─────────────────────────────────────────┐ │
+│  ┌────────────────────────────────────────┐ │
 │  │        GENERACIÓN DE INFORMES          │ │
 │  │         Y ESTADÍSTICAS                 │ │
-│  └─────────────────────────────────────────┘ │
+│  └────────────────────────────────────────┘ │
 └─────────────────────────────────────────────┘
 ```
 
 ### 3.2 Diseño de Datos
+
+#### Diagrama logico relacional (DLR)
+
+![DLR del Sistema de Gestión de Eventos](./media/der.png)
+
+Figura 1: Diagrama logico relacional del Sistema de Gestión de Eventos mostrando las tablas principales y sus relaciones.
+
 
 #### Estructura de Datos Principal
 
@@ -259,6 +266,14 @@ Asistencia {
 
 ### 3.4 Diseño de Flujo de Trabajo
 
+
+#### Diagrama de Flujo de Datos (DFD)
+
+![DFD del Sistema de Gestión de Eventos](./media/dfd.png)
+
+Figura 2: Diagrama de Flujo de Datos del Sistema de Gestión de Eventos mostrando los procesos principales y el flujo de información entre ellos.
+
+#### Flujo de Trabajo General
 ```
 1. CREACIÓN DE EVENTO
    ↓
