@@ -288,6 +288,12 @@ Figura 2: Diagrama de Flujo de Datos del Sistema de Gestión de Eventos mostrand
 6. GENERACIÓN DE INFORMES
 ```
 
+#### Diagrama de Transición de Estados
+
+![Diagrama de Transición de Estados](./media/dte.png)
+
+figura 3: Diagrama de Transición de Estados mostrando los diferentes estados de eventos, inscripciones y pagos, junto con las transiciones permitidas entre ellos.
+
 ### 3.5 Validaciones y Reglas de Negocio
 
 #### Reglas Principales:
