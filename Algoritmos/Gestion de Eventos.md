@@ -2,11 +2,11 @@
 
 ## Algoritmo
 
-Mostrar menú principal de la gestion de eventos.
-Solicitar al cliente que elija una opción.
-Mostrar la interfaz correspondiente a la elección del cliente.
-Leer la entrada o entradas del usuario.
-Mostrar salida correspondiente a las entradas.
+1. Mostrar menú principal de la gestion de eventos.
+2. Solicitar al cliente que elija una opción.
+3. Mostrar la interfaz correspondiente a la elección del cliente.
+4. Leer la entrada o entradas del usuario.
+5. Mostrar salida correspondiente a las entradas.
 
 ## Nivel de Refinamiento 1
 ````
