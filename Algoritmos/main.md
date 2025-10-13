@@ -44,8 +44,8 @@
 
 ## Pseudocodigo
 
-// --- Programa Principal (MAIN) ---
 
+```python
 Programa Principal_SGE
 INICIO
     opcion_usuario = ""
