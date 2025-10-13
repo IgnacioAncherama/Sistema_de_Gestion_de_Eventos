@@ -1,11 +1,12 @@
 # Algoritmo de Sistemas de Gestion de Eventos
 
 ## Algoritmo
-    Mostrar menú principal de la gestion de eventos.
-    Solicitar al cliente que elija una opción.
-    Mostrar la interfaz correspondiente a la elección del cliente.
-    Leer la entrada o entradas del usuario.
-    Mostrar salida correspondiente a las entradas.
+
+Mostrar menú principal de la gestion de eventos.
+Solicitar al cliente que elija una opción.
+Mostrar la interfaz correspondiente a la elección del cliente.
+Leer la entrada o entradas del usuario.
+Mostrar salida correspondiente a las entradas.
 
 ## Nivel de Refinamiento 1
 ````
