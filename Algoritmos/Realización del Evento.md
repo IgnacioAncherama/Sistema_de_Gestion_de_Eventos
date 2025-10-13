@@ -12,6 +12,7 @@
 ----
 ## Nivel de Refinamiento 2
 
+### 1. Menu Realizacion del Evento
 ```
 1.1. Hacer lo siguiente mientras la opción del usuario no sea "S" (Salir):
     1.2. Mostrar en pantalla: '--- MENÚ REALIZACIÓN DEL EVENTO ---'
@@ -39,8 +40,6 @@
             1.10.7.1 Mostrar mensaje: 'Opción no válida. Intente nuevamente.'
 1.11. Fin del bucle.
 ```
-
-## Algoritmo
 
 ### 2. INICIAR CONTROL DE ASISTENCIA
 ```
@@ -161,6 +160,7 @@
 
 ----
 ## Pseudocodigo
+## Algoritmo
 
 ```
 ALGORITMO RealizacionEvento
