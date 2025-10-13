@@ -174,7 +174,8 @@ INICIO
 
     datos_asistencia <- OBTENER_DATOS_ASISTENCIA(id_evento) // Retorna {registrados, asistentes, tasa}
     Mostrar_Datos_Asistencia(datos_asistencia)
-    grafico <- GENERAR_GRAFICO_ASISTENCIA(datos_asistencia)
+	tipo_grafico <- Obtener_Tipo_Grafico() 
+    grafico <- GENERAR_GRAFICO_ASISTENCIA(datos_asistencia,tipo_grafico)
     Mostrar_Grafico(grafico)
     
     informe_completo <- EMPAQUETAR_DATOS_Y_GRAFICO(datos_asistencia, grafico)
@@ -187,8 +188,9 @@ INICIO
     SI NOT Validar_Evento_Para_Informe(id_evento) ENTONCES RETORNAR
 
     datos_demograficos <- OBTENER_DATOS_DEMOGRAFICOS(id_evento) // Retorna {genero, edad, pais...}
+	tipo_grafico <- Obtener_Tipo_Grafico() 
     Mostrar_Datos_Demograficos(datos_demograficos)
-    graficos <- GENERAR_GRAFICOS_DEMOGRAFICOS(datos_demograficos)
+    graficos <- GENERAR_GRAFICOS_DEMOGRAFICOS(datos_demograficos,tipo_grafico)
     Mostrar_Graficos(graficos)
 
     informe_completo <- EMPAQUETAR_DATOS_Y_GRAFICO(datos_demograficos, graficos)
@@ -201,8 +203,9 @@ INICIO
     SI NOT Validar_Evento_Para_Informe(id_evento) ENTONCES RETORNAR
 
     datos_interes <- OBTENER_DATOS_INTERES_ACTIVIDADES(id_evento) // Retorna ranking de actividades
+	tipo_grafico <- Obtener_Tipo_Grafico() 
     Mostrar_Ranking_Actividades(datos_interes)
-    grafico <- GENERAR_GRAFICO_RANKING(datos_interes)
+    grafico <- GENERAR_GRAFICO_RANKING(datos_interes,tipo_grafico)
     Mostrar_Grafico(grafico)
     
     informe_completo <- EMPAQUETAR_DATOS_Y_GRAFICO(datos_interes, grafico)
@@ -225,8 +228,9 @@ INICIO
     SI NOT Validar_Evento_Para_Informe(id_evento) ENTONCES RETORNAR
 
     datos_financieros <- OBTENER_DATOS_FINANCIEROS(id_evento) // Retorna desglose y total de ingresos
+	tipo_grafico <- Obtener_Tipo_Grafico() 
     Mostrar_Datos_Financieros(datos_financieros)
-    grafico <- GENERAR_GRAFICO_INGRESOS(datos_financieros)
+    grafico <- GENERAR_GRAFICO_INGRESOS(datos_financieros,tipo_grafico)
     Mostrar_Grafico(grafico)
 
     informe_completo <- EMPAQUETAR_DATOS_Y_GRAFICO(datos_financieros, grafico)
@@ -256,7 +260,16 @@ INICIO
 FIN Funcion
 
 // --- Funciones de Utilidad ---
-
+Funcion Obtener_Tipo_Grafico(): cadena
+INICIO
+    ESCRIBIR "Seleccione el tipo de visualización "
+    ESCRIBIR "(1: Gráfico de Barras / 2: Gráfico de torta / 3: Grafico barras horizonales):"
+    LEER opcion
+    SI opcion = 1 ENTONCES RETORNAR "Barras"
+    SI opcion = 2 ENTONCES RETORNAR "Torta"
+	SI opcion = 2 ENTONCES RETORNAR "Barras horizontales"
+    RETORNAR "Ninguno"
+FIN Funcion
 
 Funcion Validar_Evento_Para_Informe(id_evento) : booleano
 INICIO
