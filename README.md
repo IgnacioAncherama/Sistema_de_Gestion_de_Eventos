@@ -1,4 +1,4 @@
-# Event Manager (Equipo **N5**)
+# Event Manager (Equipo **5**)
 
 ## Asignaciones
 - Gestión de Eventos (Ignacio Ancherama)
