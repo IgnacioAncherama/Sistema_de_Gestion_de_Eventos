@@ -26,9 +26,8 @@ Proporcionar a los organizadores del evento herramientas para analizar el rendim
 2.  Solicitar al usuario que elija una opción.
 3.  Leer la entrada o entradas del usuario (ej. ID del evento).
 4.  Procesar datos y generar el informe correspondiente.
-5.  Mostrar el informe en pantalla (datos y gráficos).
-6.  Preguntar si se desea exportar el informe.
-7.  Ejecutar la exportación si se solicita.
+5.  Mostrar el informe en pantalla (datos y gráficos), y ofrecer la opción de exportarlo.
+6.  Volver al menú principal 
 
 ### Nivel de Refinamiento 1
 
@@ -66,7 +65,7 @@ Proporcionar a los organizadores del evento herramientas para analizar el rendim
 		1.11. Fin del bucle.
 
 #### **2. GENERAR INFORME DE ASISTENCIA**
-		 2.1. Mostrar en pantalla: 'Ingrese ID del evento:'
+		 2.1. Permitir elegir el evento 
 		 2.2. Leer y guardar en 'id\_evento'.
 		 2.3. Verificar si el evento existe y ha finalizado.
 		 2.4. Si no es válido:
@@ -77,12 +76,12 @@ Proporcionar a los organizadores del evento herramientas para analizar el rendim
 			 2.5.2. Obtener `total_asistentes` (check-ins) de la base de datos para `id_evento`.
 		     2.5.3. Calcular `tasa_asistencia = (total_asistentes / total_registrados) * 100`.
 		     2.5.4. Mostrar datos en pantalla: 'Total Registrados: \[valor]', 'Total Asistentes: \[valor]', 'Tasa de Asistencia: \[valor]%'.
-		     2.5.5. Generar y mostrar gráfico de barras comparando Registrados vs. Asistentes.
+		     2.5.5. Consultar tipo de grafico, generar y mostrar gráfico seleccionado.
 		     2.5.6. Guardar los datos y el gráfico en una variable `datos_informe`.
 		     2.5.7. Ejecutar subproceso "Exportar Informe" pasando `datos_informe`.
 #### **3. GENERAR INFORME DEMOGRÁFICO**
 
-		 3.1. Mostrar en pantalla: 'Ingrese ID del evento:'
+		 3.1. Permitir elegir el evento 
 		 3.2. Leer y guardar en 'id\_evento'.
 		 3.3. Verificar si el evento es válido. Si no, terminar.
 		 3.4. Obtener la lista de asistentes (`lista_asistentes`) del evento.
@@ -90,13 +89,13 @@ Proporcionar a los organizadores del evento herramientas para analizar el rendim
 		     3.5.1. Agrupar y contar los asistentes de `lista_asistentes`.
 		     3.5.2. Calcular porcentajes.
 		     3.5.3. Mostrar en pantalla los resultados.
-		     3.5.4. Generar y mostrar gráficos  para cada categoría.
+		     3.5.4. Consultar tipo de grafico, generar y mostrar gráficos  para cada categoría.
 		 3.6. Guardar los datos y gráficos en `datos_informe`.
 		 3.7. Ejecutar subproceso "Exportar Informe" pasando `datos_informe`.
 
 #### **4. GENERAR INFORME DE INTERÉS POR ACTIVIDAD**
 		
-		 4.1. Mostrar en pantalla: 'Ingrese ID del evento:'
+		 4.1. Permitir elegir el evento
 		 4.2. Leer y guardar en 'id\_evento'.
 		 4.3. Verificar si el evento es válido. Si no, terminar.
 		 4.4. Obtener la lista de actividades (`lista_actividades`) del evento.
@@ -105,20 +104,20 @@ Proporcionar a los organizadores del evento herramientas para analizar el rendim
 		     4.5.2. Guardar el resultado.
 		 4.6. Ordenar las actividades de mayor a menor asistencia.
 		 4.7. Mostrar en pantalla la lista ordenada: '\[Nombre Actividad]: \[Nº Asistentes]'.
-		 4.8. Generar y mostrar gráfico de barras horizontal con el ranking de actividades.
+		 4.8. Consultar tipo de grafico, generar y mostrar gráfico seleccionado horizontal con el ranking de actividades.
 		 4.9. Guardar datos y gráfico en `datos_informe`.
 		 4.10. Ejecutar subproceso "Exportar Informe" pasando `datos_informe`.
 
 #### **5. GENERAR INFORME FINANCIERO**
 		
-		 5.1. Mostrar en pantalla: 'Ingrese ID del evento:'
+		 5.1. Permitir elegir el evento
 		 5.2. Leer y guardar en 'id\_evento'.
 		 5.3. Verificar si el evento es válido. Si no, terminar.
 		 5.4. Obtener todos los registros de pago (`lista_pagos`) asociados a `id_evento`.
 		 5.5. Agrupar `lista_pagos` por categoría (venta de entradas, patrocinios, merchandising, etc.).
 		 5.6. Calcular el total de ingresos por cada categoría y el total general.
 		 5.7. Mostrar en pantalla el desglose: '\[Categoría]: $\[monto]' y 'Ingresos Totales: $\[monto_total]'.
-		 5.8. Generar y mostrar gráfico con la distribución de ingresos por categoría.
+		 5.8. Consultar tipo de grafico, generar y mostrar gráfico seleccionado con la distribución de ingresos por categoría.
 		 5.9. Guardar datos y gráfico en `datos_informe`.
 		 5.10. Ejecutar subproceso "Exportar Informe" pasando `datos_informe`.
 		
@@ -170,7 +169,7 @@ FIN Proceso
 
 Funcion Generar_Informe_Asistencia()
 INICIO
-    id_evento <- Solicitar_ID_Evento()
+    id_evento <- Solicitar_Evento()
     SI NOT Validar_Evento_Para_Informe(id_evento) ENTONCES RETORNAR
 
     datos_asistencia <- OBTENER_DATOS_ASISTENCIA(id_evento) // Retorna {registrados, asistentes, tasa}
@@ -184,7 +183,7 @@ FIN Funcion
 
 Funcion Generar_Informe_Demografico()
 INICIO
-    id_evento <- Solicitar_ID_Evento()
+    id_evento <- Solicitar_Evento()
     SI NOT Validar_Evento_Para_Informe(id_evento) ENTONCES RETORNAR
 
     datos_demograficos <- OBTENER_DATOS_DEMOGRAFICOS(id_evento) // Retorna {genero, edad, pais...}
@@ -198,7 +197,7 @@ FIN Funcion
 
 Funcion Generar_Informe_Interes()
 INICIO
-    id_evento <- Solicitar_ID_Evento()
+    id_evento <- Solicitar_Evento()
     SI NOT Validar_Evento_Para_Informe(id_evento) ENTONCES RETORNAR
 
     datos_interes <- OBTENER_DATOS_INTERES_ACTIVIDADES(id_evento) // Retorna ranking de actividades
@@ -212,7 +211,7 @@ FIN Funcion
 
 Funcion Generar_Informe_Fidelizacion()
 INICIO
-    // Este informe no necesita un ID de evento, analiza el histórico
+    
     datos_fidelizacion <- OBTENER_DATOS_FIDELIZACION() // Retorna {total_asistentes_unicos, recurrentes, tasa_retorno}
     Mostrar_Datos_Fidelizacion(datos_fidelizacion)
     
@@ -222,7 +221,7 @@ FIN Funcion
 
 Funcion Generar_Informe_Financiero()
 INICIO
-    id_evento <- Solicitar_ID_Evento()
+    id_evento <- Solicitar_Evento()
     SI NOT Validar_Evento_Para_Informe(id_evento) ENTONCES RETORNAR
 
     datos_financieros <- OBTENER_DATOS_FINANCIEROS(id_evento) // Retorna desglose y total de ingresos
@@ -273,10 +272,44 @@ INICIO
     RETORNAR VERDADERO
 FIN Funcion
 
-Funcion Solicitar_ID_Evento() : entero
-    ESCRIBIR "Ingrese el ID del evento:"
-    LEER id
-    RETORNAR id
+Funcion Solicitar_Evento() : entero
+INICIO
+    ESCRIBIR "Ingrese el nombre o parte del nombre del evento:"
+    LEER criterio_busqueda
+
+    // 1. Ejecutar búsqueda en la base de datos
+    // La búsqueda debe filtrar por eventos que contengan 'criterio_busqueda' en su nombre  y que ya hayan 'finalizado' 
+    lista_coincidentes <- BUSCAR_EVENTOS_FINALIZADOS(criterio_busqueda) 
+
+    SI TAMAÑO(lista_coincidentes) = 0 ENTONCES
+        ESCRIBIR "No se encontraron eventos finalizados con ese nombre."
+        RETORNAR 0 // Retorna 0 o nulo para indicar fallo
+    FIN SI
+
+    // 2. Mostrar la lista de opciones al usuario
+    ESCRIBIR "--- Eventos Coincidentes ---"
+    contador <- 1
+    PARA CADA evento EN lista_coincidentes HACER
+        ESCRIBIR contador, ". ", evento.nombre, " (ID: ", evento.id, ")"
+        contador <- contador + 1
+    FIN PARA
+    
+    // 3. Solicitar la selección
+    ESCRIBIR "Ingrese el número de la opción deseada (o 0 para cancelar):"
+    LEER opcion_seleccionada
+
+    // 4. Validar y obtener el ID real
+    SI opcion_seleccionada = 0 O opcion_seleccionada < 1 O opcion_seleccionada >= contador ENTONCES
+        ESCRIBIR "Selección cancelada o no válida."
+        RETORNAR 0 // Retorna 0 si la selección es inválida o cancelada
+    FIN SI
+    
+    // Obtener el ID del evento que corresponde a la opción seleccionada
+    indice <- opcion_seleccionada - 1 
+    id_evento_seleccionado <- lista_coincidentes[indice].id
+    
+    // 5. Retornar el ID real
+    RETORNAR id_evento_seleccionado
 FIN Funcion
 
 Funcion Usuario_Confirma_Operacion(mensaje) : booleano
