@@ -1,13 +1,12 @@
 # Algoritmo de Sistemas de Gestion de Eventos
 
 ## Algoritmo
-````
-El sistema permite al usuario a través de un menu, realizar la gestion del evento que desee.
-Para crear un nuevo evento, ingresar C
-Consultar eventos, ingresa M
-Modificar un evento existente, ingresa X
-Eliminar un evento, ingresa E 
-````
+    Mostrar menú principal de la gestion de eventos.
+    Solicitar al cliente que elija una opción.
+    Mostrar la interfaz correspondiente a la elección del cliente.
+    Leer la entrada o entradas del usuario.
+    Mostrar salida correspondiente a las entradas.
+
 ## Nivel de Refinamiento 1
 ````
 1. Menu principal gestion de eventos.
