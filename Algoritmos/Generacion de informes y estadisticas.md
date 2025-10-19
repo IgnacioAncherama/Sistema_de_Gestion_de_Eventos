@@ -46,35 +46,38 @@
 		1.11. Fin del bucle.
 
 #### **2. GENERAR INFORME DE ASISTENCIA**
-		 2.1. Permitir elegir el evento 
-		 2.2. Leer y guardar en 'id\_evento'.
-		 2.3. Verificar si el evento existe y ha finalizado.
-		 2.4. Si no es válido:
-		     2.4.1. Mostrar mensaje de error.
-		     2.4.2. Terminar subproceso.
-		 2.5. Si es válido:
-		     2.5.1. Obtener `total_registrados` de la base de datos para `id_evento`.
-			 2.5.2. Obtener `total_asistentes` (check-ins) de la base de datos para `id_evento`.
-		     2.5.3. Calcular `tasa_asistencia = (total_asistentes / total_registrados) * 100`.
-		     2.5.4. Mostrar datos en pantalla: 'Total Registrados: \[valor]', 'Total Asistentes: \[valor]', 'Tasa de Asistencia: \[valor]%'.
-		     2.5.5. Consultar tipo de grafico, generar y mostrar gráfico seleccionado.
-		     2.5.6. Guardar los datos y el gráfico en una variable `datos_informe`.
-		     2.5.7. Ejecutar subproceso "Exportar Informe" pasando `datos_informe`.
+		 2.1. Llamar a la función Solicitar_ID_Evento() y guardar la entrada en la variable id_evento
+		 2.2. Verificar la validez del evento llamando a Validar_Evento(id_evento)
+		 2.3. Si no es válido:
+		     2.3.1. Terminar subproceso.
+		 2.4. Si es válido:
+		     2.4.1. Obtener `total_registrados` de la base de datos para `id_evento`.
+			 2.4.2. Obtener `total_asistentes` (check-ins) de la base de datos para `id_evento`.
+		     2.4.3. Calcular `tasa_asistencia = (total_asistentes / total_registrados) * 100`.
+		     2.4.4. Mostrar datos en pantalla: 'Total Registrados: \[valor]', 'Total Asistentes: \[valor]', 'Tasa de Asistencia: \[valor]%'.
+		     2.4.5. Consultar tipo de grafico llamando al modulo Obtener_Tipo_Grafico() y guardar la entrada en tipo_grafico
+			 2.4.6  Generar_Grafico(tipo_grafico,total_registrados,total_asistentes,tasa_asistencia) y mostrar gráfico.
+		     2.4.7. Guardar los datos y el gráfico en una variable `datos_informe`.
+		     2.4.8. Ejecutar subproceso "Exportar Informe" pasando `datos_informe`.
 #### **3. GENERAR INFORME DEMOGRÁFICO**
 
-		 3.1. Permitir elegir el evento 
-		 3.2. Leer y guardar en 'id\_evento'.
-		 3.3. Verificar si el evento es válido. Si no, terminar.
-		 3.4. Obtener la lista de asistentes (`lista_asistentes`) del evento.
-		 3.5. Para cada categoría (género, rango de edad, país, profesión):
-		     3.5.1. Agrupar y contar los asistentes de `lista_asistentes`.
-		     3.5.2. Calcular porcentajes.
-		     3.5.3. Mostrar en pantalla los resultados.
-		     3.5.4. Consultar tipo de grafico, generar y mostrar gráficos  para cada categoría.
-		 3.6. Guardar los datos y gráficos en `datos_informe`.
-		 3.7. Ejecutar subproceso "Exportar Informe" pasando `datos_informe`.
+		 3.1. Llamar a la función Solicitar_ID_Evento() y guardar la entrada en la variable id_evento
+		 3.2. Verificar la validez del evento llamando a Validar_Evento(id_evento)
+		 3.3. Si no es válido:
+		     3.3.1. Terminar subproceso.
+		Si la función devuelve VERDADERO:
+   			 4.1. Obtener la lista de asistentes (lista_asistentes) del evento de la base de datos.
+    		 4.2. Inicializar la variable datos_informe_demografico para almacenar todos los resultados y gráficos.
+			 4.3. Para cada categoría (género, rango de edad, país, profesión):
+        			4.3.1. Agrupar y contar los asistentes de lista_asistentes por cada sub-atributo de la categoría (ej: "Masculino", "Femenino"). Guardar en datos_conte
+					4.3.2. Calcular el porcentaje de cada sub-atributo con respecto al total de lista_asistentes. Guardar en datos_porcentaje.
+					4.3.3. Mostrar en pantalla los resultados de la categoría (usando datos_porcentaje).
+					4.3.4. Consultar tipo de gráfico llamando al módulo Obtener_Tipo_Grafico() y guardar la entrada en tipo_grafico.
+					4.3.5. Generar el gráfico demográfico específico gráfico <- Generar_Grafico(tipo_grafico, datos_porcentaje, categoría)
+					4.3.6. Guardar la categoría, datos_porcentaje y gráfico en la variable datos_informe_demografico.
+			4.4. Ejecutar subproceso "Exportar Informe" pasando datos_informe_demografico.
 
-#### **4. GENERAR INFORME DE INTERÉS POR ACTIVIDAD**
+#### **4.GENERAR INFORME DE INTERÉS POR ACTIVIDAD**
 		
 		 4.1. Permitir elegir el evento
 		 4.2. Leer y guardar en 'id\_evento'.
