@@ -1,4 +1,5 @@
-# Algoritmo de Sistemas de Gestion de Eventos  
+# Algoritmo de Administración de Pagos y Cobros  
+
   
 1. Se muestra un menu con las distintas opciones del sistema de pagos y cobros.  
 2. Se elige una de las opciones.  
@@ -49,4 +50,3 @@ Se realiza la lógica de la opción elegida.
 Se muestra la salida de la opción elegida.  
 4.1. Finalizar el bucle cuando la opción sea "S".  
 
-    

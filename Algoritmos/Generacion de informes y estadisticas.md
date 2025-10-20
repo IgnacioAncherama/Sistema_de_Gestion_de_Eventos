@@ -127,6 +127,8 @@
 
 ### Pseudocódigo
 
+**NOTA**: Este módulo utiliza funciones del archivo `Funciones_Comunes.md`
+
 #### Programa principal
 
 ```python
@@ -152,9 +154,10 @@ FIN Proceso
 // --- Procesos de Generación de informes---
 
 Funcion Generar_Informe_Asistencia()
+// Utiliza: Validar_Evento_Finalizado
 INICIO
     id_evento <- Solicitar_Evento()
-    SI NOT Validar_Evento_Para_Informe(id_evento) ENTONCES RETORNAR
+    SI NOT Validar_Evento_Finalizado(id_evento) ENTONCES RETORNAR
 
     datos_asistencia <- OBTENER_DATOS_ASISTENCIA(id_evento) // Retorna {registrados, asistentes, tasa}
     Mostrar_Datos_Asistencia(datos_asistencia)
@@ -167,9 +170,10 @@ INICIO
 FIN Funcion
 
 Funcion Generar_Informe_Demografico()
+// Utiliza: Validar_Evento_Finalizado
 INICIO
     id_evento <- Solicitar_Evento()
-    SI NOT Validar_Evento_Para_Informe(id_evento) ENTONCES RETORNAR
+    SI NOT Validar_Evento_Finalizado(id_evento) ENTONCES RETORNAR
 
     datos_demograficos <- OBTENER_DATOS_DEMOGRAFICOS(id_evento) // Retorna {genero, edad, pais...}
 	tipo_grafico <- Obtener_Tipo_Grafico() 
@@ -182,9 +186,10 @@ INICIO
 FIN Funcion
 
 Funcion Generar_Informe_Interes()
+// Utiliza: Validar_Evento_Finalizado
 INICIO
     id_evento <- Solicitar_Evento()
-    SI NOT Validar_Evento_Para_Informe(id_evento) ENTONCES RETORNAR
+    SI NOT Validar_Evento_Finalizado(id_evento) ENTONCES RETORNAR
 
     datos_interes <- OBTENER_DATOS_INTERES_ACTIVIDADES(id_evento) // Retorna ranking de actividades
 	tipo_grafico <- Obtener_Tipo_Grafico() 
@@ -207,9 +212,10 @@ INICIO
 FIN Funcion
 
 Funcion Generar_Informe_Financiero()
+// Utiliza: Validar_Evento_Finalizado
 INICIO
     id_evento <- Solicitar_Evento()
-    SI NOT Validar_Evento_Para_Informe(id_evento) ENTONCES RETORNAR
+    SI NOT Validar_Evento_Finalizado(id_evento) ENTONCES RETORNAR
 
     datos_financieros <- OBTENER_DATOS_FINANCIEROS(id_evento) // Retorna desglose y total de ingresos
 	tipo_grafico <- Obtener_Tipo_Grafico() 
@@ -225,6 +231,7 @@ FIN Funcion
 
 
 Funcion Exportar_Informe(datos, nombre_base_informe)
+// Utiliza: Usuario_Confirma_Operacion, Mostrar_Exito, Mostrar_Error
 INICIO
     SI Usuario_Confirma_Operacion("¿Desea exportar este informe?") ENTONCES
         ESCRIBIR "Seleccione formato de exportación (PDF / CSV):"
@@ -255,19 +262,7 @@ INICIO
     RETORNAR "Ninguno"
 FIN Funcion
 
-Funcion Validar_Evento_Para_Informe(id_evento) : booleano
-INICIO
-    SI NO EXISTE_EVENTO(id_evento) ENTONCES
-        Mostrar_Error("Evento no encontrado.")
-        RETORNAR FALSO
-    FIN SI
-    info_evento <- OBTENER_INFO_EVENTO(id_evento)
-    SI info_evento.fecha > FECHA_ACTUAL ENTONCES
-        Mostrar_Error("El informe solo puede generarse para eventos que ya han finalizado.")
-        RETORNAR FALSO
-    FIN SI
-    RETORNAR VERDADERO
-FIN Funcion
+// NOTA: Validar_Evento_Finalizado ahora está en Funciones_Comunes.md
 
 Funcion Solicitar_Evento() : entero
 INICIO
@@ -309,8 +304,8 @@ INICIO
     RETORNAR id_evento_seleccionado
 FIN Funcion
 
-Funcion Usuario_Confirma_Operacion(mensaje) : booleano
-    ESCRIBIR mensaje + " (S/N):"
-    LEER respuesta
-    RETORNAR (MAYUSCULA(respuesta) = "S")
-FIN Funcion
+// NOTA: Las siguientes funciones ahora están en Funciones_Comunes.md:
+// - Usuario_Confirma_Operacion(mensaje)
+// - Mostrar_Error(mensaje)
+// - Mostrar_Exito(mensaje)
+// - Mostrar_Mensaje(mensaje)

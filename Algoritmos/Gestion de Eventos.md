@@ -182,6 +182,8 @@
 ----
 ## Pseudocodigo
 
+**NOTA**: Este módulo utiliza funciones del archivo `Funciones_Comunes.md`
+
 ````
 VARIABLES:
     // Variables generales del menú
@@ -258,6 +260,7 @@ INICIO
                 
             CASO "M":
                 // Consultar eventos
+                // Utiliza: Solicitar_ID_Evento, Mostrar_Error
                 ESCRIBIR '--- CONSULTA DE EVENTOS ---'
                 ESCRIBIR 'Para ver todos los eventos ingresar > T'
                 ESCRIBIR 'Para buscar por ID ingresar > I'
@@ -268,8 +271,7 @@ INICIO
                     CASO "T":
                         MOSTRAR_TODOS_LOS_EVENTOS()
                     CASO "I":
-                        ESCRIBIR 'Ingrese ID del evento:'
-                        LEER id_evento
+                        id_evento <- Solicitar_ID_Evento()
                         BUSCAR_EVENTO_POR_ID(id_evento)
                     CASO "N":
                         ESCRIBIR 'Ingrese nombre del evento:'
@@ -280,20 +282,22 @@ INICIO
                         LEER fecha_evento
                         BUSCAR_EVENTOS_POR_FECHA(fecha_evento)
                     DE_LO_CONTRARIO:
-                        ESCRIBIR 'Opción no válida'
+                        Mostrar_Error('Opción no válida')
                 FIN_SEGUN
                 
             CASO "X":
                 // Modificar evento
+                // Utiliza: Solicitar_ID_Evento, Existe_Evento, Obtener_Info_Evento, Mostrar_Error
                 ESCRIBIR '--- MODIFICAR EVENTO ---'
-                ESCRIBIR 'Ingrese ID del evento a modificar:'
-                LEER id_buscado
+                id_buscado <- Solicitar_ID_Evento()
                 
-                evento_encontrado <- BUSCAR_EVENTO_POR_ID(id_buscado)
+                SI NOT Existe_Evento(id_buscado) ENTONCES
+                    Mostrar_Error('Evento no encontrado.')
+                    CONTINUAR
+                FIN SI
                 
-                SI evento_encontrado ES NULO ENTONCES
-                    ESCRIBIR 'Evento no encontrado.'
-                SINO
+                evento_encontrado <- Obtener_Info_Evento(id_buscado)
+                SI VERDADERO ENTONCES
                     ESCRIBIR 'Información actual del evento:'
                     // Mostrar aquí los datos de evento_encontrado
                     ESCRIBIR 'ID: ', evento_encontrado.id
@@ -315,57 +319,56 @@ INICIO
                             LEER nuevo_valor_cadena
                             SI nuevo_valor_cadena <> "" ENTONCES
                                 ACTUALIZAR_CAMPO_EVENTO(id_buscado, "nombre", nuevo_valor_cadena)
-                                ESCRIBIR 'Evento modificado exitosamente.'
+                                Mostrar_Exito('Evento modificado exitosamente.')
                             SINO
-                                ESCRIBIR 'Error: El nombre no puede estar vacío.'
+                                Mostrar_Error('El nombre no puede estar vacío.')
                             FIN_SI
                         CASO "F":
                             ESCRIBIR 'Ingrese la nueva fecha (DD/MM/AAAA):'
                             LEER nuevo_valor_fecha
                             SI nuevo_valor_fecha > FECHA_ACTUAL ENTONCES
                                 ACTUALIZAR_CAMPO_EVENTO(id_buscado, "fecha", nuevo_valor_fecha)
-                                ESCRIBIR 'Evento modificado exitosamente.'
+                                Mostrar_Exito('Evento modificado exitosamente.')
                             SINO
-                                ESCRIBIR 'Error: La fecha debe ser posterior a hoy.'
+                                Mostrar_Error('La fecha debe ser posterior a hoy.')
                             FIN_SI
                         CASO "U":
                              ESCRIBIR 'Ingrese la nueva ubicación:'
                              LEER nuevo_valor_cadena
                              ACTUALIZAR_CAMPO_EVENTO(id_buscado, "ubicacion", nuevo_valor_cadena)
-                             ESCRIBIR 'Evento modificado exitosamente.'
+                             Mostrar_Exito('Evento modificado exitosamente.')
                         CASO "C":
                             ESCRIBIR 'Ingrese la nueva capacidad:'
                             LEER nuevo_valor_entero
                             SI nuevo_valor_entero > 0 ENTONCES
                                 ACTUALIZAR_CAMPO_EVENTO(id_buscado, "capacidad", nuevo_valor_entero)
-                                ESCRIBIR 'Evento modificado exitosamente.'
+                                Mostrar_Exito('Evento modificado exitosamente.')
                             SINO
-                                ESCRIBIR 'Error: La capacidad debe ser mayor a cero.'
+                                Mostrar_Error('La capacidad debe ser mayor a cero.')
                             FIN_SI
                         DE_LO_CONTRARIO:
-                            ESCRIBIR 'Opción de modificación no válida.'
+                            Mostrar_Error('Opción de modificación no válida.')
                     FIN_SEGUN
                 FIN_SI
 
             CASO "E":
                 // Eliminar evento
-                ESCRIBIR 'Ingrese ID del evento a eliminar:'
-                LEER id_evento
-                SI EXISTE_EVENTO(id_evento) ENTONCES
+                // Utiliza: Solicitar_ID_Evento, Existe_Evento, Usuario_Confirma_Operacion
+                //          Mostrar_Error, Mostrar_Exito, Mostrar_Mensaje
+                id_evento <- Solicitar_ID_Evento()
+                SI Existe_Evento(id_evento) ENTONCES
                     SI TIENE_INSCRIPCIONES(id_evento) ENTONCES
-                        ESCRIBIR 'No se puede eliminar. Hay inscripciones asociadas.'
+                        Mostrar_Error('No se puede eliminar. Hay inscripciones asociadas.')
                     SINO
-                        ESCRIBIR '¿Está seguro que desea eliminar este evento? (S/N):'
-                        LEER confirmacion
-                        SI confirmacion = "S" O confirmacion = "s" ENTONCES
+                        SI Usuario_Confirma_Operacion('¿Está seguro que desea eliminar este evento?') ENTONCES
                             ELIMINAR_EVENTO(id_evento)
-                            ESCRIBIR 'Evento eliminado exitosamente.'
+                            Mostrar_Exito('Evento eliminado exitosamente.')
                         SINO
-                            ESCRIBIR 'Operación cancelada.'
+                            Mostrar_Mensaje('Operación cancelada.')
                         FIN_SI
                     FIN_SI
                 SINO
-                    ESCRIBIR 'Evento no encontrado.'
+                    Mostrar_Error('Evento no encontrado.')
                 FIN_SI
                 
             CASO "S":

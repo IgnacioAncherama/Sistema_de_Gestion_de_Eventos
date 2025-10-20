@@ -11,7 +11,7 @@
 
 1. Mostrar menú principal con opciones disponibles.
 2. Leer y validar la opción seleccionada por el usuario.
-3. Ejecutar la funcionalidad correspondiente según la opción: 
+3. Ejecutar la funcionalidad correspondiente según la opción:  
    3.1. Registrar nueva inscripción: Verificar evento, participante y cupos disponibles.  
    3.2. Consultar inscripciones: Buscar y mostrar información según criterios.  
    3.3. Modificar inscripción: Actualizar datos de inscripción existente.  
@@ -66,31 +66,31 @@
     3.1.5.3 Si evento no está activo:
         3.1.5.3.1 Mostrar mensaje: 'El evento no está disponible para inscripciones'
         3.1.5.3.2 Terminar subproceso
-3.1.6 Verificar capacidad disponible del evento
-3.1.7 Si no hay cupos disponibles:
-    2.1.7.1 Mostrar mensaje: 'Evento completo. ¿Desea agregarse a lista de espera? (S/N)'
-    3.1.7.2 Leer respuesta
-    3.1.7.3 Si respuesta = "S":
-        3.1.7.3.1 Ejecutar subproceso "Agregar a Lista de Espera"
-    3.1.7.4 Terminar subproceso
-3.1.8 Si hay cupos disponibles:
-    3.1.8.1 Mostrar en pantalla: 'Ingrese documento del participante:'
-    3.1.8.2 Leer y guardar en 'documento'
-    3.1.8.3 Verificar si el participante ya está registrado
-    3.1.8.4 Si participante no existe:
-        3.1.8.4.1 Ejecutar subproceso "Registrar Nuevo Participante"
-    3.1.8.5 Si participante existe:
-        3.1.8.5.1 Mostrar datos del participante
-        3.1.8.5.2 Verificar si ya está inscrito en este evento
-        3.1.8.5.3 Si ya está inscrito:
-            3.1.8.5.3.1 Mostrar mensaje: 'El participante ya está inscrito en este evento'
-            3.1.8.5.3.2 Terminar subproceso
-3.1.9 Generar nuevo ID de inscripción
-3.1.10 Establecer fecha_inscripcion = fecha_actual
-3.1.11 Establecer estado = 'confirmada'
-3.1.12 Establecer estado_pago = 'pendiente'
-3.1.13 Guardar inscripción en la base de datos
-3.1.14 Mostrar mensaje: 'Inscripción registrada exitosamente. ID: [ID_inscripcion]'
+3.1.6 Mostrar en pantalla: 'Ingrese documento del participante:'
+3.1.7 Leer y guardar en 'documento'
+3.1.8 Verificar si el participante ya está registrado
+3.1.9 Si participante no existe:
+    3.1.9.1 Ejecutar subproceso "Registrar Nuevo Participante"
+3.1.10 Si participante existe:
+    3.1.10.1 Mostrar datos del participante
+3.1.11 Verificar si el participante ya está inscrito en este evento
+3.1.12 Si ya está inscrito:
+    3.1.12.1 Mostrar mensaje: 'El participante ya está inscrito en este evento'
+    3.1.12.2 Terminar subproceso
+3.1.13 Verificar capacidad disponible del evento
+3.1.14 Si no hay cupos disponibles:
+    3.1.14.1 Mostrar mensaje: 'Evento completo. ¿Desea agregarse a lista de espera? (S/N)'
+    3.1.14.2 Leer respuesta
+    3.1.14.3 Si respuesta = "S":
+        3.1.14.3.1 Ejecutar subproceso "Agregar a Lista de Espera"
+    3.1.14.4 Terminar subproceso
+3.1.15 Si hay cupos disponibles:
+    3.1.15.1 Generar nuevo ID de inscripción
+    3.1.15.2 Establecer fecha_inscripcion = fecha_actual
+    3.1.15.3 Establecer estado = 'confirmada'
+    3.1.15.4 Establecer estado_pago = 'pendiente'
+    3.1.15.5 Guardar inscripción en la base de datos
+    3.1.15.6 Mostrar mensaje: 'Inscripción registrada exitosamente. ID: [ID_inscripcion]'
 ```
 
 ### 3. CONSULTAR INSCRIPCIONES
@@ -187,6 +187,8 @@
 ----
 ## Pseudocodigo
 
+**NOTA**: Este módulo utiliza funciones del archivo `Funciones_Comunes.md`
+
 ```
 Proceso Administracion_De_Inscripciones
 INICIO
@@ -210,20 +212,21 @@ FIN Proceso
 //Menú
 
 Funcion Proceso_Registrar_Inscripcion()
+// Utiliza: Solicitar_ID_Evento, Validar_Evento_Activo, Solicitar_Documento_Participante
+//          Participante_Ya_Inscrito, Hay_Cupos_Disponibles, Mostrar_Error, Mostrar_Exito
 INICIO
     id_evento <- Solicitar_ID_Evento()
-    SI NOT Validar_Evento_Para_Inscripcion(id_evento) ENTONCES RETORNAR
-    SI NOT Hay_Cupos_Disponibles(id_evento) ENTONCES
-        SI Usuario_Desea_Lista_Espera() ENTONCES
-            documento <- Solicitar_Documento_Participante()
-            Inscribir_En_Lista_Espera(id_evento, documento)
-        FIN SI
-        RETORNAR
-    FIN SI
+    SI NOT Validar_Evento_Activo(id_evento) ENTONCES RETORNAR
     documento <- Solicitar_Documento_Participante()
     id_participante <- Obtener_O_Registrar_Participante(documento)
     SI Participante_Ya_Inscrito(id_evento, id_participante) ENTONCES
         Mostrar_Error("El participante ya está inscrito en este evento.")
+        RETORNAR
+    FIN SI
+    SI NOT Hay_Cupos_Disponibles(id_evento) ENTONCES
+        SI Usuario_Desea_Lista_Espera() ENTONCES
+            Inscribir_En_Lista_Espera(id_evento, documento)
+        FIN SI
         RETORNAR
     FIN SI
     id_nueva_inscripcion<- Crear_Nueva_Inscripcion(id_evento, id_participante)
@@ -289,6 +292,8 @@ INICIO
 FIN Funcion
 
 Funcion Subproceso_Cambiar_Evento(id_inscripcion, id_evento_actual, id_participante)
+// Utiliza: Solicitar_ID_Evento, Validar_Evento_Activo, Hay_Cupos_Disponibles
+//          Participante_Ya_Inscrito, Mostrar_Error, Mostrar_Exito
 INICIO
     ESCRIBIR "Ingrese el ID del nuevo evento:"
     LEER id_evento_nuevo
@@ -296,7 +301,7 @@ INICIO
         Mostrar_Error("El nuevo evento es el mismo que el actual.")
         RETORNAR
     FIN SI
-    SI NOT Validar_Evento_Para_Inscripcion(id_evento_nuevo) ENTONCES RETORNAR
+    SI NOT Validar_Evento_Activo(id_evento_nuevo) ENTONCES RETORNAR
     SI NOT Hay_Cupos_Disponibles(id_evento_nuevo) ENTONCES
         Mostrar_Error("El nuevo evento no tiene cupos disponibles.")
         RETORNAR
@@ -347,6 +352,9 @@ FIN Funcion
 -------------------------
 
 Funcion Proceso_Cancelar_Inscripcion()
+// Utiliza: Solicitar_ID_Inscripcion, Validar_Inscripcion_Para_Cancelacion
+//          Usuario_Confirma_Operacion, Actualizar_Estado_Inscripcion
+//          Obtener_Evento_De_Inscripcion, Mostrar_Exito, Mostrar_Mensaje
 INICIO
     id_inscripcion <- Solicitar_ID_Inscripcion()
     SI NOT Validar_Inscripcion_Para_Cancelacion(id_inscripcion) ENTONCES RETORNAR
@@ -364,6 +372,8 @@ FIN Funcion
 
 ----------------------
 Funcion Proceso_Gestionar_Lista_Espera()
+// Utiliza: Solicitar_ID_Evento, Existe_Evento, Hay_Participantes_En_Espera
+//          Mostrar_Error, Mostrar_Mensaje
 INICIO
     id_evento <- Solicitar_ID_Evento()
     SI NOT Existe_Evento(id_evento) ENTONCES
@@ -441,45 +451,19 @@ INICIO
 FIN Funcion
 ----------------------
 
-
-Funcion Validar_Evento_Para_Inscripcion(id_evento) : booleano
-INICIO
-    SI NO EXISTE_EVENTO(id_evento) ENTONCES
-        Mostrar_Error("Evento no encontrado.")
-        RETORNAR FALSO
-    FIN SI
-    info_evento <- OBTENER_INFO_EVENTO(id_evento)
-    SI info_evento.estado <> "activo" ENTONCES
-        Mostrar_Error("El evento no está disponible para inscripciones.")
-        RETORNAR FALSO
-    FIN SI
-    SI info_evento.fecha < FECHA_ACTUAL ENTONCES
-        Mostrar_Error("Este evento ya se ha realizado.")
-        RETORNAR FALSO
-    FIN SI
-    RETORNAR VERDADERO
-FIN Funcion
-
-
-Funcion Validar_Inscripcion_Para_Cancelacion(id_inscripcion) : booleano
-INICIO
-    SI NOT Existe_Inscripcion(id_inscripcion) ENTONCES
-        Mostrar_Error("Inscripción no encontrada.")
-        RETORNAR FALSO
-    FIN SI
-    info_evento <- OBTENER_INFO_EVENTO_POR_INSCRIPCION(id_inscripcion)
-    SI info_evento.fecha < FECHA_ACTUAL ENTONCES
-        Mostrar_Error("No se puede cancelar. El evento ya se realizó.")
-        RETORNAR FALSO
-    FIN SI
-    RETORNAR VERDADERO
-FIN Funcion
+// NOTA: Las siguientes funciones ahora están en Funciones_Comunes.md:
+// - Validar_Evento_Activo(id_evento)
+// - Validar_Inscripcion_Para_Cancelacion(id_inscripcion)
+// - Existe_Evento(id_evento)
+// - Existe_Inscripcion(id_inscripcion)
+// - Existe_Participante(documento)
 
 
 Funcion Obtener_O_Registrar_Participante(documento) : entero
+// Utiliza: Existe_Participante, Obtener_ID_Participante, Mostrar_Mensaje
 INICIO
-    SI EXISTE_PARTICIPANTE(documento) ENTONCES
-        id_participante <- OBTENER_ID_PARTICIPANTE(documento)
+    SI Existe_Participante(documento) ENTONCES
+        id_participante <- Obtener_ID_Participante(documento)
         RETORNAR id_participante
     SINO
         Mostrar_Mensaje("Participante no registrado. Se solicitarán datos adicionales.")
@@ -528,6 +512,7 @@ FIN Funcion
 
 
 Funcion Liberar_Cupo_Y_Gestionar_Lista_Espera(id_evento)
+// Utiliza: Mostrar_Mensaje
 INICIO
     SI EXISTE_LISTA_ESPERA(id_evento) ENTONCES
         primer_participante <- OBTENER_PRIMER_PARTICIPANTE_ESPERA(id_evento)   
@@ -540,26 +525,10 @@ INICIO
     FIN SI
 FIN Funcion
 
-
-Funcion Solicitar_ID_Evento() : entero
-    ESCRIBIR "Ingrese el ID del evento:"
-    LEER id
-    RETORNAR id
-FIN Funcion
-
-
-Funcion Solicitar_Documento_Participante() : cadena
-    ESCRIBIR "Ingrese el documento del participante:"
-    LEER documento
-    RETORNAR documento
-FIN Funcion
-
-
-Funcion Solicitar_ID_Inscripcion() : entero
-    ESCRIBIR "Ingrese el ID de la inscripción:"
-    LEER id
-    RETORNAR id
-FIN Funcion
+// NOTA: Las siguientes funciones ahora están en Funciones_Comunes.md:
+// - Solicitar_ID_Evento()
+// - Solicitar_Documento_Participante()
+// - Solicitar_ID_Inscripcion()
 
 
 Funcion Usuario_Desea_Lista_Espera() : booleano
@@ -568,17 +537,14 @@ Funcion Usuario_Desea_Lista_Espera() : booleano
     RETORNAR (MAYUSCULA(respuesta) = "S")
 FIN Funcion
 
-
-Funcion Usuario_Confirma_Operacion(mensaje) : booleano
-    ESCRIBIR mensaje + " (S/N):"
-    LEER respuesta
-    RETORNAR (MAYUSCULA(respuesta) = "S")
-FIN Funcion
+// NOTA: Usuario_Confirma_Operacion() ahora está en Funciones_Comunes.md
 
 
 Funcion Mostrar_Advertencias_Cancelacion(id_inscripcion)
+// Utiliza: Obtener_Evento_De_Inscripcion, Obtener_Info_Evento, Mostrar_Advertencia
 INICIO
-    info_evento <- OBTENER_INFO_EVENTO_POR_INSCRIPCION(id_inscripcion)
+    id_evento <- Obtener_Evento_De_Inscripcion(id_inscripcion)
+    info_evento <- Obtener_Info_Evento(id_evento)
     horas_restantes <- CALCULAR_HORAS_HASTA_EVENTO(info_evento.fecha)
     SI horas_restantes < 24 ENTONCES
         Mostrar_Advertencia("Cancelación tardía. Se podrían aplicar penalizaciones.")

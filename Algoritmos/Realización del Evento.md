@@ -160,7 +160,8 @@
 
 ----
 ## Pseudocodigo
-## Algoritmo
+
+**NOTA**: Este módulo utiliza funciones del archivo `Funciones_Comunes.md`
 
 ```
 ALGORITMO RealizacionEvento
@@ -190,10 +191,10 @@ INICIO
         SEGUN Input HACER
             CASO "I":
                 // Iniciar control de asistencia
-                ESCRIBIR 'Ingrese ID del evento a iniciar:'
-                LEER id_evento
-                SI NO EXISTE_EVENTO(id_evento) ENTONCES
-                    ESCRIBIR 'Evento no encontrado'
+                // Utiliza: Solicitar_ID_Evento, Existe_Evento, Mostrar_Error
+                id_evento <- Solicitar_ID_Evento()
+                SI NOT Existe_Evento(id_evento) ENTONCES
+                    Mostrar_Error('Evento no encontrado')
                     CONTINUAR
                 FIN_SI
                 
@@ -216,10 +217,10 @@ INICIO
                 
             CASO "L":
                 // Registrar llegada
-                ESCRIBIR 'Ingrese documento del participante:'
-                LEER documento
-                SI NO EXISTE_PARTICIPANTE(documento) ENTONCES
-                    ESCRIBIR 'Participante no registrado'
+                // Utiliza: Solicitar_Documento_Participante, Existe_Participante, Mostrar_Error
+                documento <- Solicitar_Documento_Participante()
+                SI NOT Existe_Participante(documento) ENTONCES
+                    Mostrar_Error('Participante no registrado')
                     CONTINUAR
                 FIN_SI
                 
@@ -248,10 +249,10 @@ INICIO
                 
             CASO "A":
                 // Consultar asistencia
-                ESCRIBIR 'Ingrese ID del evento:'
-                LEER id_evento
-                SI NO EXISTE_EVENTO(id_evento) ENTONCES
-                    ESCRIBIR 'Evento no encontrado'
+                // Utiliza: Solicitar_ID_Evento, Existe_Evento, Mostrar_Error
+                id_evento <- Solicitar_ID_Evento()
+                SI NOT Existe_Evento(id_evento) ENTONCES
+                    Mostrar_Error('Evento no encontrado')
                     CONTINUAR
                 FIN_SI
                 
@@ -276,32 +277,31 @@ INICIO
                 
             CASO "R":
                 // Gestionar recursos
-                ESCRIBIR 'Ingrese ID del evento:'
-                LEER id_evento
+                // Utiliza: Solicitar_ID_Evento, Mostrar_Error
+                id_evento <- Solicitar_ID_Evento()
                 SI EVENTO_EN_CURSO(id_evento) ENTONCES
                     GESTIONAR_RECURSOS_EVENTO(id_evento)
                 SINO
-                    ESCRIBIR 'Evento no está en curso'
+                    Mostrar_Error('Evento no está en curso')
                 FIN_SI
                 
             CASO "F":
                 // Finalizar evento
-                ESCRIBIR 'Ingrese ID del evento a finalizar:'
-                LEER id_evento
+                // Utiliza: Solicitar_ID_Evento, Usuario_Confirma_Operacion
+                //          Mostrar_Error, Mostrar_Exito, Mostrar_Mensaje
+                id_evento <- Solicitar_ID_Evento()
                 SI EVENTO_EN_CURSO(id_evento) ENTONCES
                     GENERAR_RESUMEN_FINAL(id_evento)
-                    ESCRIBIR '¿Confirma finalización del evento? (S/N):'
-                    LEER confirmacion
-                    SI confirmacion = "S" ENTONCES
+                    SI Usuario_Confirma_Operacion('¿Confirma finalización del evento?') ENTONCES
                         CAMBIAR_ESTADO_EVENTO(id_evento, 'finalizado')
                         CERRAR_CONTROL_ASISTENCIA(id_evento)
                         GENERAR_REPORTE_FINAL(id_evento)
-                        ESCRIBIR 'Evento finalizado exitosamente'
+                        Mostrar_Exito('Evento finalizado exitosamente')
                     SINO
-                        ESCRIBIR 'Operación cancelada'
+                        Mostrar_Mensaje('Operación cancelada')
                     FIN_SI
                 SINO
-                    ESCRIBIR 'Evento no está en curso'
+                    Mostrar_Error('Evento no está en curso')
                 FIN_SI
                 
             CASO "S":
