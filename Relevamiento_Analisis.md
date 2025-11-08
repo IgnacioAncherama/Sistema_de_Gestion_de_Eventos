@@ -262,6 +262,7 @@ Asistencia {
 2. **Inscripciones**: Formularios de registro y gestión
 3. **Pagos**: Panel de control financiero
 4. **Realización**: Interface de control en tiempo real
+5. **Gestión de actividades**: CRUD completo de actividades
 5. **Informes**: Generador de reportes con filtros
 
 ### 3.4 Diseño de Flujo de Trabajo

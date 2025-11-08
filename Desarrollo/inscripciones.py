@@ -5,7 +5,7 @@ Sistema de Gestión de Eventos
 Este módulo maneja el registro, consulta, modificación y cancelación de inscripciones.
 """
 
-from datetime import date
+from datetime import date, datetime
 import funciones_comunes as fc
 
 
@@ -62,7 +62,20 @@ def proceso_registrar_inscripcion():
     print(f"Fecha: {fc.formatear_fecha(evento['fecha'])}")
     print(f"Precio: {fc.formatear_precio(evento['precio'])}")
     
-    documento = fc.solicitar_documento_participante()
+    # Solicitar documento con validación
+    while True:
+        documento = fc.solicitar_documento_participante()
+        
+        # Validar que el documento sea numérico y tenga 7 u 8 dígitos
+        if not documento.isdigit():
+            fc.mostrar_error("El documento debe contener solo números")
+            continue
+        
+        if len(documento) < 7 or len(documento) > 8:
+            fc.mostrar_error("El documento debe tener entre 7 y 8 dígitos")
+            continue
+        
+        break
     
     id_participante = obtener_o_registrar_participante(documento)
     if not id_participante:

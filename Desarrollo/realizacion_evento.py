@@ -276,7 +276,11 @@ def proceso_gestionar_recursos():
         fc.mostrar_exito("Uso de equipo registrado")
     
     elif opcion == '2':
-        cursor.execute('SELECT COUNT(*) as total FROM asistencia WHERE id_evento = ?', (id_evento,))
+        cursor.execute('''
+            SELECT COUNT(*) as total FROM asistencia a
+            JOIN inscripciones i ON a.id_inscripcion = i.id
+            WHERE i.id_evento = ?
+        ''', (id_evento,))
         asistentes_actuales = cursor.fetchone()['total']
         
         print(f"\nCapacidad máxima: {info_evento['capacidad_maxima']}")

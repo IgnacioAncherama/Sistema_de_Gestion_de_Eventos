@@ -51,8 +51,93 @@ def proceso_registrar_pago():
     print("           REGISTRAR NUEVO PAGO")
     print("=" * 60)
     
-    id_inscripcion = fc.solicitar_id_inscripcion()
+    # Paso 1: Mostrar eventos con inscripciones pendientes
+    conn = fc.conectar_bd()
+    cursor = conn.cursor()
     
+    cursor.execute('''
+        SELECT DISTINCT e.id, e.nombre, e.fecha, e.precio,
+               COUNT(i.id) as inscripciones_pendientes
+        FROM eventos e
+        JOIN inscripciones i ON e.id = i.id_evento
+        WHERE i.estado_pago = 'pendiente'
+        GROUP BY e.id
+        ORDER BY e.fecha DESC
+    ''')
+    eventos_con_pendientes = cursor.fetchall()
+    
+    if not eventos_con_pendientes:
+        conn.close()
+        fc.mostrar_mensaje("No hay eventos con pagos pendientes")
+        fc.pausar()
+        return
+    
+    print("\n--- EVENTOS CON PAGOS PENDIENTES ---")
+    for evento in eventos_con_pendientes:
+        evento = dict(evento)
+        print(f"\nID: {evento['id']} - {evento['nombre']}")
+        print(f"  Fecha: {fc.formatear_fecha(evento['fecha'])}")
+        print(f"  Precio: {fc.formatear_precio(evento['precio'])}")
+        print(f"  Inscripciones pendientes: {evento['inscripciones_pendientes']}")
+    
+    # Paso 2: Seleccionar evento
+    print("\n" + "=" * 60)
+    try:
+        id_evento_seleccionado = int(input("Ingrese el ID del evento: "))
+    except ValueError:
+        conn.close()
+        fc.mostrar_error("ID inválido")
+        fc.pausar()
+        return
+    
+    # Verificar que el evento existe y tiene pendientes
+    evento_existe = False
+    for evento in eventos_con_pendientes:
+        if dict(evento)['id'] == id_evento_seleccionado:
+            evento_existe = True
+            break
+    
+    if not evento_existe:
+        conn.close()
+        fc.mostrar_error("Evento no encontrado o sin pagos pendientes")
+        fc.pausar()
+        return
+    
+    # Paso 3: Mostrar inscripciones pendientes del evento
+    cursor.execute('''
+        SELECT i.id, p.nombre, p.apellido, p.documento, i.fecha_inscripcion
+        FROM inscripciones i
+        JOIN participantes p ON i.id_participante = p.id
+        WHERE i.id_evento = ? AND i.estado_pago = 'pendiente'
+        ORDER BY i.fecha_inscripcion
+    ''', (id_evento_seleccionado,))
+    inscripciones_pendientes = cursor.fetchall()
+    
+    conn.close()
+    
+    if not inscripciones_pendientes:
+        fc.mostrar_mensaje("No hay inscripciones pendientes para este evento")
+        fc.pausar()
+        return
+    
+    print("\n--- INSCRIPCIONES PENDIENTES DE PAGO ---")
+    for insc in inscripciones_pendientes:
+        insc = dict(insc)
+        print(f"\nID Inscripción: {insc['id']}")
+        print(f"  Participante: {insc['nombre']} {insc['apellido']}")
+        print(f"  Documento: {insc['documento']}")
+        print(f"  Fecha inscripción: {fc.formatear_fecha(insc['fecha_inscripcion'])}")
+    
+    # Paso 4: Seleccionar inscripción
+    print("\n" + "=" * 60)
+    try:
+        id_inscripcion = int(input("Ingrese el ID de la inscripción a pagar: "))
+    except ValueError:
+        fc.mostrar_error("ID inválido")
+        fc.pausar()
+        return
+    
+    # Verificar que la inscripción existe y está pendiente
     if not fc.existe_inscripcion(id_inscripcion):
         fc.mostrar_error("Inscripción no encontrada")
         fc.pausar()
@@ -70,10 +155,24 @@ def proceso_registrar_pago():
         fc.pausar()
         return
     
+    # Verificar que la inscripción pertenece al evento seleccionado
+    if info_inscripcion['id_evento'] != id_evento_seleccionado:
+        fc.mostrar_error("La inscripción no pertenece al evento seleccionado")
+        fc.pausar()
+        return
+    
+    # Paso 5: Procesar el pago
     id_evento = fc.obtener_evento_de_inscripcion(id_inscripcion)
     info_evento = fc.obtener_info_evento(id_evento)
+    id_participante = info_inscripcion['id_participante']
+    info_participante = fc.obtener_info_participante(id_participante)
     
-    print(f"\nEvento: {info_evento['nombre']}")
+    print("\n" + "=" * 60)
+    print("           CONFIRMAR DATOS DEL PAGO")
+    print("=" * 60)
+    print(f"Evento: {info_evento['nombre']}")
+    print(f"Participante: {info_participante['nombre']} {info_participante['apellido']}")
+    print(f"Documento: {info_participante['documento']}")
     print(f"Monto a pagar: {fc.formatear_precio(info_evento['precio'])}")
     
     print("\nMétodos de pago disponibles:")
@@ -81,7 +180,7 @@ def proceso_registrar_pago():
     print("2. Tarjeta")
     print("3. Transferencia")
     
-    metodo = input("Seleccione método de pago (1-3): ").strip()
+    metodo = input("\nSeleccione método de pago (1-3): ").strip()
     metodos = {'1': 'Efectivo', '2': 'Tarjeta', '3': 'Transferencia'}
     metodo_pago = metodos.get(metodo, 'Efectivo')
     
@@ -124,9 +223,14 @@ def proceso_registrar_pago():
     id_pago = fc.guardar_pago(pago)
     fc.actualizar_estado_pago_inscripcion(id_inscripcion, 'pagado')
     
+    print("\n" + "=" * 60)
     fc.mostrar_exito(f"Pago registrado exitosamente. ID de pago: {id_pago}")
+    print(f"Participante: {info_participante['nombre']} {info_participante['apellido']}")
+    print(f"Evento: {info_evento['nombre']}")
+    print(f"Monto pagado: {fc.formatear_precio(info_evento['precio'])}")
     if cambio > 0:
-        fc.mostrar_mensaje(f"Cambio: {fc.formatear_precio(cambio)}")
+        fc.mostrar_mensaje(f"Cambio a devolver: {fc.formatear_precio(cambio)}")
+    print("=" * 60)
     
     fc.pausar()
 

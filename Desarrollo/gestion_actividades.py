@@ -58,6 +58,7 @@ def crear_actividad():
     info_evento = fc.obtener_info_evento(id_evento)
     print(f"\nEvento: {info_evento['nombre']}")
     print(f"Fecha: {fc.formatear_fecha(info_evento['fecha'])}")
+    print(f"Horario del evento: {info_evento['hora_inicio']} - {info_evento['hora_fin']}")
     
     nombre = input("\nNombre de la actividad: ").strip()
     descripcion = input("Descripción: ").strip()
@@ -65,8 +66,20 @@ def crear_actividad():
     hora_inicio = input("Hora de inicio (HH:MM): ").strip()
     hora_fin = input("Hora de fin (HH:MM): ").strip()
     
+    # Validar que la hora de fin sea posterior a la de inicio
     if hora_fin <= hora_inicio:
         fc.mostrar_error("La hora de fin debe ser posterior a la de inicio")
+        fc.pausar()
+        return
+    
+    # Validar que las horas estén dentro del rango del evento
+    if hora_inicio < info_evento['hora_inicio'] or hora_inicio > info_evento['hora_fin']:
+        fc.mostrar_error(f"La hora de inicio debe estar entre {info_evento['hora_inicio']} y {info_evento['hora_fin']}")
+        fc.pausar()
+        return
+    
+    if hora_fin > info_evento['hora_fin'] or hora_fin < info_evento['hora_inicio']:
+        fc.mostrar_error(f"La hora de fin debe estar entre {info_evento['hora_inicio']} y {info_evento['hora_fin']}")
         fc.pausar()
         return
     
@@ -246,11 +259,21 @@ def modificar_actividad():
         fc.mostrar_exito("Actividad modificada exitosamente")
     
     elif opcion == 'H':
+        # Obtener info del evento para validar horarios
+        id_evento = actividad['id_evento']
+        info_evento = fc.obtener_info_evento(id_evento)
+        
+        print(f"\nHorario del evento: {info_evento['hora_inicio']} - {info_evento['hora_fin']}")
+        
         nueva_hora_inicio = input("Ingrese la nueva hora de inicio (HH:MM): ").strip()
         nueva_hora_fin = input("Ingrese la nueva hora de fin (HH:MM): ").strip()
         
         if nueva_hora_fin and nueva_hora_inicio and nueva_hora_fin <= nueva_hora_inicio:
             fc.mostrar_error("La hora de fin debe ser posterior a la de inicio")
+        elif nueva_hora_inicio and (nueva_hora_inicio < info_evento['hora_inicio'] or nueva_hora_inicio > info_evento['hora_fin']):
+            fc.mostrar_error(f"La hora de inicio debe estar entre {info_evento['hora_inicio']} y {info_evento['hora_fin']}")
+        elif nueva_hora_fin and (nueva_hora_fin > info_evento['hora_fin'] or nueva_hora_fin < info_evento['hora_inicio']):
+            fc.mostrar_error(f"La hora de fin debe estar entre {info_evento['hora_inicio']} y {info_evento['hora_fin']}")
         else:
             cursor.execute('UPDATE actividades SET hora_inicio = ?, hora_fin = ? WHERE id = ?', 
                          (nueva_hora_inicio, nueva_hora_fin, id_actividad))

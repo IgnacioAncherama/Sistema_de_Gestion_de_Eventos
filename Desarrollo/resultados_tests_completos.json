@@ -1,0 +1,803 @@
+[
+  {
+    "modulo": "Gestión de Eventos",
+    "numero": 1,
+    "descripcion": "Crear evento válido con todos los campos correctos",
+    "inputs": [
+      "Conferencia Python 2025",
+      "Conferencia anual",
+      "15/12/2025",
+      "09:00",
+      "17:00",
+      "Centro Convenciones",
+      "200",
+      "5000"
+    ],
+    "output_esperado": "Evento creado exitosamente con ID: 1",
+    "output_obtenido": "============================================================\n           CREAR NUEVO EVENTO\n============================================================\n\nIngrese nombre del evento: Ingrese descripción del evento: Ingrese fecha del evento (DD/MM/AAAA): Ingrese hora de inicio (HH:MM): Ingrese hora de fin (HH:MM): Ingrese ubicación del evento: Ingrese capacidad máxima: Ingrese precio del evento: \n ÉXITO: Evento creado exitosamente con ID: 1\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_eventos; gestion_eventos.crear_evento()\n                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_eventos.py\", line 111, in crear_evento\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:53",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Gestión de Eventos",
+    "numero": 2,
+    "descripcion": "Validar rechazo de evento con fecha pasada",
+    "inputs": [
+      "Evento Pasado",
+      "Descripción",
+      "01/01/2024",
+      "09:00",
+      "10:00",
+      "Ubicación",
+      "50",
+      "100"
+    ],
+    "output_esperado": "ERROR: La fecha debe ser posterior a hoy",
+    "output_obtenido": "============================================================\n           CREAR NUEVO EVENTO\n============================================================\n\nIngrese nombre del evento: Ingrese descripción del evento: Ingrese fecha del evento (DD/MM/AAAA): \n ERROR: La fecha debe ser posterior a hoy\n\nIngrese fecha del evento (DD/MM/AAAA): \n ERROR: Formato de fecha inválido. Use DD/MM/AAAA\n\nIngrese fecha del evento (DD/MM/AAAA): \n ERROR: Formato de fecha inválido. Use DD/MM/AAAA\n\nIngrese fecha del evento (DD/MM/AAAA): \n ERROR: Formato de fecha inválido. Use DD/MM/AAAA\n\nIngrese fecha del evento (DD/MM/AAAA): \n ERROR: Formato de fecha inválido. Use DD/MM/AAAA\n\nIngrese fecha del evento (DD/MM/AAAA): \n ERROR: Formato de fecha inválido. Use DD/MM/AAAA\n\nIngrese fecha del evento (DD/MM/AAAA): Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_eventos; gestion_eventos.crear_evento()\n                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_eventos.py\", line 56, in crear_evento\n    fecha_str = input(\"Ingrese fecha del evento (DD/MM/AAAA): \")\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:53",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Gestión de Eventos",
+    "numero": 3,
+    "descripcion": "Validar rechazo de capacidad negativa",
+    "inputs": [
+      "Evento Cap Negativa",
+      "Desc",
+      "01/01/2026",
+      "09:00",
+      "10:00",
+      "Ubic",
+      "-10",
+      "100"
+    ],
+    "output_esperado": "ERROR: La capacidad debe ser mayor a 0",
+    "output_obtenido": "============================================================\n           CREAR NUEVO EVENTO\n============================================================\n\nIngrese nombre del evento: Ingrese descripción del evento: Ingrese fecha del evento (DD/MM/AAAA): Ingrese hora de inicio (HH:MM): Ingrese hora de fin (HH:MM): Ingrese ubicación del evento: Ingrese capacidad máxima: \n ERROR: La capacidad debe ser mayor a 0\n\nIngrese capacidad máxima: Ingrese precio del evento: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_eventos; gestion_eventos.crear_evento()\n                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_eventos.py\", line 89, in crear_evento\n    precio = float(input(\"Ingrese precio del evento: \"))\n                   ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:53",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Gestión de Eventos",
+    "numero": 4,
+    "descripcion": "Validar rechazo de precio negativo",
+    "inputs": [
+      "Evento Precio Neg",
+      "Desc",
+      "01/01/2026",
+      "09:00",
+      "10:00",
+      "Ubic",
+      "100",
+      "-50"
+    ],
+    "output_esperado": "ERROR: El precio no puede ser negativo",
+    "output_obtenido": "============================================================\n           CREAR NUEVO EVENTO\n============================================================\n\nIngrese nombre del evento: Ingrese descripción del evento: Ingrese fecha del evento (DD/MM/AAAA): Ingrese hora de inicio (HH:MM): Ingrese hora de fin (HH:MM): Ingrese ubicación del evento: Ingrese capacidad máxima: Ingrese precio del evento: \n ERROR: El precio no puede ser negativo\n\nIngrese precio del evento: Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_eventos; gestion_eventos.crear_evento()\n                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_eventos.py\", line 89, in crear_evento\n    precio = float(input(\"Ingrese precio del evento: \"))\n                   ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:53",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Gestión de Eventos",
+    "numero": 5,
+    "descripcion": "Consultar evento existente por ID",
+    "inputs": [
+      "I",
+      "1"
+    ],
+    "output_esperado": "Evento ID: 1, nombre visible",
+    "output_obtenido": "============================================================\n           CONSULTA DE EVENTOS\n============================================================\nT. Ver todos los eventos\nI. Buscar por ID\nN. Buscar por nombre\nF. Buscar por fecha\nS. Volver\n============================================================\n\nSeleccione una opción: Ingrese el ID del evento: \n--- Evento ID: 1 ---\nNombre: Conferencia Python 2025\nDescripción: Conferencia anual\nFecha: 15/12/2025\nHorario: 09:00 - 17:00\nUbicación: Centro Convenciones\nCapacidad: 200 personas\nPrecio: $5,000.00\nEstado: activo\nCupos disponibles: 200\n------------------------------------------------------------\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_eventos; gestion_eventos.consultar_eventos()\n                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_eventos.py\", line 142, in consultar_eventos\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:53",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Gestión de Eventos",
+    "numero": 6,
+    "descripcion": "Consultar evento inexistente",
+    "inputs": [
+      "I",
+      "999"
+    ],
+    "output_esperado": "ERROR: Evento no encontrado",
+    "output_obtenido": "============================================================\n           CONSULTA DE EVENTOS\n============================================================\nT. Ver todos los eventos\nI. Buscar por ID\nN. Buscar por nombre\nF. Buscar por fecha\nS. Volver\n============================================================\n\nSeleccione una opción: Ingrese el ID del evento: \n ERROR: Evento no encontrado\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_eventos; gestion_eventos.consultar_eventos()\n                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_eventos.py\", line 142, in consultar_eventos\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:54",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Gestión de Eventos",
+    "numero": 7,
+    "descripcion": "Buscar eventos por nombre parcial",
+    "inputs": [
+      "N",
+      "Conferencia"
+    ],
+    "output_esperado": "Mostrar eventos que contengan 'Conferencia'",
+    "output_obtenido": "============================================================\n           CONSULTA DE EVENTOS\n============================================================\nT. Ver todos los eventos\nI. Buscar por ID\nN. Buscar por nombre\nF. Buscar por fecha\nS. Volver\n============================================================\n\nSeleccione una opción: Ingrese nombre del evento a buscar: \nSe encontraron 2 evento(s):\n\n--- Evento ID: 3 ---\nNombre: Conferencia IA\nDescripción: Desc\nFecha: 25/12/2025\nHorario: 09:00 - 18:00\nUbicación: Centro\nCapacidad: 100 personas\nPrecio: $3,000.00\nEstado: activo\nCupos disponibles: 100\n------------------------------------------------------------\n\n--- Evento ID: 1 ---\nNombre: Conferencia Python 2025\nDescripción: Conferencia anual\nFecha: 15/12/2025\nHorario: 09:00 - 17:00\nUbicación: Centro Convenciones\nCapacidad: 200 personas\nPrecio: $5,000.00\nEstado: activo\nCupos disponibles: 200\n------------------------------------------------------------\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_eventos; gestion_eventos.consultar_eventos()\n                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_eventos.py\", line 142, in consultar_eventos\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:54",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Gestión de Eventos",
+    "numero": 8,
+    "descripcion": "Modificar nombre de evento existente",
+    "inputs": [
+      "ID: 1",
+      "N",
+      "Conferencia Python 2025 - Actualizado"
+    ],
+    "output_esperado": "ÉXITO: Evento modificado exitosamente",
+    "output_obtenido": "============================================================\n           MODIFICAR EVENTO\n============================================================\nIngrese el ID del evento: \nInformación actual del evento:\n\n--- Evento ID: 1 ---\nNombre: Conferencia Python 2025\nDescripción: Conferencia anual\nFecha: 15/12/2025\nHorario: 09:00 - 17:00\nUbicación: Centro Convenciones\nCapacidad: 200 personas\nPrecio: $5,000.00\nEstado: activo\nCupos disponibles: 200\n------------------------------------------------------------\n\n¿Qué desea modificar?\nN. Nombre\nF. Fecha\nU. Ubicación\nC. Capacidad\nP. Precio\n\nSeleccione una opción: Ingrese el nuevo nombre: \n ÉXITO: Evento modificado exitosamente\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_eventos; gestion_eventos.modificar_evento()\n                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_eventos.py\", line 329, in modificar_evento\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:54",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Inscripciones",
+    "numero": 1,
+    "descripcion": "Inscribir nuevo participante a evento",
+    "inputs": [
+      "1",
+      "12345678",
+      "Juan",
+      "Pérez",
+      "juan@email.com",
+      "1234567890",
+      "01/01/1990",
+      "Masculino",
+      "Argentina",
+      "Ingeniero"
+    ],
+    "output_esperado": "Inscripción registrada exitosamente",
+    "output_obtenido": "============================================================\n           REGISTRAR NUEVA INSCRIPCIÓN\n============================================================\nIngrese el ID del evento: \nEvento: Evento Test\nFecha: 15/12/2025\nPrecio: $1,000.00\nIngrese el documento del participante: \n  Participante no registrado. Se solicitarán datos adicionales.\n\n\n--- REGISTRO DE NUEVO PARTICIPANTE ---\nNombre: Apellido: Email: Teléfono: Fecha de nacimiento (DD/MM/AAAA): Género: País: Profesión: \n ÉXITO: Participante registrado exitosamente\n\n\n ÉXITO: Inscripción registrada exitosamente. ID: 1\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import inscripciones; inscripciones.proceso_registrar_inscripcion()\n                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/inscripciones.py\", line 93, in proceso_registrar_inscripcion\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:54",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Inscripciones",
+    "numero": 2,
+    "descripcion": "Validar rechazo de inscripción duplicada",
+    "inputs": [
+      "1",
+      "12345678"
+    ],
+    "output_esperado": "ERROR: El participante ya está inscrito en este evento",
+    "output_obtenido": "============================================================\n           REGISTRAR NUEVA INSCRIPCIÓN\n============================================================\nIngrese el ID del evento: \nEvento: Evento Test\nFecha: 15/12/2025\nPrecio: $1,000.00\nIngrese el documento del participante: \nParticipante encontrado: Juan Pérez\n\n ERROR: El participante ya está inscrito en este evento\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import inscripciones; inscripciones.proceso_registrar_inscripcion()\n                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/inscripciones.py\", line 74, in proceso_registrar_inscripcion\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:54",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Inscripciones",
+    "numero": 3,
+    "descripcion": "Agregar participante a lista de espera cuando evento lleno",
+    "inputs": [
+      "1",
+      "11111111",
+      "S"
+    ],
+    "output_esperado": "Participante agregado a lista de espera",
+    "output_obtenido": "============================================================\n           REGISTRAR NUEVA INSCRIPCIÓN\n============================================================\nIngrese el ID del evento: \nEvento: Evento Test\nFecha: 15/12/2025\nPrecio: $1,000.00\nIngrese el documento del participante: \n  Participante no registrado. Se solicitarán datos adicionales.\n\n\n--- REGISTRO DE NUEVO PARTICIPANTE ---\nNombre: Apellido: Email: Teléfono: Fecha de nacimiento (DD/MM/AAAA): Género: País: Profesión: \n ERROR: Formato de fecha inválido. Use DD/MM/AAAA\n\n\nPresione Enter para continuar...\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import inscripciones; inscripciones.proceso_registrar_inscripcion()\n                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/inscripciones.py\", line 69, in proceso_registrar_inscripcion\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:54",
+    "resultado": "FAIL",
+    "resumen_correcciones": "Requiere corrección"
+  },
+  {
+    "modulo": "Inscripciones",
+    "numero": 4,
+    "descripcion": "Consultar inscripciones de un evento específico",
+    "inputs": [
+      "E",
+      "1"
+    ],
+    "output_esperado": "Mostrar lista de inscripciones del evento 1",
+    "output_obtenido": "============================================================\n           CONSULTA DE INSCRIPCIONES\n============================================================\nE. Ver por evento\nP. Ver por participante\nT. Ver todas las inscripciones\n============================================================\n\nSeleccione una opción: Ingrese el ID del evento: \n--- INSCRIPCIONES DEL EVENTO: Evento Test ---\n\n--- Inscripción ID: 1 ---\nParticipante: Juan Pérez\nEvento: Evento Test\nFecha inscripción: 07/11/2025\nEstado: confirmada\nEstado pago: pendiente\n------------------------------------------------------------\n\n--- Inscripción ID: 2 ---\nParticipante: María García\nEvento: Evento Test\nFecha inscripción: 07/11/2025\nEstado: confirmada\nEstado pago: pendiente\n------------------------------------------------------------\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import inscripciones; inscripciones.proceso_consultar_inscripciones()\n                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/inscripciones.py\", line 210, in proceso_consultar_inscripciones\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:54",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Inscripciones",
+    "numero": 5,
+    "descripcion": "Consultar inscripciones de un participante específico",
+    "inputs": [
+      "P",
+      "12345678"
+    ],
+    "output_esperado": "Mostrar inscripciones del participante 12345678",
+    "output_obtenido": "============================================================\n           CONSULTA DE INSCRIPCIONES\n============================================================\nE. Ver por evento\nP. Ver por participante\nT. Ver todas las inscripciones\n============================================================\n\nSeleccione una opción: Ingrese el documento del participante: \n--- INSCRIPCIONES DE: Juan Pérez ---\n\n--- Inscripción ID: 1 ---\nParticipante: Juan Pérez\nEvento: Evento Test\nFecha inscripción: 07/11/2025\nEstado: confirmada\nEstado pago: pendiente\n------------------------------------------------------------\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import inscripciones; inscripciones.proceso_consultar_inscripciones()\n                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/inscripciones.py\", line 210, in proceso_consultar_inscripciones\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:54",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Inscripciones",
+    "numero": 6,
+    "descripcion": "Cancelar inscripción confirmada",
+    "inputs": [
+      "1",
+      "S"
+    ],
+    "output_esperado": "Inscripción cancelada exitosamente",
+    "output_obtenido": "============================================================\n           CANCELAR INSCRIPCIÓN\n============================================================\nIngrese el ID de la inscripción: \n--- Inscripción ID: 1 ---\nParticipante: Juan Pérez\nEvento: Evento Test\nFecha inscripción: 07/11/2025\nEstado: confirmada\nEstado pago: pendiente\n------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import inscripciones; inscripciones.proceso_cancelar_inscripcion()\n                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/inscripciones.py\", line 387, in proceso_cancelar_inscripcion\n    fecha_evento = datetime.strptime(evento['fecha'], '%Y-%m-%d').date()\n                   ^^^^^^^^\nNameError: name 'datetime' is not defined. Did you forget to import 'datetime'?\n",
+    "fecha": "07/11/2025 16:41:55",
+    "resultado": "FAIL",
+    "resumen_correcciones": "Requiere corrección"
+  },
+  {
+    "modulo": "Inscripciones",
+    "numero": 7,
+    "descripcion": "Verificar promoción automática desde lista de espera",
+    "inputs": [
+      "Automático al cancelar inscripción anterior"
+    ],
+    "output_esperado": "Participante en lista de espera promovido a confirmado",
+    "output_obtenido": "Estado en BD: No encontrado",
+    "fecha": "07/11/2025 16:41:55",
+    "resultado": "FAIL",
+    "resumen_correcciones": "Requiere corrección"
+  },
+  {
+    "modulo": "Inscripciones",
+    "numero": 8,
+    "descripcion": "Visualizar lista de espera de un evento",
+    "inputs": [
+      "V",
+      "1"
+    ],
+    "output_esperado": "Mostrar lista de espera del evento",
+    "output_obtenido": "============================================================\n           GESTIONAR LISTA DE ESPERA\n============================================================\nIngrese el ID del evento: \n ERROR: Por favor ingrese un número válido.\n\nIngrese el ID del evento: \n  No hay participantes en lista de espera\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import inscripciones; inscripciones.proceso_gestionar_lista_espera()\n                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/inscripciones.py\", line 465, in proceso_gestionar_lista_espera\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:55",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Pagos",
+    "numero": 1,
+    "descripcion": "Registrar pago completo en efectivo",
+    "inputs": [
+      "1",
+      "1",
+      "2500",
+      "Pago total",
+      "COMP-001",
+      "Ninguna"
+    ],
+    "output_esperado": "Pago registrado exitosamente",
+    "output_obtenido": "============================================================\n           REGISTRAR NUEVO PAGO\n============================================================\nIngrese el ID de la inscripción: \nEvento: Evento Pago\nMonto a pagar: $2,500.00\n\nMétodos de pago disponibles:\n1. Efectivo\n2. Tarjeta\n3. Transferencia\nSeleccione método de pago (1-3): Ingrese monto recibido: \n--- DATOS ADICIONALES DEL PAGO (obligatorios) ---\nConcepto del pago: Número de comprobante: Observaciones: \n ÉXITO: Pago registrado exitosamente. ID de pago: 1\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import pagos; pagos.proceso_registrar_pago()\n                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/pagos.py\", line 131, in proceso_registrar_pago\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:55",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Pagos",
+    "numero": 2,
+    "descripcion": "Validar rechazo de pago duplicado",
+    "inputs": [
+      "1",
+      "1",
+      "2500",
+      "Pago duplicado",
+      "COMP-002",
+      ""
+    ],
+    "output_esperado": "ERROR: Esta inscripción ya ha sido pagada",
+    "output_obtenido": "============================================================\n           REGISTRAR NUEVO PAGO\n============================================================\nIngrese el ID de la inscripción: \n ERROR: Esta inscripción ya ha sido pagada\n\n\nPresione Enter para continuar...",
+    "fecha": "07/11/2025 16:41:55",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Pagos",
+    "numero": 3,
+    "descripcion": "Validar rechazo de pago con monto insuficiente",
+    "inputs": [
+      "2",
+      "1",
+      "2000",
+      "Pago parcial",
+      "COMP-003",
+      ""
+    ],
+    "output_esperado": "ERROR: Monto insuficiente",
+    "output_obtenido": "============================================================\n           REGISTRAR NUEVO PAGO\n============================================================\nIngrese el ID de la inscripción: \nEvento: Evento Pago\nMonto a pagar: $2,500.00\n\nMétodos de pago disponibles:\n1. Efectivo\n2. Tarjeta\n3. Transferencia\nSeleccione método de pago (1-3): Ingrese monto recibido: \n ERROR: Monto insuficiente. Falta: $500.00\n\n\nPresione Enter para continuar...",
+    "fecha": "07/11/2025 16:41:55",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Pagos",
+    "numero": 4,
+    "descripcion": "Registrar pago con tarjeta de crédito",
+    "inputs": [
+      "2",
+      "2",
+      "2500",
+      "Pago con tarjeta",
+      "TC-12345",
+      ""
+    ],
+    "output_esperado": "Pago registrado exitosamente",
+    "output_obtenido": "============================================================\n           REGISTRAR NUEVO PAGO\n============================================================\nIngrese el ID de la inscripción: \nEvento: Evento Pago\nMonto a pagar: $2,500.00\n\nMétodos de pago disponibles:\n1. Efectivo\n2. Tarjeta\n3. Transferencia\nSeleccione método de pago (1-3): Ingrese monto recibido: \n--- DATOS ADICIONALES DEL PAGO (obligatorios) ---\nConcepto del pago: Número de comprobante: Observaciones: \n ERROR: Todos los campos son obligatorios\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import pagos; pagos.proceso_registrar_pago()\n                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/pagos.py\", line 110, in proceso_registrar_pago\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:55",
+    "resultado": "FAIL",
+    "resumen_correcciones": "Requiere corrección"
+  },
+  {
+    "modulo": "Pagos",
+    "numero": 5,
+    "descripcion": "Consultar pagos de una inscripción específica",
+    "inputs": [
+      "I",
+      "1"
+    ],
+    "output_esperado": "Mostrar pagos de la inscripción 1",
+    "output_obtenido": "============================================================\n           CONSULTA DE PAGOS\n============================================================\nI. Consultar por inscripción\nE. Consultar por evento\nP. Ver pagos pendientes\nT. Ver todos los pagos\n============================================================\n\nSeleccione una opción: Ingrese el ID de la inscripción: \n=== INFORMACIÓN DE PAGO ===\nID Inscripción: 1\nEstado de pago: pagado\nID Pago: 1\nMonto: $2,500.00\nMétodo: Efectivo\nFecha: 07/11/2025\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import pagos; pagos.proceso_consultar_pagos()\n                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/pagos.py\", line 159, in proceso_consultar_pagos\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:55",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Pagos",
+    "numero": 6,
+    "descripcion": "Consultar todos los pagos de un evento",
+    "inputs": [
+      "E",
+      "1"
+    ],
+    "output_esperado": "Mostrar pagos del evento 1",
+    "output_obtenido": "============================================================\n           CONSULTA DE PAGOS\n============================================================\nI. Consultar por inscripción\nE. Consultar por evento\nP. Ver pagos pendientes\nT. Ver todos los pagos\n============================================================\n\nSeleccione una opción: Ingrese el ID del evento: \n=== PAGOS DEL EVENTO: Evento Pago ===\n\nID: 1 | Monto: $2,500.00 | Método: Efectivo | Fecha: 07/11/2025\n\nTotal recaudado: $2,500.00\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import pagos; pagos.proceso_consultar_pagos()\n                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/pagos.py\", line 159, in proceso_consultar_pagos\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:55",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Pagos",
+    "numero": 7,
+    "descripcion": "Consultar pagos pendientes",
+    "inputs": [
+      "P"
+    ],
+    "output_esperado": "Mostrar inscripciones con pago pendiente",
+    "output_obtenido": "============================================================\n           CONSULTA DE PAGOS\n============================================================\nI. Consultar por inscripción\nE. Consultar por evento\nP. Ver pagos pendientes\nT. Ver todos los pagos\n============================================================\n\nSeleccione una opción: \n=== PAGOS PENDIENTES ===\nTotal: 2\n\nInscripción #2\n  Participante: Carlos Ruiz\n  Evento: Evento Pago\n  Monto: $2,500.00\n\nInscripción #3\n  Participante: Laura Díaz\n  Evento: Evento Pago\n  Monto: $2,500.00\n\nMonto total pendiente: $5,000.00\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import pagos; pagos.proceso_consultar_pagos()\n                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/pagos.py\", line 159, in proceso_consultar_pagos\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:56",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Pagos",
+    "numero": 8,
+    "descripcion": "Calcular porcentajes de reembolso según días restantes",
+    "inputs": [
+      "40 días, 25 días, 10 días, 3 días"
+    ],
+    "output_esperado": "100%, 75%, 50%, 25%",
+    "output_obtenido": "40 días: 100\n25 días: 75\n10 días: 50\n3 días: 25\n",
+    "fecha": "07/11/2025 16:41:56",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Realización de Evento",
+    "numero": 1,
+    "descripcion": "Iniciar control de asistencia para un evento",
+    "inputs": [
+      "1"
+    ],
+    "output_esperado": "Control de asistencia iniciado",
+    "output_obtenido": "============================================================\n           INICIAR CONTROL DE ASISTENCIA\n============================================================\nIngrese el ID del evento: \n ERROR: El evento no es hoy. Fecha del evento: 15/12/2025\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import realizacion_evento; realizacion_evento.proceso_iniciar_control_asistencia()\n                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/realizacion_evento.py\", line 66, in proceso_iniciar_control_asistencia\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:56",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Realización de Evento",
+    "numero": 2,
+    "descripcion": "Registrar llegada de participante inscrito",
+    "inputs": [
+      "1",
+      "12345678"
+    ],
+    "output_esperado": "Llegada registrada exitosamente",
+    "output_obtenido": "============================================================\n           REGISTRAR LLEGADA DE PARTICIPANTE\n============================================================\nIngrese el documento del participante: \n ERROR: Participante no registrado\n\n\nPresione Enter para continuar...",
+    "fecha": "07/11/2025 16:41:56",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Realización de Evento",
+    "numero": 3,
+    "descripcion": "Validar rechazo de llegada duplicada",
+    "inputs": [
+      "1",
+      "12345678"
+    ],
+    "output_esperado": "ERROR: La asistencia ya fue registrada",
+    "output_obtenido": "============================================================\n           REGISTRAR LLEGADA DE PARTICIPANTE\n============================================================\nIngrese el documento del participante: \n ERROR: Participante no registrado\n\n\nPresione Enter para continuar...",
+    "fecha": "07/11/2025 16:41:56",
+    "resultado": "FAIL",
+    "resumen_correcciones": "Requiere corrección"
+  },
+  {
+    "modulo": "Realización de Evento",
+    "numero": 4,
+    "descripcion": "Validar rechazo de participante no inscrito",
+    "inputs": [
+      "1",
+      "99999999"
+    ],
+    "output_esperado": "ERROR: Participante no inscrito en este evento",
+    "output_obtenido": "============================================================\n           REGISTRAR LLEGADA DE PARTICIPANTE\n============================================================\nIngrese el documento del participante: \n ERROR: Participante no registrado\n\n\nPresione Enter para continuar...",
+    "fecha": "07/11/2025 16:41:56",
+    "resultado": "FAIL",
+    "resumen_correcciones": "Requiere corrección"
+  },
+  {
+    "modulo": "Realización de Evento",
+    "numero": 5,
+    "descripcion": "Consultar lista de asistencia de un evento",
+    "inputs": [
+      "1"
+    ],
+    "output_esperado": "Mostrar asistentes del evento",
+    "output_obtenido": "============================================================\n           CONSULTAR ASISTENCIA EN TIEMPO REAL\n============================================================\nIngrese el ID del evento: \n============================================================\n           RESUMEN DE ASISTENCIA\n============================================================\nEvento: Evento Realización\nFecha: 15/12/2025\n\nTotal inscriptos: 0\nPresentes: 0\nAusentes: 0\nPorcentaje de asistencia: 0.00%\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import realizacion_evento; realizacion_evento.proceso_consultar_asistencia()\n                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/realizacion_evento.py\", line 230, in proceso_consultar_asistencia\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:56",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Realización de Evento",
+    "numero": 6,
+    "descripcion": "Registrar recurso de personal para evento",
+    "inputs": [
+      "Opción Registrar",
+      "1",
+      "P",
+      "Coordinador General",
+      "2",
+      "Coordinación del evento"
+    ],
+    "output_esperado": "Recurso registrado exitosamente",
+    "output_obtenido": "============================================================\n           GESTIONAR RECURSOS DEL EVENTO\n============================================================\nIngrese el ID del evento: \n ERROR: Por favor ingrese un número válido.\n\nIngrese el ID del evento: \n ERROR: El evento no está en curso\n\n\nPresione Enter para continuar...",
+    "fecha": "07/11/2025 16:41:56",
+    "resultado": "FAIL",
+    "resumen_correcciones": "Requiere corrección"
+  },
+  {
+    "modulo": "Realización de Evento",
+    "numero": 7,
+    "descripcion": "Registrar recurso material para evento",
+    "inputs": [
+      "Opción Registrar",
+      "1",
+      "M",
+      "Proyector",
+      "3",
+      "Para presentaciones"
+    ],
+    "output_esperado": "Recurso registrado exitosamente",
+    "output_obtenido": "============================================================\n           GESTIONAR RECURSOS DEL EVENTO\n============================================================\nIngrese el ID del evento: \n ERROR: Por favor ingrese un número válido.\n\nIngrese el ID del evento: \n ERROR: El evento no está en curso\n\n\nPresione Enter para continuar...",
+    "fecha": "07/11/2025 16:41:56",
+    "resultado": "FAIL",
+    "resumen_correcciones": "Requiere corrección"
+  },
+  {
+    "modulo": "Realización de Evento",
+    "numero": 8,
+    "descripcion": "Consultar recursos asignados a un evento",
+    "inputs": [
+      "C",
+      "1"
+    ],
+    "output_esperado": "Mostrar lista de recursos del evento",
+    "output_obtenido": "============================================================\n           GESTIONAR RECURSOS DEL EVENTO\n============================================================\nIngrese el ID del evento: \n ERROR: Por favor ingrese un número válido.\n\nIngrese el ID del evento: \n ERROR: El evento no está en curso\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import realizacion_evento; realizacion_evento.proceso_gestionar_recursos()\n                               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/realizacion_evento.py\", line 251, in proceso_gestionar_recursos\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:56",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Informes",
+    "numero": 1,
+    "descripcion": "Generar informe de asistencia de evento finalizado",
+    "inputs": [
+      "1"
+    ],
+    "output_esperado": "Informe con estadísticas de asistencia",
+    "output_obtenido": "============================================================\n           INFORME DE ASISTENCIA\n============================================================\n\nIngrese el nombre o parte del nombre del evento:\n> \n ERROR: No se encontraron eventos finalizados con ese criterio\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import informes; informes.generar_informe_asistencia()\n                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/informes.py\", line 57, in generar_informe_asistencia\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:57",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Informes",
+    "numero": 2,
+    "descripcion": "Generar informe demográfico (género, país, edad)",
+    "inputs": [
+      "1"
+    ],
+    "output_esperado": "Informe con distribución demográfica",
+    "output_obtenido": "============================================================\n           INFORME DEMOGRÁFICO\n============================================================\n\nIngrese el nombre o parte del nombre del evento:\n> \n ERROR: No se encontraron eventos finalizados con ese criterio\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import informes; informes.generar_informe_demografico()\n                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/informes.py\", line 117, in generar_informe_demografico\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:57",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Informes",
+    "numero": 3,
+    "descripcion": "Generar informe de nivel de interés (inscritos vs capacidad)",
+    "inputs": [
+      "1"
+    ],
+    "output_esperado": "Informe con tasa de ocupación",
+    "output_obtenido": "============================================================\n           INFORME DE INTERÉS POR EVENTO\n============================================================\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import informes; informes.generar_informe_interes()\n                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/informes.py\", line 177, in generar_informe_interes\n    cursor.execute('''\n    ~~~~~~~~~~~~~~^^^^\n        SELECT e.*,\n        ^^^^^^^^^^^\n    ...<3 lines>...\n        ORDER BY inscripciones DESC\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n    ''')\n    ^^^^\nsqlite3.OperationalError: no such column: id_evento\n",
+    "fecha": "07/11/2025 16:41:57",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Informes",
+    "numero": 4,
+    "descripcion": "Generar informe de fidelización (participantes recurrentes)",
+    "inputs": [],
+    "output_esperado": "Informe con participantes en múltiples eventos",
+    "output_obtenido": "============================================================\n           INFORME DE FIDELIZACIÓN\n============================================================\n\n  No hay inscripciones registradas\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import informes; informes.generar_informe_fidelizacion()\n                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/informes.py\", line 232, in generar_informe_fidelizacion\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:57",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Informes",
+    "numero": 5,
+    "descripcion": "Generar informe financiero de un evento específico",
+    "inputs": [
+      "E",
+      "1"
+    ],
+    "output_esperado": "Informe con ingresos y pagos del evento",
+    "output_obtenido": "============================================================\n           REPORTES FINANCIEROS\n============================================================\nE. Reporte por evento\nG. Reporte general\n============================================================\n\nSeleccione una opción: Ingrese el ID del evento: \n ERROR: Evento no encontrado\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import pagos; pagos.proceso_generar_reportes_financieros()\n                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/pagos.py\", line 437, in proceso_generar_reportes_financieros\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:57",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Informes",
+    "numero": 6,
+    "descripcion": "Generar informe financiero general (todos los eventos)",
+    "inputs": [
+      "G"
+    ],
+    "output_esperado": "Informe con resumen financiero global",
+    "output_obtenido": "============================================================\n           REPORTES FINANCIEROS\n============================================================\nE. Reporte por evento\nG. Reporte general\n============================================================\n\nSeleccione una opción: \n============================================================\n           REPORTE FINANCIERO GENERAL\n============================================================\nTotal eventos activos: 0\nTotal inscripciones: 0\n\nPagos completados: 0\nPagos pendientes: 0\n\nTotal ingresos: $0.00\nMonto pendiente: $0.00\nTotal reembolsos: $0.00\nIngresos netos: $0.00\n============================================================\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import pagos; pagos.proceso_generar_reportes_financieros()\n                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/pagos.py\", line 437, in proceso_generar_reportes_financieros\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:57",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Informes",
+    "numero": 7,
+    "descripcion": "Validar rechazo de informe para evento no finalizado",
+    "inputs": [
+      "3"
+    ],
+    "output_esperado": "ERROR: El informe solo puede generarse para eventos finalizados",
+    "output_obtenido": "============================================================\n           INFORME DE ASISTENCIA\n============================================================\n\nIngrese el nombre o parte del nombre del evento:\n> \n ERROR: No se encontraron eventos finalizados con ese criterio\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import informes; informes.generar_informe_asistencia()\n                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/informes.py\", line 57, in generar_informe_asistencia\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:58",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Informes",
+    "numero": 8,
+    "descripcion": "Verificar integridad de datos en BD para generación de informes",
+    "inputs": [
+      "Query SQL de verificación"
+    ],
+    "output_esperado": "1 asistencia registrada para evento 1",
+    "output_obtenido": "Total asistencias encontradas: 0",
+    "fecha": "07/11/2025 16:41:58",
+    "resultado": "FAIL",
+    "resumen_correcciones": "Requiere corrección"
+  },
+  {
+    "modulo": "Gestión de Actividades",
+    "numero": 1,
+    "descripcion": "Crear actividad válida para un evento",
+    "inputs": [
+      "1",
+      "Charla Inaugural",
+      "Presentación del evento",
+      "09:30",
+      "10:30",
+      "Auditorio Principal",
+      "100"
+    ],
+    "output_esperado": "Actividad creada exitosamente con ID: 1",
+    "output_obtenido": "============================================================\n           CREAR NUEVA ACTIVIDAD\n============================================================\nIngrese el ID del evento: \nEvento: Conferencia con Actividades\nFecha: 20/12/2025\n\nNombre de la actividad: Descripción: Hora de inicio (HH:MM): Hora de fin (HH:MM): Ubicación específica: Capacidad: \n ÉXITO: Actividad creada exitosamente con ID: 1\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_actividades; gestion_actividades.crear_actividad()\n                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_actividades.py\", line 105, in crear_actividad\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:58",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Gestión de Actividades",
+    "numero": 2,
+    "descripcion": "Validar rechazo de actividad con horario inválido",
+    "inputs": [
+      "1",
+      "Actividad Inválida",
+      "Desc",
+      "15:00",
+      "14:00",
+      "Sala",
+      "50"
+    ],
+    "output_esperado": "ERROR: La hora de fin debe ser posterior a la de inicio",
+    "output_obtenido": "============================================================\n           CREAR NUEVA ACTIVIDAD\n============================================================\nIngrese el ID del evento: \nEvento: Conferencia con Actividades\nFecha: 20/12/2025\n\nNombre de la actividad: Descripción: Hora de inicio (HH:MM): Hora de fin (HH:MM): \n ERROR: La hora de fin debe ser posterior a la de inicio\n\n\nPresione Enter para continuar...",
+    "fecha": "07/11/2025 16:41:58",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Gestión de Actividades",
+    "numero": 3,
+    "descripcion": "Validar rechazo de actividad con capacidad negativa",
+    "inputs": [
+      "1",
+      "Act Cap Negativa",
+      "Desc",
+      "11:00",
+      "12:00",
+      "Sala",
+      "-10"
+    ],
+    "output_esperado": "ERROR: La capacidad debe ser mayor a 0",
+    "output_obtenido": "============================================================\n           CREAR NUEVA ACTIVIDAD\n============================================================\nIngrese el ID del evento: \nEvento: Conferencia con Actividades\nFecha: 20/12/2025\n\nNombre de la actividad: Descripción: Hora de inicio (HH:MM): Hora de fin (HH:MM): Ubicación específica: Capacidad: \n ERROR: La capacidad debe ser mayor a 0\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_actividades; gestion_actividades.crear_actividad()\n                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_actividades.py\", line 80, in crear_actividad\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:58",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Gestión de Actividades",
+    "numero": 4,
+    "descripcion": "Crear segunda actividad para el mismo evento",
+    "inputs": [
+      "1",
+      "Taller Práctico",
+      "Ejercicios prácticos",
+      "11:00",
+      "13:00",
+      "Sala B",
+      "30"
+    ],
+    "output_esperado": "Actividad creada exitosamente",
+    "output_obtenido": "============================================================\n           CREAR NUEVA ACTIVIDAD\n============================================================\nIngrese el ID del evento: \nEvento: Conferencia con Actividades\nFecha: 20/12/2025\n\nNombre de la actividad: Descripción: Hora de inicio (HH:MM): Hora de fin (HH:MM): Ubicación específica: Capacidad: \n ÉXITO: Actividad creada exitosamente con ID: 2\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_actividades; gestion_actividades.crear_actividad()\n                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_actividades.py\", line 105, in crear_actividad\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:58",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Gestión de Actividades",
+    "numero": 5,
+    "descripcion": "Consultar todas las actividades de un evento",
+    "inputs": [
+      "E",
+      "1"
+    ],
+    "output_esperado": "Mostrar lista de actividades del evento 1",
+    "output_obtenido": "============================================================\n           CONSULTA DE ACTIVIDADES\n============================================================\nE. Ver por evento\nT. Ver todas las actividades\nS. Volver\n============================================================\n\nSeleccione una opción: Ingrese el ID del evento: \n--- ACTIVIDADES DEL EVENTO: Conferencia con Actividades ---\n\n--- Actividad ID: 1 ---\nNombre: Charla Inaugural\nDescripción: Presentación del evento\nHorario: 09:30 - 10:30\nUbicación: Auditorio Principal\nCapacidad: 100\n------------------------------------------------------------\n\n--- Actividad ID: 2 ---\nNombre: Taller Práctico\nDescripción: Ejercicios prácticos\nHorario: 11:00 - 13:00\nUbicación: Sala B\nCapacidad: 30\n------------------------------------------------------------\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_actividades; gestion_actividades.consultar_actividades()\n                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_actividades.py\", line 130, in consultar_actividades\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:58",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Gestión de Actividades",
+    "numero": 6,
+    "descripcion": "Consultar todas las actividades del sistema",
+    "inputs": [
+      "T"
+    ],
+    "output_esperado": "Mostrar todas las actividades registradas",
+    "output_obtenido": "============================================================\n           CONSULTA DE ACTIVIDADES\n============================================================\nE. Ver por evento\nT. Ver todas las actividades\nS. Volver\n============================================================\n\nSeleccione una opción: \n--- TODAS LAS ACTIVIDADES ---\n\n--- Actividad ID: 1 ---\nEvento: Conferencia con Actividades\nNombre: Charla Inaugural\nDescripción: Presentación del evento\nHorario: 09:30 - 10:30\nUbicación: Auditorio Principal\nCapacidad: 100\n------------------------------------------------------------\n\n--- Actividad ID: 2 ---\nEvento: Conferencia con Actividades\nNombre: Taller Práctico\nDescripción: Ejercicios prácticos\nHorario: 11:00 - 13:00\nUbicación: Sala B\nCapacidad: 30\n------------------------------------------------------------\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_actividades; gestion_actividades.consultar_actividades()\n                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_actividades.py\", line 130, in consultar_actividades\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:58",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Gestión de Actividades",
+    "numero": 7,
+    "descripcion": "Modificar nombre de una actividad",
+    "inputs": [
+      "1",
+      "N",
+      "Charla Inaugural Actualizada"
+    ],
+    "output_esperado": "Actividad modificada exitosamente",
+    "output_obtenido": "============================================================\n           MODIFICAR ACTIVIDAD\n============================================================\nIngrese el ID de la actividad: \nInformación actual de la actividad:\n\n--- Actividad ID: 1 ---\nNombre: Charla Inaugural\nDescripción: Presentación del evento\nHorario: 09:30 - 10:30\nUbicación: Auditorio Principal\nCapacidad: 100\n------------------------------------------------------------\n\n¿Qué desea modificar?\nN. Nombre\nD. Descripción\nH. Horario\nU. Ubicación\nC. Capacidad\n\nSeleccione una opción: Ingrese el nuevo nombre: \n ÉXITO: Actividad modificada exitosamente\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_actividades; gestion_actividades.modificar_actividad()\n                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_actividades.py\", line 282, in modificar_actividad\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:58",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Gestión de Actividades",
+    "numero": 8,
+    "descripcion": "Eliminar actividad existente",
+    "inputs": [
+      "2",
+      "S"
+    ],
+    "output_esperado": "Actividad eliminada exitosamente",
+    "output_obtenido": "============================================================\n           ELIMINAR ACTIVIDAD\n============================================================\nIngrese el ID de la actividad: \nActividad a eliminar: Taller Práctico\n¿Está seguro que desea eliminar esta actividad? (S/N): \n ÉXITO: Actividad eliminada exitosamente\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_actividades; gestion_actividades.eliminar_actividad()\n                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_actividades.py\", line 312, in eliminar_actividad\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:58",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Integración",
+    "numero": 1,
+    "descripcion": "Flujo completo: Crear evento → Inscribir participante → Registrar pago",
+    "inputs": [
+      "Ver output completo"
+    ],
+    "output_esperado": "3 operaciones exitosas consecutivas",
+    "output_obtenido": "PASO 1 - Crear Evento:\n============================================================\n           CREAR NUEVO EVENTO\n============================================================\n\nIngrese nombre del evento: Ingrese descripción del evento: Ingrese fecha del evento (DD/MM/AAAA): Ingrese hora de inicio (HH:MM): Ingrese hora de fin (HH:MM): Ingrese ubicación del evento: Ingrese capacidad máxima: Ingrese precio del evento: \n ÉXITO: Evento creado exitosamente con ID: 1\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_eventos; gestion_eventos.crear_evento()\n                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_eventos.py\", line 111, in crear_evento\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n\n\nPASO 2 - Inscribir:\n============================================================\n           REGISTRAR NUEVA INSCRIPCIÓN\n============================================================\nIngrese el ID del evento: \nEvento: Workshop Integración\nFecha: 25/12/2025\nPrecio: $2,500.00\nIngrese el documento del participante: \n  Participante no registrado. Se solicitarán datos adicionales.\n\n\n--- REGISTRO DE NUEVO PARTICIPANTE ---\nNombre: Apellido: Email: Teléfono: Fecha de nacimiento (DD/MM/AAAA): Género: País: Profesión: \n ÉXITO: Participante registrado exitosamente\n\n\n ÉXITO: Inscripción registrada exitosamente. ID: 1\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import inscripciones; inscripciones.proceso_registrar_inscripcion()\n                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/inscripciones.py\", line 93, in proceso_registrar_inscripcion\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n\n\nPASO 3 - Pagar:\n============================================================\n           REGISTRAR NUEVO PAGO\n============================================================\nIngrese el ID de la inscripción: \nEvento: Workshop Integración\nMonto a pagar: $2,500.00\n\nMétodos de pago disponibles:\n1. Efectivo\n2. Tarjeta\n3. Transferencia\nSeleccione método de pago (1-3): Ingrese monto recibido: \n--- DATOS ADICIONALES DEL PAGO (obligatorios) ---\nConcepto del pago: Número de comprobante: Observaciones: \n ÉXITO: Pago registrado exitosamente. ID de pago: 1\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import pagos; pagos.proceso_registrar_pago()\n                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/pagos.py\", line 131, in proceso_registrar_pago\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:59",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Integración",
+    "numero": 2,
+    "descripcion": "Gestión de lista de espera: Llenado → Lista espera → Cancelación → Promoción automática",
+    "inputs": [
+      "Ver output completo"
+    ],
+    "output_esperado": "Participante promovido automáticamente desde lista de espera",
+    "output_obtenido": "PASO 1:\n============================================================\n           REGISTRAR NUEVA INSCRIPCIÓN\n============================================================\nIngrese el ID del evento: \nEvento: Evento Capacidad 1\nFecha: 30/12/2025\nPrecio: $1,000.00\nIngrese el documento del participante: \n  Participante no registrado. Se solicitarán datos adicionales.\n\n\n--- REGISTRO DE NUEVO PARTICIPANTE ---\nNombre: Apellido: Email: Teléfono: Fecha de nacimiento (DD/MM/AAAA): Género: País: Profesión: \n ÉXITO: Participante registrado exitosamente\n\n\n ÉXITO: Inscripción registrada exitosamente. ID: 2\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import inscripciones; inscripciones.proceso_registrar_inscripcion()\n                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/inscripciones.py\", line 93, in proceso_registrar_inscripcion\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n\n\nPASO 2:\n============================================================\n           REGISTRAR NUEVA INSCRIPCIÓN\n============================================================\nIngrese el ID del evento: \nEvento: Evento Capacidad 1\nFecha: 30/12/2025\nPrecio: $1,000.00\nIngrese el documento del participante: \n  Participante no registrado. Se solicitarán datos adicionales.\n\n\n--- REGISTRO DE NUEVO PARTICIPANTE ---\nNombre: Apellido: Email: Teléfono: Fecha de nacimiento (DD/MM/AAAA): Género: País: Profesión: \n ERROR: Formato de fecha inválido. Use DD/MM/AAAA\n\n\nPresione Enter para continuar...\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import inscripciones; inscripciones.proceso_registrar_inscripcion()\n                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/inscripciones.py\", line 69, in proceso_registrar_inscripcion\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n\n\nPASO 3:\n============================================================\n           CANCELAR INSCRIPCIÓN\n============================================================\nIngrese el ID de la inscripción: \n--- Inscripción ID: 1 ---\nParticipante: Integration Test\nEvento: Workshop Integración\nFecha inscripción: 07/11/2025\nEstado: confirmada\nEstado pago: pagado\n------------------------------------------------------------\nTraceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import inscripciones; inscripciones.proceso_cancelar_inscripcion()\n                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/inscripciones.py\", line 387, in proceso_cancelar_inscripcion\n    fecha_evento = datetime.strptime(evento['fecha'], '%Y-%m-%d').date()\n                   ^^^^^^^^\nNameError: name 'datetime' is not defined. Did you forget to import 'datetime'?\n",
+    "fecha": "07/11/2025 16:41:59",
+    "resultado": "FAIL",
+    "resumen_correcciones": "Requiere corrección"
+  },
+  {
+    "modulo": "Integración",
+    "numero": 3,
+    "descripcion": "Crear evento con múltiples actividades paralelas y consultar",
+    "inputs": [
+      "3 actividades creadas"
+    ],
+    "output_esperado": "3 actividades visibles en la consulta del evento",
+    "output_obtenido": "Act1:\n============================================================\n           CREAR NUEVA ACTIVIDAD\n============================================================\nIngrese el ID del evento: \nEvento: Conferencia Multi-Track\nFecha: 28/12/2025\n\nNombre de la actividad: Descripción: Hora de inicio (HH:MM): Hora de fin (HH:MM): Ubicación específica: Capacidad: \n ÉXITO: Actividad creada exitosamente con ID: 1\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_actividades; gestion_actividades.crear_actividad()\n                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_actividades.py\", line 105, in crear_actividad\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n\n\nAct2:\n============================================================\n           CREAR NUEVA ACTIVIDAD\n============================================================\nIngrese el ID del evento: \nEvento: Conferencia Multi-Track\nFecha: 28/12/2025\n\nNombre de la actividad: Descripción: Hora de inicio (HH:MM): Hora de fin (HH:MM): Ubicación específica: Capacidad: \n ÉXITO: Actividad creada exitosamente con ID: 2\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_actividades; gestion_actividades.crear_actividad()\n                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_actividades.py\", line 105, in crear_actividad\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n\n\nAct3:\n============================================================\n           CREAR NUEVA ACTIVIDAD\n============================================================\nIngrese el ID del evento: \nEvento: Conferencia Multi-Track\nFecha: 28/12/2025\n\nNombre de la actividad: Descripción: Hora de inicio (HH:MM): Hora de fin (HH:MM): Ubicación específica: Capacidad: \n ÉXITO: Actividad creada exitosamente con ID: 3\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_actividades; gestion_actividades.crear_actividad()\n                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_actividades.py\", line 105, in crear_actividad\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n\n\nConsulta:\n============================================================\n           CONSULTA DE ACTIVIDADES\n============================================================\nE. Ver por evento\nT. Ver todas las actividades\nS. Volver\n============================================================\n\nSeleccione una opción: Ingrese el ID del evento: \n--- ACTIVIDADES DEL EVENTO: Conferencia Multi-Track ---\n\n--- Actividad ID: 1 ---\nNombre: Track A - Mañana\nDescripción: Primera sesión\nHorario: 09:00 - 12:00\nUbicación: Sala A\nCapacidad: 50\n------------------------------------------------------------\n\n--- Actividad ID: 2 ---\nNombre: Track B - Mañana\nDescripción: Segunda sesión\nHorario: 09:00 - 12:00\nUbicación: Sala B\nCapacidad: 50\n------------------------------------------------------------\n\n--- Actividad ID: 3 ---\nNombre: Track A - Tarde\nDescripción: Tercera sesión\nHorario: 14:00 - 17:00\nUbicación: Sala A\nCapacidad: 50\n------------------------------------------------------------\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import gestion_actividades; gestion_actividades.consultar_actividades()\n                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/gestion_actividades.py\", line 130, in consultar_actividades\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:41:59",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Integración",
+    "numero": 4,
+    "descripcion": "Realización completa: Asistencia + Recursos (Personal y Material)",
+    "inputs": [
+      "Ver outputs"
+    ],
+    "output_esperado": "Asistencia y recursos registrados correctamente",
+    "output_obtenido": "Llegada:\n============================================================\n           REGISTRAR LLEGADA DE PARTICIPANTE\n============================================================\nIngrese el documento del participante: \n ERROR: Participante no registrado\n\n\nPresione Enter para continuar...\n\nRecurso 1:\n============================================================\n           GESTIONAR RECURSOS DEL EVENTO\n============================================================\nIngrese el ID del evento: \n ERROR: Por favor ingrese un número válido.\n\nIngrese el ID del evento: \n ERROR: El evento no está en curso\n\n\nPresione Enter para continuar...\n\nRecurso 2:\n============================================================\n           GESTIONAR RECURSOS DEL EVENTO\n============================================================\nIngrese el ID del evento: \n ERROR: Por favor ingrese un número válido.\n\nIngrese el ID del evento: \n ERROR: El evento no está en curso\n\n\nPresione Enter para continuar...",
+    "fecha": "07/11/2025 16:42:00",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  },
+  {
+    "modulo": "Integración",
+    "numero": 5,
+    "descripcion": "Generar múltiples informes de un evento finalizado con datos completos",
+    "inputs": [
+      "Informes: Asistencia, Demográfico, Financiero"
+    ],
+    "output_esperado": "3 informes generados correctamente con datos reales",
+    "output_obtenido": "Informe Asistencia:\n============================================================\n           INFORME DE ASISTENCIA\n============================================================\n\nIngrese el nombre o parte del nombre del evento:\n> \n ERROR: No se encontraron eventos finalizados con ese criterio\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import informes; informes.generar_informe_asistencia()\n                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/informes.py\", line 57, in generar_informe_asistencia\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n\n\nInforme Demográfico:\n============================================================\n           INFORME DEMOGRÁFICO\n============================================================\n\nIngrese el nombre o parte del nombre del evento:\n> \n ERROR: No se encontraron eventos finalizados con ese criterio\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import informes; informes.generar_informe_demografico()\n                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/informes.py\", line 117, in generar_informe_demografico\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n\n\nInforme Financiero:\n============================================================\n           REPORTES FINANCIEROS\n============================================================\nE. Reporte por evento\nG. Reporte general\n============================================================\n\nSeleccione una opción: Ingrese el ID del evento: \n ERROR: Evento no encontrado\n\n\nPresione Enter para continuar...Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n    import pagos; pagos.proceso_generar_reportes_financieros()\n                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/pagos.py\", line 437, in proceso_generar_reportes_financieros\n    fc.pausar()\n    ~~~~~~~~~^^\n  File \"/home/sebastian/facultad/4to/pensamientoComputacional/Sistema_de_Gestion_de_Eventos/Desarrollo/funciones_comunes.py\", line 387, in pausar\n    input(\"\\nPresione Enter para continuar...\")\n    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nEOFError: EOF when reading a line\n",
+    "fecha": "07/11/2025 16:42:00",
+    "resultado": "PASS",
+    "resumen_correcciones": "Ninguna - Test pasó correctamente"
+  }
+]
