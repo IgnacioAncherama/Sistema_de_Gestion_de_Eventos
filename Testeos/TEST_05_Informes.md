@@ -462,6 +462,5 @@ Ingrese el nombre o parte del nombre del evento:
 
 ---
 
-**Documento generado automáticamente el 07/11/2025**  
 **Sistema:** Sistema de Gestión de Eventos v1.0
 

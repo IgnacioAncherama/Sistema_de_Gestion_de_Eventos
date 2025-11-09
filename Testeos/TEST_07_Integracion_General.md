@@ -369,7 +369,7 @@ Presione Enter para continuar...
 
 ## PRUEBA 4: Realización completa: Asistencia + Recursos (Personal y Material)
 
-**Estado:** revisar
+**Estado:** pass
 
 
 ### Descripción
@@ -377,11 +377,35 @@ Realización completa: Asistencia
 
 ### Inputs
 ```
+1. r
+2. i
+3. l
+4. 11111111
+5. a
+6.1
+7. r
+8. 1
+9. 1
+10. computadora
+11. 3
+12. r
+13. 1
+14. 2
 ```
 
 ### Output Esperado
 ```
-Asistencia y recursos registrados correctamente
+ ÉXITO: Control de asistencia iniciado
+
+ ÉXITO: Llegada registrada exitosamente
+
+ resumen de asistencia
+
+ÉXITO: Uso de equipo registrado
+
+capacidad ocupada y disponible del evento
+
+
 ```
 
 ### Fecha de Ejecución
@@ -389,6 +413,97 @@ Asistencia y recursos registrados correctamente
 
 ### Output Obtenido
 ```
+============================================================
+           INICIAR CONTROL DE ASISTENCIA
+============================================================
+Ingrese el ID del evento: 1
+
+ ÉXITO: Control de asistencia iniciado
+
+
+Evento: Workshop Integración
+Participantes esperados: 1
+
+Presione Enter para continuar...
+
+============================================================
+           REGISTRAR LLEGADA DE PARTICIPANTE
+============================================================
+Ingrese el documento del participante: 11111111
+
+ ÉXITO: Llegada registrada exitosamente
+
+
+Participante: juan Perez
+Evento: Workshop Integración
+Ubicación: Centro
+
+Presione Enter para continuar...
+
+============================================================
+           CONSULTAR ASISTENCIA EN TIEMPO REAL
+============================================================
+Ingrese el ID del evento: 1
+
+============================================================
+           RESUMEN DE ASISTENCIA
+============================================================
+Evento: Workshop Integración
+Fecha: 09/11/2025
+
+Total inscriptos: 2
+Presentes: 2
+Ausentes: 0
+Porcentaje de asistencia: 100.00%
+
+--- LISTA DE PRESENTES ---
+  • juan Perez - Llegada: 16:31:56
+  • Integration Test - Llegada: 16:36:17
+
+
+
+============================================================
+           GESTIONAR RECURSOS DEL EVENTO
+============================================================
+Ingrese el ID del evento: 1
+
+Evento: Workshop Integración
+
+Opciones de gestión de recursos:
+1. Registrar uso de equipos
+2. Controlar capacidad de sala
+3. Gestionar materiales
+4. Registrar incidencias
+
+Seleccione una opción: 1
+Ingrese nombre del equipo: computadora
+Ingrese cantidad utilizada: 3
+
+ ÉXITO: Uso de equipo registrado
+
+
+Presione Enter para continuar...
+
+============================================================
+           GESTIONAR RECURSOS DEL EVENTO
+============================================================
+Ingrese el ID del evento: 1
+
+Evento: Workshop Integración
+
+Opciones de gestión de recursos:
+1. Registrar uso de equipos
+2. Controlar capacidad de sala
+3. Gestionar materiales
+4. Registrar incidencias
+
+Seleccione una opción: 2
+
+Capacidad máxima: 50
+Asistentes registrados: 2
+Espacios disponibles: 48
+
+Presione Enter para continuar...
 ```
 
 ### Resumen de Correcciones
@@ -521,15 +636,12 @@ Pendiente:  0.0%
 | Métrica | Valor |
 |---------|-------|
 | Total de Pruebas | 5 |
-| Pruebas Exitosas | 4  |
-| Pruebas Fallidas | 1  |
-| Tasa de Éxito | 80.0% |
-
-### Observaciones Generales
+| Pruebas Exitosas | 5 |
+| Pruebas Fallidas | 0  |
+| Tasa de Éxito | 100.0% |
 
 ---
 
-**Documento generado automáticamente el 07/11/2025**  
 **Sistema:** Sistema de Gestión de Eventos v1.0
 
 

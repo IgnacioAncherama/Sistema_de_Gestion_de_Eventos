@@ -133,10 +133,11 @@ def proceso_registrar_llegada():
         fc.pausar()
         return
     
+    # Verificar si ya registró asistencia
     cursor.execute('''
         SELECT * FROM asistencia 
-        WHERE id_evento = ? AND id_participante = ?
-    ''', (inscripcion['id_evento'], id_participante))
+        WHERE id_inscripcion = ?
+    ''', (inscripcion['id'],))
     
     if cursor.fetchone():
         conn.close()

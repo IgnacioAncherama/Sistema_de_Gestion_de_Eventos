@@ -461,7 +461,6 @@ vemos los 2500 que es el 25% de 10000
 | Pruebas Fallidas | 0 |
 | Tasa de Éxito | 100% |
 
-
-**Documento generado automáticamente el 07/11/2025**  
+ 
 **Sistema:** Sistema de Gestión de Eventos v1.0
 
