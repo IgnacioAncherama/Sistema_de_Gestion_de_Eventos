@@ -7,7 +7,7 @@
 2.  Solicitar al usuario que elija una opción.
 3.  Leer la entrada o entradas del usuario
 4.  Procesar datos y generar el informe correspondiente.
-5.  Mostrar el informe en pantalla , y ofrecer la opción de exportarlo.
+5.  Mostrar el informe en pantalla
 6.  Volver al menú principal 
 
 ### Nivel de Refinamiento 1
@@ -20,7 +20,7 @@
 			3.3. Generar Informe de Interés: Analizar la participación en las distintas actividades del evento.
 			3.4. Generar Informe de Fidelización: Identificar y cuantificar asistentes recurrentes.
 			3.5. Generar Informe Financiero: Desglosar y totalizar los ingresos.
-		4.  Una vez generado un informe, mostrarlo en pantalla (solo texto, sin exportación a PDF/CSV).
+		4.  Una vez generado un informe, mostrarlo en pantalla
 		5.  Repetir el proceso hasta que el usuario decida salir.
 		6.  Finalizar el módulo y retornar al menú principal.
 
@@ -109,7 +109,6 @@
 					alcance_informe + ".")
             Terminar subproceso (RETORNAR).
        5.9 Se muestran los datos en pantalla usando Mostrar_Datos_Fidelizacion(datos_fidelizacion).
-       5.10 Se exporta el informe llamando a Exportar_Informe(datos_fidelizacion, "Fidelizacion_" + tipo_evento).
 
 ```
 #### **5. GENERAR INFORME FINANCIERO**
@@ -124,29 +123,9 @@
         6.6.1 Llamar a Mostrar_Advertencia("No se registraron ingresos para este evento.")
         6.6.2 Terminar subproceso (RETORNAR).
     6.7 Se muestran los datos en pantalla usando Mostrar_Datos_Financieros(datos_financieros).
-    6.8 Consultar tipo de grafico llamando a Obtener_Tipo_Grafico() y guardar la entrada en tipo_grafico.
-    6.9 Se genera el gráfico llamando a GENERAR_GRAFICO_INGRESOS(datos_financieros, tipo_grafico) y se guarda en grafico.
-    6.10 Se muestra el gráfico con Mostrar_Grafico(grafico).
-    6.11 Se empaquetan los datos llamando a EMPAQUETAR_DATOS_Y_GRAFICO(datos_financieros, grafico) y se guarda en informe_completo.
-    6.12 Se llama a Exportar_Informe(informe_completo, "Financiero_Evento_" + id_evento) para que el usuario decida si lo guarda.
-```	
-#### **6. SUBPROCESO DE EXPORTACIÓN**
 
-		 6.1. Recibir `datos_informe`.
-		 6.2. Mostrar en pantalla: '¿Desea exportar el informe? (S/N)'.
-		 6.3. Leer respuesta.
-		 6.4. Si respuesta = "S":
-		     6.4.1. Mostrar en pantalla: 'Seleccione formato: PDF o CSV'.
-		     6.4.2. Leer formato.
-		     6.4.3. Si formato = "PDF":
-		         6.4.3.1. Generar archivo PDF con `datos_informe`.
-		         6.4.3.2. Mostrar mensaje: 'Informe exportado a \[nombre\_archivo.pdf]'.
-		     6.4.4. Si formato = "CSV":
-		         6.4.4.1. Generar archivo CSV con `datos_informe`.
-		         6.4.4.2. Mostrar mensaje: 'Informe exportado a \[nombre\_archivo.csv]'.
-		     6.4.5. De lo contrario: Mostrar mensaje: 'Formato no válido'.
-		 6.5. Si respuesta = "N":
-		     6.5.1. Mostrar mensaje: 'Regresando al menú de informes...'.
+```	
+
 
 ---
 
@@ -189,12 +168,6 @@ INICIO
     datos_asistencia <- OBTENER_DATOS_ASISTENCIA(id_evento) // {registrados, asistentes, tasa}
     Mostrar_Datos_Asistencia(datos_asistencia)
 	
-    tipo_grafico <- Obtener_Tipo_Grafico() 
-    grafico <- GENERAR_GRAFICO_ASISTENCIA(datos_asistencia, tipo_grafico)
-    Mostrar_Grafico(grafico)
-    
-    informe_completo <- EMPAQUETAR_DATOS_Y_GRAFICO(datos_asistencia, grafico)
-    Exportar_Informe(informe_completo, "Asistencia_Evento_" + id_evento)
 FIN Funcion
 
 // --- 3. Informe Demográfico ---
@@ -205,7 +178,6 @@ INICIO
         RETORNAR
     FIN SI
 
-    // Obtiene la lista de asistentes que hicieron check-in
     lista_asistentes <- OBTENER_LISTA_ASISTENTES_CHECKIN(id_evento)
     
     SI lista_asistentes.longitud = 0 ENTONCES
@@ -213,16 +185,10 @@ INICIO
         RETORNAR
     FIN SI
 
-    // Procesa los datos y calcula porcentajes
     datos_demograficos <- OBTENER_DATOS_DEMOGRAFICOS(lista_asistentes) // {genero: {...}, edad: {...}, ...}
     Mostrar_Datos_Demograficos(datos_demograficos)
     
-	tipo_grafico <- Obtener_Tipo_Grafico() 
-    graficos <- GENERAR_GRAFICOS_DEMOGRAFICOS(datos_demograficos, tipo_grafico)
-    Mostrar_Graficos(graficos) // Muestra múltiples gráficos
 
-    informe_completo <- EMPAQUETAR_DATOS_Y_GRAFICO(datos_demograficos, graficos)
-    Exportar_Informe(informe_completo, "Demografico_Evento_" + id_evento)
 FIN Funcion
 
 // --- 4. Informe de Interés por Actividad ---
@@ -243,21 +209,13 @@ INICIO
     
     Mostrar_Ranking_Actividades(datos_interes)
     
-	tipo_grafico <- Obtener_Tipo_Grafico("horizontal") // Sugiere horizontal por defecto
-    grafico <- GENERAR_GRAFICO_RANKING(datos_interes, tipo_grafico)
-    Mostrar_Grafico(grafico)
-    
-    informe_completo <- EMPAQUETAR_DATOS_Y_GRAFICO(datos_interes, grafico)
-    Exportar_Informe(informe_completo, "Interes_Actividades_" + id_evento)
 FIN Funcion
 
 Funcion Generar_Informe_Fidelizacion(tipo_evento: cadena = "Global")
 INICIO
-    // Determina el alcance del informe para el mensaje y el nombre del archivo
     alcance_informe <- SI tipo_evento = "Global" ENTONCES "global" SINO "para tipo de evento: " + tipo_evento FIN SI
     Mostrar_Mensaje("Generando informe de fidelización " + alcance_informe + "...")
     
-    // Pasa el tipo de evento a la función OBTENER_DATOS_FIDELIZACION
     datos_fidelizacion <- OBTENER_DATOS_FIDELIZACION(tipo_evento)
     
     SI datos_fidelizacion.unicos = 0 ENTONCES
@@ -267,7 +225,6 @@ INICIO
     
     Mostrar_Datos_Fidelizacion(datos_fidelizacion)
     
-    Exportar_Informe(datos_fidelizacion, "Fidelizacion_" + tipo_evento)
 FIN Funcion
 
 
@@ -280,39 +237,12 @@ INICIO
     datos_financieros <- OBTENER_DATOS_FINANCIEROS(id_evento) // Retorna desglose y total de ingresos
 	tipo_grafico <- Obtener_Tipo_Grafico() 
     Mostrar_Datos_Financieros(datos_financieros)
-    grafico <- GENERAR_GRAFICO_INGRESOS(datos_financieros,tipo_grafico)
-    Mostrar_Grafico(grafico)
-
-    informe_completo <- EMPAQUETAR_DATOS_Y_GRAFICO(datos_financieros, grafico)
-    Exportar_Informe(informe_completo, "Financiero")
+  
 FIN Funcion
 
 
 ```
-```python
-// --- Función de Exportación de informes---
 
-
-Funcion Exportar_Informe(datos, nombre_base_informe)
-// Utiliza: Usuario_Confirma_Operacion, Mostrar_Exito, Mostrar_Error
-INICIO
-    SI Usuario_Confirma_Operacion("¿Desea exportar este informe?") ENTONCES
-        ESCRIBIR "Seleccione formato de exportación (PDF / CSV):"
-        LEER formato
-        formato <- MAYUSCULA(formato)
-        SEGUN formato HACER
-            CASO "PDF":
-                nombre_archivo <- GENERAR_PDF(datos, nombre_base_informe)
-                Mostrar_Exito("Informe exportado a: " + nombre_archivo)
-            CASO "CSV":
-                nombre_archivo <- GENERAR_CSV(datos, nombre_base_informe)
-                Mostrar_Exito("Informe exportado a: " + nombre_archivo)
-            DE LO CONTRARIO:
-                Mostrar_Error("Formato no válido.")
-        FIN SEGUN
-    FIN SI
-FIN Funcion
-```
 
 ```python
 // --- Funciones consultas   base de datos---
@@ -414,20 +344,6 @@ FIN Funcion
 
 ```
 
-```python
-// --- Funciones de Utilidad ---
-Funcion Obtener_Tipo_Grafico(): cadena
-INICIO
-    ESCRIBIR "Seleccione el tipo de visualización "
-    ESCRIBIR "(1: Gráfico de Barras / 2: Gráfico de torta / 3: Grafico barras horizonales):"
-    LEER opcion
-    SI opcion = 1 ENTONCES RETORNAR "Barras"
-    SI opcion = 2 ENTONCES RETORNAR "Torta"
-	SI opcion = 2 ENTONCES RETORNAR "Barras horizontales"
-    RETORNAR "Ninguno"
-FIN Funcion
-
-```
 
 ## Notas
 
