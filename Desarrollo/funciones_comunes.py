@@ -680,5 +680,196 @@ def mostrar_separador(caracter: str = "=", longitud: int = 60):
     print(caracter * longitud)
 
 
+# 8. FUNCIONES DE VALIDACIÓN DE FORMATO
+
+
+def validar_formato_hora(hora: str) -> bool:
+    """
+    Valida que una hora tenga el formato HH:MM correcto.
+    
+    Args:
+        hora: String con la hora a validar
+        
+    Returns:
+        True si el formato es válido, False en caso contrario
+    """
+    import re
+    
+    # Verificar formato HH:MM
+    if not re.match(r'^\d{2}:\d{2}$', hora):
+        return False
+    
+    try:
+        horas, minutos = map(int, hora.split(':'))
+        
+        # Validar rangos
+        if horas < 0 or horas > 23:
+            return False
+        if minutos < 0 or minutos > 59:
+            return False
+        
+        return True
+    except:
+        return False
+
+
+def solicitar_hora(mensaje: str) -> str:
+    """
+    Solicita una hora al usuario con validación de formato.
+    
+    Args:
+        mensaje: Mensaje a mostrar al usuario
+        
+    Returns:
+        String con la hora en formato HH:MM válido
+    """
+    while True:
+        hora = input(f"{mensaje} (HH:MM): ").strip()
+        
+        if validar_formato_hora(hora):
+            return hora
+        else:
+            mostrar_error("Formato de hora inválido. Use HH:MM (00:00 a 23:59)")
+
+
+def validar_rango_horario(hora_inicio: str, hora_fin: str) -> bool:
+    """
+    Valida que la hora de fin sea posterior a la hora de inicio.
+    
+    Args:
+        hora_inicio: Hora de inicio en formato HH:MM
+        hora_fin: Hora de fin en formato HH:MM
+        
+    Returns:
+        True si el rango es válido, False en caso contrario
+    """
+    if not validar_formato_hora(hora_inicio) or not validar_formato_hora(hora_fin):
+        return False
+    
+    return hora_fin > hora_inicio
+
+
+def validar_hora_en_rango(hora: str, hora_min: str, hora_max: str) -> bool:
+    """
+    Valida que una hora esté dentro de un rango especificado.
+    
+    Args:
+        hora: Hora a validar en formato HH:MM
+        hora_min: Hora mínima del rango en formato HH:MM
+        hora_max: Hora máxima del rango en formato HH:MM
+        
+    Returns:
+        True si la hora está dentro del rango, False en caso contrario
+    """
+    if not all([validar_formato_hora(h) for h in [hora, hora_min, hora_max]]):
+        return False
+    
+    return hora_min <= hora <= hora_max
+
+
+def solicitar_cantidad_positiva(mensaje: str) -> int:
+    """
+    Solicita un número entero positivo al usuario con validación.
+    
+    Args:
+        mensaje: Mensaje a mostrar al usuario
+        
+    Returns:
+        Número entero positivo
+    """
+    while True:
+        try:
+            valor = int(input(f"{mensaje}: "))
+            if valor <= 0:
+                mostrar_error("El valor debe ser mayor a 0")
+                continue
+            return valor
+        except ValueError:
+            mostrar_error("Por favor ingrese un número válido")
+
+
+def solicitar_precio() -> float:
+    """
+    Solicita un precio al usuario con validación.
+    
+    Returns:
+        Precio como número flotante no negativo
+    """
+    while True:
+        try:
+            precio = float(input("Ingrese precio del evento: "))
+            if precio < 0:
+                mostrar_error("El precio no puede ser negativo")
+                continue
+            return precio
+        except ValueError:
+            mostrar_error("Por favor ingrese un número válido")
+
+
+def validar_formato_fecha(fecha_str: str) -> bool:
+    """
+    Valida que una fecha tenga el formato DD/MM/AAAA correcto.
+    
+    Args:
+        fecha_str: String con la fecha a validar
+        
+    Returns:
+        True si el formato es válido, False en caso contrario
+    """
+    import re
+    
+    # Verificar formato DD/MM/AAAA
+    if not re.match(r'^\d{2}/\d{2}/\d{4}$', fecha_str):
+        return False
+    
+    try:
+        dia, mes, anio = map(int, fecha_str.split('/'))
+        
+        # Validar rangos básicos
+        if mes < 1 or mes > 12:
+            return False
+        if dia < 1 or dia > 31:
+            return False
+        if anio < 1900 or anio > 2100:
+            return False
+        
+        # Intentar crear la fecha para validar días válidos por mes
+        date(anio, mes, dia)
+        return True
+    except ValueError:
+        return False
+
+
+def solicitar_fecha(mensaje: str, fecha_minima: date = None) -> date:
+    """
+    Solicita una fecha al usuario con validación.
+    
+    Args:
+        mensaje: Mensaje a mostrar al usuario
+        fecha_minima: Fecha mínima aceptable (opcional)
+        
+    Returns:
+        Objeto date con la fecha válida
+    """
+    while True:
+        try:
+            fecha_str = input(f"{mensaje} (DD/MM/AAAA): ").strip()
+            
+            if not validar_formato_fecha(fecha_str):
+                mostrar_error("Formato de fecha inválido. Use DD/MM/AAAA")
+                continue
+            
+            dia, mes, anio = map(int, fecha_str.split('/'))
+            fecha = date(anio, mes, dia)
+            
+            if fecha_minima and fecha <= fecha_minima:
+                mostrar_error(f"La fecha debe ser posterior a {formatear_fecha(fecha_minima)}")
+                continue
+            
+            return fecha
+        except ValueError as e:
+            mostrar_error(f"Fecha inválida: {e}")
+
+
 # Inicializar la base de datos al importar el módulo
 inicializar_bd()

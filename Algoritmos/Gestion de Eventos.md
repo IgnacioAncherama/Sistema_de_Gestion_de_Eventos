@@ -224,34 +224,28 @@ INICIO
                 LEER nombre_evento
                 ESCRIBIR 'Ingrese descripción del evento:'
                 LEER descripcion_evento
-                ESCRIBIR 'Ingrese fecha del evento (DD/MM/AAAA):'
-                LEER fecha_evento
-                SI fecha_evento <= FECHA_ACTUAL ENTONCES
-                    ESCRIBIR 'Error: La fecha debe ser posterior a hoy'
+                
+                // Solicitar fecha con validación
+                fecha_evento <- Solicitar_Fecha("Ingrese fecha del evento", FECHA_ACTUAL)
+                
+                // Solicitar horas con validación
+                hora_inicio <- Solicitar_Hora("Ingrese hora de inicio")
+                hora_fin <- Solicitar_Hora("Ingrese hora de fin")
+                
+                // Validar rango horario
+                SI NO Validar_Rango_Horario(hora_inicio, hora_fin) ENTONCES
+                    Mostrar_Error("La hora de fin debe ser posterior a la de inicio")
                     CONTINUAR
                 FIN_SI
-                ESCRIBIR 'Ingrese hora de inicio (HH:MM):'
-                LEER hora_inicio
-                ESCRIBIR 'Ingrese hora de fin (HH:MM):'
-                LEER hora_fin
-                SI hora_fin <= hora_inicio ENTONCES
-                    ESCRIBIR 'Error: La hora de fin debe ser posterior a la de inicio'
-                    CONTINUAR
-                FIN_SI
+                
                 ESCRIBIR 'Ingrese ubicación del evento:'
                 LEER ubicacion
-                ESCRIBIR 'Ingrese capacidad máxima:'
-                LEER capacidad_maxima
-                SI capacidad_maxima <= 0 ENTONCES
-                    ESCRIBIR 'Error: La capacidad debe ser mayor a 0'
-                    CONTINUAR
-                FIN_SI
-                ESCRIBIR 'Ingrese precio del evento:'
-                LEER precio
-                SI precio < 0 ENTONCES
-                    ESCRIBIR 'Error: El precio no puede ser negativo'
-                    CONTINUAR
-                FIN_SI
+                
+                // Solicitar capacidad con validación
+                capacidad_maxima <- Solicitar_Cantidad_Positiva("Ingrese capacidad máxima")
+                
+                // Solicitar precio con validación
+                precio <- Solicitar_Precio()
                 id_evento <- GENERAR_ID_UNICO()
                 estado <- 'activo'
                 GUARDAR_EVENTO(id_evento, nombre_evento, descripcion_evento, fecha_evento, 
@@ -324,28 +318,18 @@ INICIO
                                 Mostrar_Error('El nombre no puede estar vacío.')
                             FIN_SI
                         CASO "F":
-                            ESCRIBIR 'Ingrese la nueva fecha (DD/MM/AAAA):'
-                            LEER nuevo_valor_fecha
-                            SI nuevo_valor_fecha > FECHA_ACTUAL ENTONCES
-                                ACTUALIZAR_CAMPO_EVENTO(id_buscado, "fecha", nuevo_valor_fecha)
-                                Mostrar_Exito('Evento modificado exitosamente.')
-                            SINO
-                                Mostrar_Error('La fecha debe ser posterior a hoy.')
-                            FIN_SI
+                            nueva_fecha <- Solicitar_Fecha("Ingrese la nueva fecha", FECHA_ACTUAL)
+                            ACTUALIZAR_CAMPO_EVENTO(id_buscado, "fecha", nueva_fecha)
+                            Mostrar_Exito('Evento modificado exitosamente.')
                         CASO "U":
                              ESCRIBIR 'Ingrese la nueva ubicación:'
                              LEER nuevo_valor_cadena
                              ACTUALIZAR_CAMPO_EVENTO(id_buscado, "ubicacion", nuevo_valor_cadena)
                              Mostrar_Exito('Evento modificado exitosamente.')
                         CASO "C":
-                            ESCRIBIR 'Ingrese la nueva capacidad:'
-                            LEER nuevo_valor_entero
-                            SI nuevo_valor_entero > 0 ENTONCES
-                                ACTUALIZAR_CAMPO_EVENTO(id_buscado, "capacidad", nuevo_valor_entero)
-                                Mostrar_Exito('Evento modificado exitosamente.')
-                            SINO
-                                Mostrar_Error('La capacidad debe ser mayor a cero.')
-                            FIN_SI
+                            nueva_capacidad <- Solicitar_Cantidad_Positiva("Ingrese la nueva capacidad")
+                            ACTUALIZAR_CAMPO_EVENTO(id_buscado, "capacidad", nueva_capacidad)
+                            Mostrar_Exito('Evento modificado exitosamente.')
                         DE_LO_CONTRARIO:
                             Mostrar_Error('Opción de modificación no válida.')
                     FIN_SEGUN
@@ -381,3 +365,24 @@ INICIO
     HASTA_QUE Input = "S"
 FIN
 ````
+
+
+## Notas
+
+1. **Convención de Nombres**: Todas las funciones comunes usan PascalCase con guiones bajos.
+2. **Manejo de Errores**: Las funciones de validación ya incluyen los mensajes de error, por lo que no es necesario repetirlos en los módulos que las llaman.
+3. **Retornos Consistentes**: 
+   - Funciones de validación retornan booleano
+   - Funciones de obtención retornan el tipo de dato correspondiente o 0/NULO si no existe
+4. **Abstracción de BD**: Las funciones que acceden a la base de datos están en MAYÚSCULAS para indicar que son operaciones de bajo nivel.
+
+---
+
+
+## Ventajas de Este Módulo
+
+**Reutilización**: Código escrito una vez, usado en múltiples lugares  
+**Mantenimiento**: Un solo lugar para actualizar la lógica  
+**Consistencia**: Mismo comportamiento en todos los módulos  
+**Legibilidad**: Nombres descriptivos y claros  
+**Facilita Testing**: Funciones independientes más fáciles de probar

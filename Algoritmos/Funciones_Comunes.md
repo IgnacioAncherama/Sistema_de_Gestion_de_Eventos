@@ -319,6 +319,190 @@ FIN Funcion
 
 
 
+// 7. FUNCIONES DE VALIDACIÓN DE FORMATO Y RANGOS
+
+
+Funcion Validar_Formato_Hora(hora : cadena) : booleano
+// Valida que una hora tenga el formato HH:MM correcto (00:00 a 23:59)
+INICIO
+    // Verificar formato HH:MM con expresión regular
+    SI NO CUMPLE_PATRON(hora, "^\d{2}:\d{2}$") ENTONCES
+        RETORNAR FALSO
+    FIN SI
+    
+    INTENTAR
+        partes <- SEPARAR(hora, ":")
+        horas <- CONVERTIR_A_ENTERO(partes[0])
+        minutos <- CONVERTIR_A_ENTERO(partes[1])
+        
+        // Validar rangos
+        SI horas < 0 O horas > 23 ENTONCES
+            RETORNAR FALSO
+        FIN SI
+        SI minutos < 0 O minutos > 59 ENTONCES
+            RETORNAR FALSO
+        FIN SI
+        
+        RETORNAR VERDADERO
+    CAPTURAR error
+        RETORNAR FALSO
+    FIN INTENTAR
+FIN Funcion
+
+
+Funcion Solicitar_Hora(mensaje : cadena) : cadena
+// Solicita una hora al usuario con validación de formato
+INICIO
+    REPETIR
+        ESCRIBIR(mensaje + " (HH:MM): ")
+        LEER(hora)
+        hora <- QUITAR_ESPACIOS(hora)
+        
+        SI Validar_Formato_Hora(hora) ENTONCES
+            RETORNAR hora
+        SINO
+            Mostrar_Error("Formato de hora inválido. Use HH:MM (00:00 a 23:59)")
+        FIN SI
+    HASTA QUE FALSO
+FIN Funcion
+
+
+Funcion Validar_Rango_Horario(hora_inicio : cadena, hora_fin : cadena) : booleano
+// Valida que la hora de fin sea posterior a la hora de inicio
+INICIO
+    SI NO Validar_Formato_Hora(hora_inicio) O NO Validar_Formato_Hora(hora_fin) ENTONCES
+        RETORNAR FALSO
+    FIN SI
+    
+    RETORNAR hora_fin > hora_inicio
+FIN Funcion
+
+
+Funcion Validar_Hora_En_Rango(hora : cadena, hora_min : cadena, hora_max : cadena) : booleano
+// Valida que una hora esté dentro de un rango especificado
+INICIO
+    SI NO Validar_Formato_Hora(hora) O 
+       NO Validar_Formato_Hora(hora_min) O 
+       NO Validar_Formato_Hora(hora_max) ENTONCES
+        RETORNAR FALSO
+    FIN SI
+    
+    RETORNAR (hora_min <= hora Y hora <= hora_max)
+FIN Funcion
+
+
+Funcion Solicitar_Cantidad_Positiva(mensaje : cadena) : entero
+// Solicita un número entero positivo al usuario con validación
+INICIO
+    REPETIR
+        INTENTAR
+            ESCRIBIR(mensaje + ": ")
+            LEER(valor)
+            valor <- CONVERTIR_A_ENTERO(valor)
+            
+            SI valor <= 0 ENTONCES
+                Mostrar_Error("El valor debe ser mayor a 0")
+                CONTINUAR
+            FIN SI
+            
+            RETORNAR valor
+        CAPTURAR error
+            Mostrar_Error("Por favor ingrese un número válido")
+        FIN INTENTAR
+    HASTA QUE FALSO
+FIN Funcion
+
+
+Funcion Solicitar_Precio() : real
+// Solicita un precio al usuario con validación (no negativo)
+INICIO
+    REPETIR
+        INTENTAR
+            ESCRIBIR("Ingrese precio del evento: ")
+            LEER(precio)
+            precio <- CONVERTIR_A_REAL(precio)
+            
+            SI precio < 0 ENTONCES
+                Mostrar_Error("El precio no puede ser negativo")
+                CONTINUAR
+            FIN SI
+            
+            RETORNAR precio
+        CAPTURAR error
+            Mostrar_Error("Por favor ingrese un número válido")
+        FIN INTENTAR
+    HASTA QUE FALSO
+FIN Funcion
+
+
+Funcion Validar_Formato_Fecha(fecha_str : cadena) : booleano
+// Valida que una fecha tenga el formato DD/MM/AAAA correcto
+INICIO
+    // Verificar formato DD/MM/AAAA con expresión regular
+    SI NO CUMPLE_PATRON(fecha_str, "^\d{2}/\d{2}/\d{4}$") ENTONCES
+        RETORNAR FALSO
+    FIN SI
+    
+    INTENTAR
+        partes <- SEPARAR(fecha_str, "/")
+        dia <- CONVERTIR_A_ENTERO(partes[0])
+        mes <- CONVERTIR_A_ENTERO(partes[1])
+        anio <- CONVERTIR_A_ENTERO(partes[2])
+        
+        // Validar rangos básicos
+        SI mes < 1 O mes > 12 ENTONCES
+            RETORNAR FALSO
+        FIN SI
+        SI dia < 1 O dia > 31 ENTONCES
+            RETORNAR FALSO
+        FIN SI
+        SI anio < 1900 O anio > 2100 ENTONCES
+            RETORNAR FALSO
+        FIN SI
+        
+        // Intentar crear la fecha para validar días válidos por mes
+        fecha <- CREAR_FECHA(anio, mes, dia)
+        RETORNAR VERDADERO
+    CAPTURAR error
+        RETORNAR FALSO
+    FIN INTENTAR
+FIN Funcion
+
+
+Funcion Solicitar_Fecha(mensaje : cadena, fecha_minima : fecha = NULO) : fecha
+// Solicita una fecha al usuario con validación
+INICIO
+    REPETIR
+        INTENTAR
+            ESCRIBIR(mensaje + " (DD/MM/AAAA): ")
+            LEER(fecha_str)
+            fecha_str <- QUITAR_ESPACIOS(fecha_str)
+            
+            SI NO Validar_Formato_Fecha(fecha_str) ENTONCES
+                Mostrar_Error("Formato de fecha inválido. Use DD/MM/AAAA")
+                CONTINUAR
+            FIN SI
+            
+            partes <- SEPARAR(fecha_str, "/")
+            dia <- CONVERTIR_A_ENTERO(partes[0])
+            mes <- CONVERTIR_A_ENTERO(partes[1])
+            anio <- CONVERTIR_A_ENTERO(partes[2])
+            fecha <- CREAR_FECHA(anio, mes, dia)
+            
+            SI fecha_minima <> NULO Y fecha <= fecha_minima ENTONCES
+                Mostrar_Error("La fecha debe ser posterior a " + Formatear_Fecha(fecha_minima))
+                CONTINUAR
+            FIN SI
+            
+            RETORNAR fecha
+        CAPTURAR error
+            Mostrar_Error("Fecha inválida: " + error.mensaje)
+        FIN INTENTAR
+    HASTA QUE FALSO
+FIN Funcion
+
+
+
 // 6. FUNCIONES DE OPERACIONES CON BD (ABSTRACTAS)
 
 // Estas son las funciones de base de datos que cada implementación
@@ -340,7 +524,7 @@ FIN Funcion
 
 ---
 
-## Notas de Implementación
+## Notas
 
 1. **Convención de Nombres**: Todas las funciones comunes usan PascalCase con guiones bajos.
 2. **Manejo de Errores**: Las funciones de validación ya incluyen los mensajes de error, por lo que no es necesario repetirlos en los módulos que las llaman.

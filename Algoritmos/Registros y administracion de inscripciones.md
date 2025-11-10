@@ -474,7 +474,14 @@ FIN Funcion
 
 
 Funcion Registrar_Nuevo_Participante(documento) : entero
+// Registra un nuevo participante con validaciones completas
 INICIO
+    // Validar documento
+    SI NO ES_NUMERICO(documento) O (LONGITUD(documento) <> 7 Y LONGITUD(documento) <> 8) ENTONCES
+        Mostrar_Error("El documento debe ser numérico y tener 7 u 8 dígitos")
+        RETORNAR 0
+    FIN SI
+    
     ESCRIBIR 'Nombre:'
     LEER nombre
     ESCRIBIR 'Apellido:'
@@ -483,7 +490,28 @@ INICIO
     LEER email
     ESCRIBIR 'Teléfono:'
     LEER telefono
-    id_participante <- GUARDAR_PARTICIPANTE (nombre, apellido, email, telefono, documento)
+    
+    // Solicitar datos adicionales demográficos
+    ESCRIBIR 'Fecha de nacimiento (DD/MM/AAAA):'
+    LEER fecha_nacimiento_str
+    SI NO Validar_Formato_Fecha(fecha_nacimiento_str) ENTONCES
+        Mostrar_Error("Formato de fecha inválido")
+        RETORNAR 0
+    FIN SI
+    fecha_nacimiento <- CONVERTIR_A_FECHA(fecha_nacimiento_str)
+    
+    ESCRIBIR 'Género (Masculino/Femenino/Otro):'
+    LEER genero
+    
+    ESCRIBIR 'País:'
+    LEER pais
+    
+    ESCRIBIR 'Profesión:'
+    LEER profesion
+    
+    // Guardar participante con todos los datos
+    id_participante <- GUARDAR_PARTICIPANTE(nombre, apellido, documento, email, telefono, 
+                                           fecha_nacimiento, genero, pais, profesion)
     Mostrar_Exito("Participante registrado exitosamente.")
     RETORNAR id_participante
 FIN Funcion
@@ -550,3 +578,28 @@ INICIO
         Mostrar_Advertencia("Cancelación tardía. Se podrían aplicar penalizaciones.")
     FIN SI
 FIN Funcion
+```
+
+## Notas
+
+1. **Convención de Nombres**: Todas las funciones comunes usan PascalCase con guiones bajos.
+2. **Manejo de Errores**: Las funciones de validación ya incluyen los mensajes de error, por lo que no es necesario repetirlos en los módulos que las llaman.
+3. **Retornos Consistentes**: 
+   - Funciones de validación retornan booleano
+   - Funciones de obtención retornan el tipo de dato correspondiente o 0/NULO si no existe
+4. **Abstracción de BD**: Las funciones que acceden a la base de datos están en MAYÚSCULAS para indicar que son operaciones de bajo nivel.
+
+---
+
+
+## Ventajas de Este Módulo
+
+**Reutilización**: Código escrito una vez, usado en múltiples lugares  
+**Mantenimiento**: Un solo lugar para actualizar la lógica  
+**Consistencia**: Mismo comportamiento en todos los módulos  
+**Legibilidad**: Nombres descriptivos y claros  
+**Facilita Testing**: Funciones independientes más fáciles de probar
+
+
+
+

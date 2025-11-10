@@ -314,3 +314,23 @@ INICIO
     HASTA_QUE Input = "S"
 FIN
 ```
+
+## Notas
+
+1. **Convención de Nombres**: Todas las funciones comunes usan PascalCase con guiones bajos.
+2. **Manejo de Errores**: Las funciones de validación ya incluyen los mensajes de error, por lo que no es necesario repetirlos en los módulos que las llaman.
+3. **Retornos Consistentes**: 
+   - Funciones de validación retornan booleano
+   - Funciones de obtención retornan el tipo de dato correspondiente o 0/NULO si no existe
+4. **Abstracción de BD**: Las funciones que acceden a la base de datos están en MAYÚSCULAS para indicar que son operaciones de bajo nivel.
+
+---
+
+
+## Ventajas de Este Módulo
+
+**Reutilización**: Código escrito una vez, usado en múltiples lugares  
+**Mantenimiento**: Un solo lugar para actualizar la lógica  
+**Consistencia**: Mismo comportamiento en todos los módulos  
+**Legibilidad**: Nombres descriptivos y claros  
+**Facilita Testing**: Funciones independientes más fáciles de probar

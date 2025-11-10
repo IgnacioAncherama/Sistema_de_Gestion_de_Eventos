@@ -15,12 +15,12 @@
 		1.  Mostrar menú principal con los tipos de informes disponibles.
 		2.  Leer y validar la opción seleccionada por el usuario.
 		3.  Ejecutar la funcionalidad correspondiente según la opción:
-			3.1. Generar Informe de Asistencia:Calcular y mostrar la comparativa entre registrados y asistentes.
-			3.2. Generar Informe Demográfico:Procesar y visualizar la distribución de los asistentes
-			3.3. Generar Informe de Interés:Analizar la participación en las distintas actividades del evento
-			3.4. Generar Informe de Fidelización:Identificar y cuantificar asistentes recurrentes
+			3.1. Generar Informe de Asistencia: Calcular y mostrar la comparativa entre registrados y asistentes.
+			3.2. Generar Informe Demográfico: Procesar y visualizar la distribución de los asistentes por género, país y edad.
+			3.3. Generar Informe de Interés: Analizar la participación en las distintas actividades del evento.
+			3.4. Generar Informe de Fidelización: Identificar y cuantificar asistentes recurrentes.
 			3.5. Generar Informe Financiero: Desglosar y totalizar los ingresos.
-		4.  Una vez generado un informe, ofrecer la opción de exportarlo (PDF, CSV).
+		4.  Una vez generado un informe, mostrarlo en pantalla (solo texto, sin exportación a PDF/CSV).
 		5.  Repetir el proceso hasta que el usuario decida salir.
 		6.  Finalizar el módulo y retornar al menú principal.
 
@@ -51,15 +51,9 @@
 		 2.3. Si no es válido:
 		     2.3.1. Terminar subproceso.
 		 2.4. Si es válido:
-		     2.4.1. Se llama a Obtener_Datos_Asistencia(id_evento) y se guarda el resultado en datos_asistencia.Los registrados, los 						asistentes y la tasa
-			 2.4.2. Se muestran los datos en pantalla usando Mostrar_Datos_Asistencia(datos_asistencia) 
-		     2.4.3. Consultar tipo de grafico llamando al modulo Obtener_Tipo_Grafico() y guardar la entrada en tipo_grafico
-			 2.4.4  Generar_Grafico_Asistencia(datos_asistencia, tipo_grafico) y se guarda en grafico.
-		     2.4.5. Se muestra el gráfico con Mostrar_Grafico(grafico).
-		     2.4.6. Se empaquetan los datos llamando a Empaquetar_datos_y_grafico(datos_asistencia, grafico) y se guarda en  
-			 		informe_completo.
-			 2.4.6. Se llama a Exportar_Informe(informe_completo, "Asistencia_Evento_" + id_evento) para que el usuario decida si lo	
-					guarda.
+		     2.4.1. Se llama a Obtener_Datos_Asistencia(id_evento) y se guarda el resultado en datos_asistencia.
+			 2.4.2. Se muestran los datos en pantalla usando Mostrar_Datos_Asistencia(datos_asistencia).
+		     2.4.3. Terminar subproceso.
 #### **3. GENERAR INFORME DEMOGRÁFICO**
 ```
 	3.1. Llamar a la función Solicitar_ID_Evento() y guardar la entrada en la variable id_evento
@@ -73,13 +67,10 @@
 	        3.4.3.1. Se llama a Mostrar_Advertencia("No hubo asistentes para generar datos demográficos.")
 	        3.4.3.2. Terminar subproceso.
 	    3.4.4. Si es mayor a 0:
-	        3.4.4.1. Se llama a Obtener_Datos_Demograficos(lista_asistentes) y se guarda en datos_demograficos.
-	        3.4.4.2. Se muestran los datos en pantalla usando Mostrar_Datos_Demograficos(datos_demograficos).
-	        3.4.4.3. Consultar tipo de grafico llamando al modulo Obtener_Tipo_Grafico() y guardar la entrada en tipo_grafico.
-	        3.4.4.4. Se generan los gráficos llamando a Generar_Graficos_Demograficos(datos_demograficos, tipo_grafico) y se guarda en graficos.
-	        3.4.4.5. Se muestran los gráficos con Mostrar_Graficos(graficos).
-	        3.4.4.6. Se empaquetan los datos llamando a Empaquetar_Datos_y_Grafico(datos_demograficos, graficos) y se guarda en informe_completo.
-	        3.4.4.7. Se llama a Exportar_Informe(informe_completo, "Demografico_Evento_" + id_evento) para que el usuario decida si lo guarda.
+	        3.4.4.1. Se llama a Analizar_Distribucion_Genero(lista_asistentes) y se muestra en pantalla.
+	        3.4.4.2. Se llama a Analizar_Distribucion_Pais(lista_asistentes) y se muestra en pantalla.
+	        3.4.4.3. Se llama a Analizar_Distribucion_Edad(lista_asistentes) y se muestra en pantalla.
+	        3.4.4.4. Terminar subproceso.
 ```
 #### **4.GENERAR INFORME DE INTERÉS POR ACTIVIDAD**
 		
@@ -96,11 +87,7 @@
 	        4.4.3.2. Terminar subproceso.
 	    4.4.4. Si es mayor a 0:
 	        4.4.4.1. Se muestran los datos en pantalla usando Mostrar_Ranking_Actividades(datos_interes).
-	        4.4.4.2. Consultar tipo de grafico llamando al modulo Obtener_Tipo_Grafico() y guardar la entrada en tipo_grafico.
-	        4.4.4.3. Se genera el gráfico llamando a Generar_Grafico_Ranking(datos_interes, tipo_grafico) y se guarda en grafico.
-	        4.4.4.4. Se muestra el gráfico con Mostrar_Grafico(grafico).
-	        4.4.4.5. Se empaquetan los datos llamando a Empaquetar_Datos_y_Grafico(datos_interes, grafico) y se guarda en informe_completo.
-	        4.4.4.6. Se llama a Exportar_Informe(informe_completo, "Interes_Actividades_" + id_evento) para que el usuario decida si lo guarda.
+	        4.4.4.2. Terminar subproceso.
 ```
 #### **5.GENERAR INFORME DE fIDELIZACIÓN POR TIPO DE EVENTO**
 
@@ -441,3 +428,24 @@ INICIO
 FIN Funcion
 
 ```
+
+## Notas
+
+1. **Convención de Nombres**: Todas las funciones comunes usan PascalCase con guiones bajos.
+2. **Manejo de Errores**: Las funciones de validación ya incluyen los mensajes de error, por lo que no es necesario repetirlos en los módulos que las llaman.
+3. **Retornos Consistentes**: 
+   - Funciones de validación retornan booleano
+   - Funciones de obtención retornan el tipo de dato correspondiente o 0/NULO si no existe
+4. **Abstracción de BD**: Las funciones que acceden a la base de datos están en MAYÚSCULAS para indicar que son operaciones de bajo nivel.
+
+---
+
+
+## Ventajas de Este Módulo
+
+**Reutilización**: Código escrito una vez, usado en múltiples lugares  
+**Mantenimiento**: Un solo lugar para actualizar la lógica  
+**Consistencia**: Mismo comportamiento en todos los módulos  
+**Legibilidad**: Nombres descriptivos y claros  
+**Facilita Testing**: Funciones independientes más fáciles de probar
+

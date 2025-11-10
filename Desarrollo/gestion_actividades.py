@@ -63,39 +63,31 @@ def crear_actividad():
     nombre = input("\nNombre de la actividad: ").strip()
     descripcion = input("Descripción: ").strip()
     
-    hora_inicio = input("Hora de inicio (HH:MM): ").strip()
-    hora_fin = input("Hora de fin (HH:MM): ").strip()
+    # Solicitar horas con validación de formato
+    hora_inicio = fc.solicitar_hora("Hora de inicio")
+    hora_fin = fc.solicitar_hora("Hora de fin")
     
     # Validar que la hora de fin sea posterior a la de inicio
-    if hora_fin <= hora_inicio:
+    if not fc.validar_rango_horario(hora_inicio, hora_fin):
         fc.mostrar_error("La hora de fin debe ser posterior a la de inicio")
         fc.pausar()
         return
     
     # Validar que las horas estén dentro del rango del evento
-    if hora_inicio < info_evento['hora_inicio'] or hora_inicio > info_evento['hora_fin']:
+    if not fc.validar_hora_en_rango(hora_inicio, info_evento['hora_inicio'], info_evento['hora_fin']):
         fc.mostrar_error(f"La hora de inicio debe estar entre {info_evento['hora_inicio']} y {info_evento['hora_fin']}")
         fc.pausar()
         return
     
-    if hora_fin > info_evento['hora_fin'] or hora_fin < info_evento['hora_inicio']:
+    if not fc.validar_hora_en_rango(hora_fin, info_evento['hora_inicio'], info_evento['hora_fin']):
         fc.mostrar_error(f"La hora de fin debe estar entre {info_evento['hora_inicio']} y {info_evento['hora_fin']}")
         fc.pausar()
         return
     
     ubicacion_especifica = input("Ubicación específica: ").strip()
     
-    capacidad_input = input("Capacidad: ").strip()
-    try:
-        capacidad = int(capacidad_input)
-        if capacidad <= 0:
-            fc.mostrar_error("La capacidad debe ser mayor a 0")
-            fc.pausar()
-            return
-    except ValueError:
-        fc.mostrar_error("Capacidad inválida")
-        fc.pausar()
-        return
+    # Solicitar capacidad con validación
+    capacidad = fc.solicitar_cantidad_positiva("Capacidad")
     
     # Validar campos obligatorios
     if not descripcion or not hora_inicio or not hora_fin or not ubicacion_especifica:
@@ -265,14 +257,16 @@ def modificar_actividad():
         
         print(f"\nHorario del evento: {info_evento['hora_inicio']} - {info_evento['hora_fin']}")
         
-        nueva_hora_inicio = input("Ingrese la nueva hora de inicio (HH:MM): ").strip()
-        nueva_hora_fin = input("Ingrese la nueva hora de fin (HH:MM): ").strip()
+        # Solicitar nuevas horas con validación
+        nueva_hora_inicio = fc.solicitar_hora("Ingrese la nueva hora de inicio")
+        nueva_hora_fin = fc.solicitar_hora("Ingrese la nueva hora de fin")
         
-        if nueva_hora_fin and nueva_hora_inicio and nueva_hora_fin <= nueva_hora_inicio:
+        # Validar rango horario
+        if not fc.validar_rango_horario(nueva_hora_inicio, nueva_hora_fin):
             fc.mostrar_error("La hora de fin debe ser posterior a la de inicio")
-        elif nueva_hora_inicio and (nueva_hora_inicio < info_evento['hora_inicio'] or nueva_hora_inicio > info_evento['hora_fin']):
+        elif not fc.validar_hora_en_rango(nueva_hora_inicio, info_evento['hora_inicio'], info_evento['hora_fin']):
             fc.mostrar_error(f"La hora de inicio debe estar entre {info_evento['hora_inicio']} y {info_evento['hora_fin']}")
-        elif nueva_hora_fin and (nueva_hora_fin > info_evento['hora_fin'] or nueva_hora_fin < info_evento['hora_inicio']):
+        elif not fc.validar_hora_en_rango(nueva_hora_fin, info_evento['hora_inicio'], info_evento['hora_fin']):
             fc.mostrar_error(f"La hora de fin debe estar entre {info_evento['hora_inicio']} y {info_evento['hora_fin']}")
         else:
             cursor.execute('UPDATE actividades SET hora_inicio = ?, hora_fin = ? WHERE id = ?', 
@@ -287,16 +281,10 @@ def modificar_actividad():
         fc.mostrar_exito("Actividad modificada exitosamente")
     
     elif opcion == 'C':
-        try:
-            nueva_capacidad = int(input("Ingrese la nueva capacidad: "))
-            if nueva_capacidad > 0:
-                cursor.execute('UPDATE actividades SET capacidad = ? WHERE id = ?', (nueva_capacidad, id_actividad))
-                conn.commit()
-                fc.mostrar_exito("Actividad modificada exitosamente")
-            else:
-                fc.mostrar_error("La capacidad debe ser mayor a cero")
-        except ValueError:
-            fc.mostrar_error("Por favor ingrese un número válido")
+        nueva_capacidad = fc.solicitar_cantidad_positiva("Ingrese la nueva capacidad")
+        cursor.execute('UPDATE actividades SET capacidad = ? WHERE id = ?', (nueva_capacidad, id_actividad))
+        conn.commit()
+        fc.mostrar_exito("Actividad modificada exitosamente")
     
     else:
         fc.mostrar_error("Opción de modificación no válida")

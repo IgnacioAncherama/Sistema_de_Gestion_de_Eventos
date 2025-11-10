@@ -51,48 +51,26 @@ def crear_evento():
     nombre = input("\nIngrese nombre del evento: ").strip()
     descripcion = input("Ingrese descripción del evento: ").strip()
     
-    while True:
-        try:
-            fecha_str = input("Ingrese fecha del evento (DD/MM/AAAA): ")
-            dia, mes, anio = map(int, fecha_str.split('/'))
-            fecha_evento = date(anio, mes, dia)
-            
-            if fecha_evento <= date.today():
-                fc.mostrar_error("La fecha debe ser posterior a hoy")
-                continue
-            break
-        except ValueError:
-            fc.mostrar_error("Formato de fecha inválido. Use DD/MM/AAAA")
+    # Solicitar fecha con validación
+    fecha_evento = fc.solicitar_fecha("Ingrese fecha del evento", fecha_minima=date.today())
     
-    hora_inicio = input("Ingrese hora de inicio (HH:MM): ").strip()
-    hora_fin = input("Ingrese hora de fin (HH:MM): ").strip()
+    # Solicitar horas con validación
+    hora_inicio = fc.solicitar_hora("Ingrese hora de inicio")
+    hora_fin = fc.solicitar_hora("Ingrese hora de fin")
     
-    if hora_fin <= hora_inicio:
+    # Validar rango horario
+    if not fc.validar_rango_horario(hora_inicio, hora_fin):
         fc.mostrar_error("La hora de fin debe ser posterior a la de inicio")
         fc.pausar()
         return
     
     ubicacion = input("Ingrese ubicación del evento: ").strip()
     
-    while True:
-        try:
-            capacidad = int(input("Ingrese capacidad máxima: "))
-            if capacidad <= 0:
-                fc.mostrar_error("La capacidad debe ser mayor a 0")
-                continue
-            break
-        except ValueError:
-            fc.mostrar_error("Por favor ingrese un número válido")
+    # Solicitar capacidad con validación
+    capacidad = fc.solicitar_cantidad_positiva("Ingrese capacidad máxima")
     
-    while True:
-        try:
-            precio = float(input("Ingrese precio del evento: "))
-            if precio < 0:
-                fc.mostrar_error("El precio no puede ser negativo")
-                continue
-            break
-        except ValueError:
-            fc.mostrar_error("Por favor ingrese un número válido")
+    # Solicitar precio con validación
+    precio = fc.solicitar_precio()
     
     evento = {
         'nombre': nombre,
@@ -277,20 +255,11 @@ def modificar_evento():
             fc.mostrar_error("El nombre no puede estar vacío")
     
     elif opcion == 'F':
-        try:
-            fecha_str = input("Ingrese la nueva fecha (DD/MM/AAAA): ")
-            dia, mes, anio = map(int, fecha_str.split('/'))
-            nueva_fecha = date(anio, mes, dia)
-            
-            if nueva_fecha > date.today():
-                fecha_bd = nueva_fecha.strftime('%Y-%m-%d')
-                cursor.execute('UPDATE eventos SET fecha = ? WHERE id = ?', (fecha_bd, id_evento))
-                conn.commit()
-                fc.mostrar_exito("Evento modificado exitosamente")
-            else:
-                fc.mostrar_error("La fecha debe ser posterior a hoy")
-        except ValueError:
-            fc.mostrar_error("Formato de fecha inválido")
+        nueva_fecha = fc.solicitar_fecha("Ingrese la nueva fecha", fecha_minima=date.today())
+        fecha_bd = nueva_fecha.strftime('%Y-%m-%d')
+        cursor.execute('UPDATE eventos SET fecha = ? WHERE id = ?', (fecha_bd, id_evento))
+        conn.commit()
+        fc.mostrar_exito("Evento modificado exitosamente")
     
     elif opcion == 'U':
         nueva_ubicacion = input("Ingrese la nueva ubicación: ").strip()
@@ -299,28 +268,16 @@ def modificar_evento():
         fc.mostrar_exito("Evento modificado exitosamente")
     
     elif opcion == 'C':
-        try:
-            nueva_capacidad = int(input("Ingrese la nueva capacidad: "))
-            if nueva_capacidad > 0:
-                cursor.execute('UPDATE eventos SET capacidad_maxima = ? WHERE id = ?', (nueva_capacidad, id_evento))
-                conn.commit()
-                fc.mostrar_exito("Evento modificado exitosamente")
-            else:
-                fc.mostrar_error("La capacidad debe ser mayor a cero")
-        except ValueError:
-            fc.mostrar_error("Por favor ingrese un número válido")
+        nueva_capacidad = fc.solicitar_cantidad_positiva("Ingrese la nueva capacidad")
+        cursor.execute('UPDATE eventos SET capacidad_maxima = ? WHERE id = ?', (nueva_capacidad, id_evento))
+        conn.commit()
+        fc.mostrar_exito("Evento modificado exitosamente")
     
     elif opcion == 'P':
-        try:
-            nuevo_precio = float(input("Ingrese el nuevo precio: "))
-            if nuevo_precio >= 0:
-                cursor.execute('UPDATE eventos SET precio = ? WHERE id = ?', (nuevo_precio, id_evento))
-                conn.commit()
-                fc.mostrar_exito("Evento modificado exitosamente")
-            else:
-                fc.mostrar_error("El precio no puede ser negativo")
-        except ValueError:
-            fc.mostrar_error("Por favor ingrese un número válido")
+        nuevo_precio = fc.solicitar_precio()
+        cursor.execute('UPDATE eventos SET precio = ? WHERE id = ?', (nuevo_precio, id_evento))
+        conn.commit()
+        fc.mostrar_exito("Evento modificado exitosamente")
     
     else:
         fc.mostrar_error("Opción de modificación no válida")
