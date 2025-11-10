@@ -291,7 +291,10 @@ Figura 2: Diagrama de Flujo de Datos del Sistema de Gestión de Eventos mostrand
 
 #### Diagrama de Transición de Estados
 
-![Diagrama de Transición de Estados](./media/dte.png)
+1. Reservado
+![Diagrama de Transición de Estados](./media/dte1.png)
+2. Inscripción Pagada
+![Diagrama de Transición de Estados](./media/dte2.png)
 
 figura 3: Diagrama de Transición de Estados mostrando los diferentes estados de eventos, inscripciones y pagos, junto con las transiciones permitidas entre ellos.
 
@@ -305,6 +308,38 @@ figura 3: Diagrama de Transición de Estados mostrando los diferentes estados de
 5. **Asistencia**: Solo se puede registrar asistencia el día del evento
 
 ---
+
+### Casos de Uso
+
+1. Gestion de eventos
+![Caso de Uso - Gestión de Eventos](./media/CU/CU1.png)
+![Caso de Uso - Gestión de Eventos](./media/CU/CU3.png)
+![Caso de Uso - Gestión de Eventos](./media/CU/CU4.png)
+![Caso de Uso - Gestión de Eventos](./media/CU/CU5.png)
+2. Generación de informes
+![Caso de Uso - Generación de Informes](./media/CU/CU6.png)
+![Caso de Uso - Generación de Informes](./media/CU/CU7.png)
+![Caso de Uso - Generación de Informes](./media/CU/CU8.png)
+![Caso de Uso - Generación de Informes](./media/CU/CU9.png)
+![Caso de Uso - Generación de Informes](./media/CU/CU10.png)
+![Caso de Uso - Generación de Informes](./media/CU/CU11.png)
+3. Administración de Pagos y Cobros
+![Caso de Uso - Administración de Pagos y Cobros](./media/CU/CU12.png)
+![Caso de Uso - Administración de Pagos y Cobros](./media/CU/CU13.png)
+![Caso de Uso - Administración de Pagos y Cobros](./media/CU/CU14.png)
+![Caso de Uso - Administración de Pagos y Cobros](./media/CU/CU15.png)
+4. Realización del Evento
+![Caso de Uso - Realización del Evento](./media/CU/CU16.png)
+![Caso de Uso - Realización del Evento](./media/CU/CU17.png)
+![Caso de Uso - Realización del Evento](./media/CU/CU18.png)
+![Caso de Uso - Realización del Evento](./media/CU/CU19.png)
+![Caso de Uso - Realización del Evento](./media/CU/CU20.png)
+5. Registro y Administración de Inscripciones
+![Caso de Uso - Registro y Administración de Inscripciones](./media/CU/CU21.png)
+![Caso de Uso - Registro y Administración de Inscripciones](./media/CU/CU22.png)
+![Caso de Uso - Registro y Administración de Inscripciones](./media/CU/CU23.png)
+![Caso de Uso - Registro y Administración de Inscripciones](./media/CU/CU24.png)
+![Caso de Uso - Registro y Administración de Inscripciones](./media/CU/CU25.png)
 
 ## 4. CONSIDERACIONES TÉCNICAS
 
