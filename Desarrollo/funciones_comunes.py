@@ -33,15 +33,21 @@ def inicializar_bd():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS eventos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nombre TEXT NOT NULL,
+            nombre TEXT NOT NULL CHECK(length(nombre) > 0 AND length(nombre) <= 200),
             descripcion TEXT,
             fecha DATE NOT NULL,
-            hora_inicio TEXT NOT NULL,
-            hora_fin TEXT NOT NULL,
-            ubicacion TEXT NOT NULL,
-            capacidad_maxima INTEGER NOT NULL,
-            precio REAL NOT NULL,
-            estado TEXT DEFAULT 'activo'
+            hora_inicio TEXT NOT NULL CHECK(
+                hora_inicio GLOB '[0-2][0-9]:[0-5][0-9]' AND
+                CAST(substr(hora_inicio, 1, 2) AS INTEGER) < 24
+            ),
+            hora_fin TEXT NOT NULL CHECK(
+                hora_fin GLOB '[0-2][0-9]:[0-5][0-9]' AND
+                CAST(substr(hora_fin, 1, 2) AS INTEGER) < 24
+            ),
+            ubicacion TEXT NOT NULL CHECK(length(ubicacion) > 0),
+            capacidad_maxima INTEGER NOT NULL CHECK(capacidad_maxima > 0),
+            precio REAL NOT NULL CHECK(precio >= 0),
+            estado TEXT DEFAULT 'activo' CHECK(estado IN ('activo', 'cancelado', 'finalizado'))
         )
     ''')
     
@@ -49,15 +55,19 @@ def inicializar_bd():
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS participantes (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            nombre TEXT NOT NULL,
-            apellido TEXT NOT NULL,
-            documento TEXT UNIQUE NOT NULL,
-            email TEXT NOT NULL,
-            telefono TEXT NOT NULL,
+            nombre TEXT NOT NULL CHECK(length(nombre) > 0 AND length(nombre) <= 100),
+            apellido TEXT NOT NULL CHECK(length(apellido) > 0 AND length(apellido) <= 100),
+            documento TEXT UNIQUE NOT NULL CHECK(
+                documento GLOB '[0-9][0-9][0-9][0-9][0-9][0-9][0-9]*' AND
+                length(documento) >= 7 AND 
+                length(documento) <= 8
+            ),
+            email TEXT NOT NULL CHECK(email LIKE '%@%.%'),
+            telefono TEXT NOT NULL CHECK(length(telefono) >= 7),
             fecha_nacimiento DATE NOT NULL,
-            genero TEXT NOT NULL,
-            pais TEXT NOT NULL,
-            profesion TEXT NOT NULL
+            genero TEXT NOT NULL CHECK(length(genero) > 0),
+            pais TEXT NOT NULL CHECK(length(pais) > 0),
+            profesion TEXT NOT NULL CHECK(length(profesion) > 0)
         )
     ''')
     
@@ -80,10 +90,10 @@ def inicializar_bd():
         CREATE TABLE IF NOT EXISTS pagos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             id_inscripcion INTEGER NOT NULL,
-            monto REAL NOT NULL,
-            metodo_pago TEXT NOT NULL,
+            monto REAL NOT NULL CHECK(monto > 0),
+            metodo_pago TEXT NOT NULL CHECK(metodo_pago IN ('Efectivo', 'Tarjeta', 'Transferencia')),
             fecha_pago DATE NOT NULL,
-            estado TEXT DEFAULT 'confirmado',
+            estado TEXT DEFAULT 'confirmado' CHECK(estado IN ('confirmado', 'pendiente', 'rechazado')),
             concepto TEXT,
             numero_comprobante TEXT,
             observaciones TEXT,
@@ -134,12 +144,22 @@ def inicializar_bd():
         CREATE TABLE IF NOT EXISTS actividades (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             id_evento INTEGER NOT NULL,
-            nombre TEXT NOT NULL,
+            nombre TEXT NOT NULL CHECK(length(nombre) > 0 AND length(nombre) <= 150),
             descripcion TEXT,
-            hora_inicio TEXT,
-            hora_fin TEXT,
+            hora_inicio TEXT CHECK(
+                hora_inicio IS NULL OR (
+                    hora_inicio GLOB '[0-2][0-9]:[0-5][0-9]' AND
+                    CAST(substr(hora_inicio, 1, 2) AS INTEGER) < 24
+                )
+            ),
+            hora_fin TEXT CHECK(
+                hora_fin IS NULL OR (
+                    hora_fin GLOB '[0-2][0-9]:[0-5][0-9]' AND
+                    CAST(substr(hora_fin, 1, 2) AS INTEGER) < 24
+                )
+            ),
             ubicacion_especifica TEXT,
-            capacidad INTEGER,
+            capacidad INTEGER CHECK(capacidad IS NULL OR capacidad > 0),
             FOREIGN KEY (id_evento) REFERENCES eventos(id)
         )
     ''')
