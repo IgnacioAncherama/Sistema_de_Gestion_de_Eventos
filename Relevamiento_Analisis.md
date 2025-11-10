@@ -84,7 +84,6 @@ Desarrollar un sistema informático que permita gestionar de manera integral tod
 - El sistema debe generar reportes de inscripciones
 - Debe generar reportes financieros
 - Debe generar estadísticas de asistencia
-- Debe permitir exportar información
 
 #### Requerimientos No Funcionales
 
@@ -263,7 +262,8 @@ Asistencia {
 3. **Pagos**: Panel de control financiero
 4. **Realización**: Interface de control en tiempo real
 5. **Gestión de actividades**: CRUD completo de actividades
-5. **Informes**: Generador de reportes con filtros
+5. **Informes**: Generador de reportes 
+
 
 ### 3.4 Diseño de Flujo de Trabajo
 
