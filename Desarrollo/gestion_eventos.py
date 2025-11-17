@@ -153,8 +153,12 @@ def mostrar_evento_detallado(evento: dict):
 
 
 def buscar_evento_por_id():
-    """Busca y muestra un evento por su ID."""
-    id_evento = fc.solicitar_id_evento()
+    """Busca y muestra un evento por su ID o nombre."""
+    id_evento = fc.solicitar_evento_por_id_o_nombre("¿Cómo desea buscar el evento?", solo_activos=False)
+    
+    if id_evento is None:
+        fc.mostrar_mensaje("Operación cancelada")
+        return
     
     if not fc.existe_evento(id_evento):
         fc.mostrar_error("Evento no encontrado")
@@ -221,7 +225,12 @@ def modificar_evento():
     print("           MODIFICAR EVENTO")
     print("=" * 60)
     
-    id_evento = fc.solicitar_id_evento()
+    id_evento = fc.solicitar_evento_por_id_o_nombre("¿Cómo desea buscar el evento a modificar?", solo_activos=False)
+    
+    if id_evento is None:
+        fc.mostrar_mensaje("Operación cancelada")
+        fc.pausar()
+        return
     
     if not fc.existe_evento(id_evento):
         fc.mostrar_error("Evento no encontrado")
@@ -293,7 +302,12 @@ def eliminar_evento():
     print("           ELIMINAR EVENTO")
     print("=" * 60)
     
-    id_evento = fc.solicitar_id_evento()
+    id_evento = fc.solicitar_evento_por_id_o_nombre("¿Cómo desea buscar el evento a eliminar?", solo_activos=False)
+    
+    if id_evento is None:
+        fc.mostrar_mensaje("Operación cancelada")
+        fc.pausar()
+        return
     
     if not fc.existe_evento(id_evento):
         fc.mostrar_error("Evento no encontrado")

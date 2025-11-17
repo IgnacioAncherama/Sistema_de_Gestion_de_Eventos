@@ -60,7 +60,7 @@ def proceso_registrar_pago():
                COUNT(i.id) as inscripciones_pendientes
         FROM eventos e
         JOIN inscripciones i ON e.id = i.id_evento
-        WHERE i.estado_pago = 'pendiente'
+        WHERE i.estado_pago = 'pendiente' AND i.estado != 'cancelada'
         GROUP BY e.id
         ORDER BY e.fecha DESC
     ''')
@@ -108,7 +108,7 @@ def proceso_registrar_pago():
         SELECT i.id, p.nombre, p.apellido, p.documento, i.fecha_inscripcion
         FROM inscripciones i
         JOIN participantes p ON i.id_participante = p.id
-        WHERE i.id_evento = ? AND i.estado_pago = 'pendiente'
+        WHERE i.id_evento = ? AND i.estado_pago = 'pendiente' AND i.estado != 'cancelada'
         ORDER BY i.fecha_inscripcion
     ''', (id_evento_seleccionado,))
     inscripciones_pendientes = cursor.fetchall()
@@ -296,7 +296,11 @@ def consultar_por_inscripcion():
 
 def consultar_por_evento():
     """Consulta los pagos de un evento."""
-    id_evento = fc.solicitar_id_evento()
+    id_evento = fc.solicitar_evento_por_id_o_nombre("¿Cómo desea buscar el evento?", solo_activos=False)
+    
+    if id_evento is None:
+        fc.mostrar_mensaje("Operación cancelada")
+        return
     
     if not fc.existe_evento(id_evento):
         fc.mostrar_error("Evento no encontrado")
@@ -336,7 +340,8 @@ def mostrar_pagos_pendientes():
     conn = fc.conectar_bd()
     cursor = conn.cursor()
     cursor.execute('''
-        SELECT * FROM inscripciones WHERE estado_pago = 'pendiente'
+        SELECT * FROM inscripciones 
+        WHERE estado_pago = 'pendiente' AND estado != 'cancelada'
     ''')
     pendientes = cursor.fetchall()
     conn.close()
@@ -396,15 +401,26 @@ def proceso_generar_recordatorios():
     print("           GENERAR RECORDATORIOS DE PAGO")
     print("=" * 60)
     
-    print("Ingrese ID del evento (o 0 para todos los eventos):")
-    id_evento = fc.solicitar_id_evento()
+    print("\n¿Desea generar recordatorios para un evento específico o para todos?")
+    print("1. Evento específico")
+    print("2. Todos los eventos")
+    opcion = input("\nSeleccione una opción: ").strip()
+    
+    id_evento = 0
+    if opcion == "1":
+        id_evento = fc.solicitar_evento_por_id_o_nombre("¿Cómo desea buscar el evento?", solo_activos=True)
+        if id_evento is None:
+            fc.mostrar_mensaje("Operación cancelada")
+            fc.pausar()
+            return
     
     conn = fc.conectar_bd()
     cursor = conn.cursor()
     
     if id_evento == 0:
         cursor.execute('''
-            SELECT * FROM inscripciones WHERE estado_pago = 'pendiente'
+            SELECT * FROM inscripciones 
+            WHERE estado_pago = 'pendiente' AND estado != 'cancelada'
         ''')
     else:
         if not fc.existe_evento(id_evento):
@@ -415,7 +431,7 @@ def proceso_generar_recordatorios():
         
         cursor.execute('''
             SELECT * FROM inscripciones 
-            WHERE id_evento = ? AND estado_pago = 'pendiente'
+            WHERE id_evento = ? AND estado_pago = 'pendiente' AND estado != 'cancelada'
         ''', (id_evento,))
     
     pendientes = cursor.fetchall()
@@ -543,7 +559,11 @@ def proceso_generar_reportes_financieros():
 
 def generar_reporte_evento():
     """Genera un reporte financiero para un evento específico."""
-    id_evento = fc.solicitar_id_evento()
+    id_evento = fc.solicitar_evento_por_id_o_nombre("¿Cómo desea buscar el evento?", solo_activos=False)
+    
+    if id_evento is None:
+        fc.mostrar_mensaje("Operación cancelada")
+        return
     
     if not fc.existe_evento(id_evento):
         fc.mostrar_error("Evento no encontrado")

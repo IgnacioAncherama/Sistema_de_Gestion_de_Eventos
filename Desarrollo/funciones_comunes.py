@@ -47,7 +47,7 @@ def inicializar_bd():
             ubicacion TEXT NOT NULL CHECK(length(ubicacion) > 0),
             capacidad_maxima INTEGER NOT NULL CHECK(capacidad_maxima > 0),
             precio REAL NOT NULL CHECK(precio >= 0),
-            estado TEXT DEFAULT 'activo' CHECK(estado IN ('activo', 'cancelado', 'finalizado'))
+            estado TEXT DEFAULT 'activo' CHECK(estado IN ('activo', 'cancelado', 'finalizado', 'en_curso'))
         )
     ''')
     
@@ -286,6 +286,105 @@ def solicitar_id_evento() -> int:
             return id_evento
         except ValueError:
             mostrar_error("Por favor ingrese un número válido.")
+
+
+def solicitar_evento_por_id_o_nombre(mensaje_busqueda: str = None, solo_activos: bool = True) -> Optional[int]:
+    """
+    Solicita al usuario un evento permitiendo buscar por ID o por nombre.
+    
+    Args:
+        mensaje_busqueda: Mensaje personalizado para la búsqueda (opcional)
+        solo_activos: Si es True, solo busca eventos activos. Si es False, busca todos.
+        
+    Returns:
+        ID del evento seleccionado, o None si se cancela
+    """
+    if mensaje_busqueda is None:
+        mensaje_busqueda = "\n¿Cómo desea buscar el evento?"
+    
+    print(mensaje_busqueda)
+    print("1. Por ID")
+    print("2. Por nombre")
+    print("0. Cancelar")
+    
+    while True:
+        opcion = input("\nSeleccione una opción: ").strip()
+        
+        if opcion == "0":
+            return None
+        
+        elif opcion == "1":
+            # Búsqueda por ID
+            try:
+                id_evento = int(input("Ingrese el ID del evento: "))
+                if existe_evento(id_evento):
+                    return id_evento
+                else:
+                    mostrar_error("Evento no encontrado")
+                    continue
+            except ValueError:
+                mostrar_error("Por favor ingrese un número válido")
+                continue
+        
+        elif opcion == "2":
+            # Búsqueda por nombre
+            criterio = input("Ingrese el nombre o parte del nombre del evento: ").strip()
+            
+            if not criterio:
+                mostrar_error("Debe ingresar un nombre para buscar")
+                continue
+            
+            conn = conectar_bd()
+            cursor = conn.cursor()
+            
+            if solo_activos:
+                cursor.execute('''
+                    SELECT * FROM eventos 
+                    WHERE nombre LIKE ? AND estado = 'activo'
+                    ORDER BY fecha DESC
+                ''', (f'%{criterio}%',))
+            else:
+                cursor.execute('''
+                    SELECT * FROM eventos 
+                    WHERE nombre LIKE ?
+                    ORDER BY fecha DESC
+                ''', (f'%{criterio}%',))
+            
+            eventos_encontrados = cursor.fetchall()
+            conn.close()
+            
+            if not eventos_encontrados:
+                mostrar_error("No se encontraron eventos con ese criterio")
+                continue
+            
+            # Si hay un solo resultado, retornarlo directamente
+            if len(eventos_encontrados) == 1:
+                evento = dict(eventos_encontrados[0])
+                print(f"\n✓ Evento encontrado: {evento['nombre']} (ID: {evento['id']})")
+                return evento['id']
+            
+            # Si hay múltiples resultados, mostrar lista
+            print("\n--- Eventos Coincidentes ---")
+            for i, evento in enumerate(eventos_encontrados, 1):
+                evento = dict(evento)
+                estado_info = f" - {evento['estado']}" if not solo_activos else ""
+                print(f"{i}. {evento['nombre']} (ID: {evento['id']}) - {formatear_fecha(evento['fecha'])}{estado_info}")
+            
+            try:
+                seleccion = int(input("\nIngrese el número de la opción (0 para cancelar): "))
+                if seleccion == 0:
+                    return None
+                if 1 <= seleccion <= len(eventos_encontrados):
+                    return dict(eventos_encontrados[seleccion - 1])['id']
+                else:
+                    mostrar_error("Opción no válida")
+                    continue
+            except ValueError:
+                mostrar_error("Por favor ingrese un número válido")
+                continue
+        
+        else:
+            mostrar_error("Opción no válida. Seleccione 1, 2 o 0")
 
 
 def solicitar_documento_participante() -> str:

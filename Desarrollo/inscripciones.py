@@ -51,7 +51,12 @@ def proceso_registrar_inscripcion():
     print("           REGISTRAR NUEVA INSCRIPCIÓN")
     print("=" * 60)
     
-    id_evento = fc.solicitar_id_evento()
+    id_evento = fc.solicitar_evento_por_id_o_nombre("¿Cómo desea buscar el evento para inscribir?", solo_activos=True)
+    
+    if id_evento is None:
+        fc.mostrar_mensaje("Operación cancelada")
+        fc.pausar()
+        return
     
     if not fc.validar_evento_activo(id_evento):
         fc.pausar()
@@ -225,7 +230,11 @@ def proceso_consultar_inscripciones():
 
 def consultar_por_evento():
     """Consulta inscripciones de un evento específico."""
-    id_evento = fc.solicitar_id_evento()
+    id_evento = fc.solicitar_evento_por_id_o_nombre("¿Cómo desea buscar el evento?", solo_activos=False)
+    
+    if id_evento is None:
+        fc.mostrar_mensaje("Operación cancelada")
+        return
     
     if not fc.existe_evento(id_evento):
         fc.mostrar_error("Evento no encontrado")
@@ -339,8 +348,12 @@ def cambiar_evento_inscripcion(id_inscripcion: int, inscripcion: dict):
     """Cambia el evento de una inscripción."""
     id_evento_actual = inscripcion['id_evento']
     
-    print("\nIngrese el ID del nuevo evento:")
-    id_evento_nuevo = fc.solicitar_id_evento()
+    print("\nSeleccione el nuevo evento:")
+    id_evento_nuevo = fc.solicitar_evento_por_id_o_nombre("¿Cómo desea buscar el nuevo evento?", solo_activos=True)
+    
+    if id_evento_nuevo is None:
+        fc.mostrar_mensaje("Operación cancelada")
+        return
     
     if id_evento_nuevo == id_evento_actual:
         fc.mostrar_error("El nuevo evento es el mismo que el actual")
@@ -466,7 +479,12 @@ def proceso_gestionar_lista_espera():
     print("           GESTIONAR LISTA DE ESPERA")
     print("=" * 60)
     
-    id_evento = fc.solicitar_id_evento()
+    id_evento = fc.solicitar_evento_por_id_o_nombre("¿Cómo desea buscar el evento?", solo_activos=False)
+    
+    if id_evento is None:
+        fc.mostrar_mensaje("Operación cancelada")
+        fc.pausar()
+        return
     
     if not fc.existe_evento(id_evento):
         fc.mostrar_error("Evento no encontrado")

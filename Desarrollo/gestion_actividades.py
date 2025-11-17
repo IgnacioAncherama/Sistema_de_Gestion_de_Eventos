@@ -48,7 +48,12 @@ def crear_actividad():
     print("           CREAR NUEVA ACTIVIDAD")
     print("=" * 60)
     
-    id_evento = fc.solicitar_id_evento()
+    id_evento = fc.solicitar_evento_por_id_o_nombre("¿Cómo desea buscar el evento para crear la actividad?", solo_activos=False)
+    
+    if id_evento is None:
+        fc.mostrar_mensaje("Operación cancelada")
+        fc.pausar()
+        return
     
     if not fc.existe_evento(id_evento):
         fc.mostrar_error("Evento no encontrado")
@@ -137,7 +142,11 @@ def consultar_actividades():
 
 def consultar_por_evento():
     """Consulta actividades de un evento específico."""
-    id_evento = fc.solicitar_id_evento()
+    id_evento = fc.solicitar_evento_por_id_o_nombre("¿Cómo desea buscar el evento?", solo_activos=False)
+    
+    if id_evento is None:
+        fc.mostrar_mensaje("Operación cancelada")
+        return
     
     if not fc.existe_evento(id_evento):
         fc.mostrar_error("Evento no encontrado")

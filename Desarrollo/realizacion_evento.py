@@ -51,7 +51,12 @@ def proceso_iniciar_control_asistencia():
     print("           INICIAR CONTROL DE ASISTENCIA")
     print("=" * 60)
     
-    id_evento = fc.solicitar_id_evento()
+    id_evento = fc.solicitar_evento_por_id_o_nombre("¿Cómo desea buscar el evento?", solo_activos=False)
+    
+    if id_evento is None:
+        fc.mostrar_mensaje("Operación cancelada")
+        fc.pausar()
+        return
     
     if not fc.existe_evento(id_evento):
         fc.mostrar_error("Evento no encontrado")
@@ -169,7 +174,12 @@ def proceso_consultar_asistencia():
     print("           CONSULTAR ASISTENCIA EN TIEMPO REAL")
     print("=" * 60)
     
-    id_evento = fc.solicitar_id_evento()
+    id_evento = fc.solicitar_evento_por_id_o_nombre("¿Cómo desea buscar el evento?", solo_activos=False)
+    
+    if id_evento is None:
+        fc.mostrar_mensaje("Operación cancelada")
+        fc.pausar()
+        return
     
     if not fc.existe_evento(id_evento):
         fc.mostrar_error("Evento no encontrado")
@@ -238,7 +248,12 @@ def proceso_gestionar_recursos():
     print("           GESTIONAR RECURSOS DEL EVENTO")
     print("=" * 60)
     
-    id_evento = fc.solicitar_id_evento()
+    id_evento = fc.solicitar_evento_por_id_o_nombre("¿Cómo desea buscar el evento?", solo_activos=False)
+    
+    if id_evento is None:
+        fc.mostrar_mensaje("Operación cancelada")
+        fc.pausar()
+        return
     
     if not fc.existe_evento(id_evento):
         fc.mostrar_error("Evento no encontrado")
@@ -328,7 +343,12 @@ def proceso_finalizar_evento():
     print("           FINALIZAR EVENTO")
     print("=" * 60)
     
-    id_evento = fc.solicitar_id_evento()
+    id_evento = fc.solicitar_evento_por_id_o_nombre("¿Cómo desea buscar el evento?", solo_activos=False)
+    
+    if id_evento is None:
+        fc.mostrar_mensaje("Operación cancelada")
+        fc.pausar()
+        return
     
     if not fc.existe_evento(id_evento):
         fc.mostrar_error("Evento no encontrado")
